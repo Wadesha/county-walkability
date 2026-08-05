@@ -25,14 +25,15 @@
 **可比性（迭代 5）**：每县城算 `score_mean`（169 格整体好走度均值），按全省 min-max 归一为 `comparable_score`（0–100），并给出 `province_rank` / `global_rank`。
 
 ## 技术架构
-- 前端**默认自包含 SVG 离线渲染**（内联四省轮廓 + 点位 + 下钻），**完全不依赖任何外部地图 SDK**，因此永不空白。
-- 腾讯地图矢量底图作为 **opt-in**：在 `config.local.js` 设 `USE_TENCENT_BASEMAP: true` 且 Key 在部署域名通过鉴权时才启用。
+- 前端**主路径**用 **MapLibre GL + OpenFreeMap** 矢量底图，**免 key、免域名白名单**，有真实街道/水系/地名；坐标直接采用 WGS-84，无需 GCJ-02 转换。
+- **SVG 离线渲染兜底**：MapLibre 库未引入或底图加载失败时，自动切到内联 SVG（四省轮廓 + 点位 + 下钻），**保证页面永不空白**。
 - 数据**内联**进 `data_bundle.js`（`window.APP_DATA`），避免相对路径 `fetch` 在代理环境下失败。
 
 ## 文件结构
 ```
 index.html / app.js / css/style.css / config.local.js   运行时必需
 data_bundle.js                                          内联数据（县城280 + 详情 + 四省轮廓）
+vendor/maplibre-gl.js + vendor/maplibre-gl.css          MapLibre 库（已本地化，避免 CDN 波动）
 data/counties.json  四省县城中心（GCJ-02→WGS-84，DataV 行政区划）
 data/provinces.json 四省行政边界（简化）
 data/zones.json     已算县城的最大友好连片（由 extract_zones.py 生成）
@@ -53,4 +54,4 @@ METHODOLOGY.md      计算依据与 7 步迭代路线图
 静态站点，GitHub Pages（`https://wadesha.github.io/county-walkability/`）。
 
 ## 密钥说明
-`config.local.js` 中的腾讯地图 Key 为用户授权**明文提交**（同 friendly-zones 仓库做法）；如需吊销可在腾讯位置服务控制台删除，并重新生成后替换。因默认走离线 SVG，Key 缺失/未鉴权不影响站点基本功能。
+无需任何密钥。MapLibre 库与 OpenFreeMap 样式均为免 key 使用；如需换成商业底图（腾讯/高德/Google），可在 `config.local.js` 注入 key 并在 `app.js` 增加对应分支。
