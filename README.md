@@ -124,7 +124,7 @@ node deploy.js                # 上传到 GitHub Pages
 |------|------------------------------|--------------------------|-------------|--------|------------|
 | **路网** | `elements[]` 中 `type:"way"` 且 `tags.highway` 存在；需 `geometry`（节点序列） | `roads[]`：`geometry:[[lng,lat],…]`（≥2 点）、`highway?`（默认 `residential`） | `highway ∈ {footway,path,pedestrian,living_street,residential,service,unclassified,tertiary,secondary,primary,trunk}`；`motorway/motorway_link` 被跳过 | **必需** | 可达 / 连通 / 安全 / 街道好走度 |
 | **POI** | `elements[]` 中 node/way，按 `classify()` 映射：`tags.leisure∈{park,garden}`→park；`tags.railway∈{station,halt,stop,tram_stop}` 或 `station:subway`→metro；`tags.shop`→shop；`tags.amenity∈{hospital,clinic,dentist}`→hospital；`tags.amenity∈{school,university,college,kindergarten}`→school；其余 `amenity`→shop | `pois[]`：`lng`(float)、`lat`(float)、`type∈{park,metro,shop,school,hospital}`、`name?` | 点坐标；`type` 仅这 5 种 | **强烈建议（核心）** | 可达 / 吸引 |
-| **高程** | 不来自 A；管线固定调 Open-Meteo 在网格角点采样 | 当前**不接受注入**（own 路径仍走 Open-Meteo） | 米；用于算坡度 | 可选 | 舒适 / 街道好走度(slope) |
+| **高程** | 不来自 A；管线固定调 Open-Meteo 在网格角点采样 | **已支持注入**：`elev:[[lng,lat,h],…]`（米），声明后跳过 Open-Meteo，真实区分坡度 | 米；用于算坡度 | 可选 | 舒适 / 街道好走度(slope) |
 | **建筑** | `elements[]` 中 `type:"way"` 且 `tags.building`，需 `geometry`（≥3 点成面） | `buildings[]`：`geometry:[[lng,lat],…]`（≥3 点） | 多边形 | 可选（仅可视化） | 不参与 |
 | **绿地** | `elements[]` 中 `type:"way"` 且 `tags.leisure∈{park,garden}`，需 `geometry`（≥3 点） | `greens[]`：`geometry:[[lng,lat],…]`（≥3 点） | 多边形 | 可选（仅可视化） | 不参与 |
 | **坐标基准** | 全部 `lon/lat` 为 **WGS-84 十进制度** | 同左：`geometry` 与 `pois` 的 `lng/lat` 均为 WGS-84 | 经度 lng、纬度 lat | 必需 | — |
@@ -139,17 +139,59 @@ node deploy.js                # 上传到 GitHub Pages
 
 | # | 不匹配情形 | 代码里为什么会错 | 表面症状 | 提前规避 |
 |---|------------|------------------|----------|----------|
-| 1 | **坐标系是 GCJ-02 / 百度 BD-09，未转 WGS-84**（高德/腾讯/百度导出常见） | 网格中心用 `rec.wgs`（已是 WGS-84），而 own 数据**不做任何坐标转换**，直接按 WGS-84 解读 | 整体偏移 **50–500m**：POI 落错格、路网与网格错位、友好区中心偏掉、**与 MapLibre 真实底图（WGS-84）对不上** | 喂之前把数据转成 WGS-84；或让我给 own 数据加一个 `coord_sys:"gcj02"` 自动反算开关 |
-| 2 | **POI 类别不在 5 类内**（restaurant/bank/cafe/pharmacy/gas_station/gym/library…） | 格式 B：`load_own` 第 184 行 `if t not in (...) : continue` **静默丢弃**；格式 A：非已知 `amenity` 一律归 `shop`（可能错类） | 一大半 POI 凭空消失 → 可达/吸引塌缩，或全被错算成 shop | 喂之前把类别归并到 5 类；或让我加一张**可配置的类别映射表**（不再静默丢） |
-| 3 | **经纬度顺序写反**（GeoJSON 是 `[lng,lat]`，很多 CSV 是 `[lat,lng]`） | 格式 B 读 `c[0]` 当经度、`c[1]` 当纬度；写反后整条路/点跑到错误半球 | 路网/POI 跑到离谱位置（如把纬度当经度），全城分数错乱 | 统一 `[lng,lat]`；或让我在 own 格式加 `coord_order:"latlng"` 声明 |
+| 1 | **坐标系是 GCJ-02 / 百度 BD-09，未转 WGS-84**（高德/腾讯/百度导出常见） | own 数据默认按 WGS-84 解读 | 整体偏移 **50–500m**：POI 落错格、与 MapLibre 真实底图（WGS-84）对不上 | ✅ 已内置预案：在 own 文件顶层声明 `"coord_sys":"gcj02"`，管线自动 `gcj2wgs` 反算回 WGS-84（BD-09 需先转 GCJ-02，本管线不处理） |
+| 2 | **POI 类别不在 5 类内**（restaurant/bank/cafe/pharmacy/gas_station/gym/library…） | 格式 B 非 5 类会被静默丢弃；格式 A 非已知 amenity 一律归 shop | 一大半 POI 凭空消失 → 可达/吸引塌缩，或全被错算成 shop | ✅ 已内置预案：`"type_map":{"restaurant":"shop","bank":"shop"}` 把任意类别归并到 5 类；再加 `"type_fallback":"shop"` 兜底未命中项（必须在 5 类内） |
+| 3 | **经纬度顺序写反**（GeoJSON 是 `[lng,lat]`，很多 CSV 是 `[lat,lng]`） | 格式 B 读 `c[0]` 当经度、`c[1]` 当纬度；写反后整条路/点跑到错误半球 | 路网/POI 跑到离谱位置，全城分数错乱 | ✅ 已内置预案：`"coord_order":"latlng"` 声明数组坐标按 `[lat,lng]` 存，管线自动交换（仅影响 roads/greens/buildings 数组，pois 的命名字段不受影响） |
 | 4 | **只给 POI、不给路网**（你说"我有一些 poi 数据"很可能就是这个） | `ways` 为空 → `build_graph` 返回空图 → 每格 `conn_raw=0`、`safe_raw=9999`、街道层为空 | 连通=0、安全=0、街道好走度图层空；分数只剩 `0.30·可达 + 0.20·吸引 + 0.17·中性舒适`，**连通/安全两个维度彻底缺失** | 尽量补全路网；接受"缺连通/安全"的降级结果；或后续用路网密度近似 |
 | 5 | **数据只覆盖县城主城区，< 2200m** | 网格外圈格在 ±1000m 外、可达靠 1400m 衰减，路网稀疏 → 外圈 `conn=0` | 友好区偏小、偏中心，外圈全灰，排名失真 | 提供中心 ±2200m 的完整盒子 |
 | 6 | **该县城不在 `data/counties.json`**（你手上是鲁苏豫皖以外，或名单漏了） | `main()` 遍历 `counties.json` 按 `adcode` 匹配，找不到就跳过（哪怕有 own 文件） | 跑 `build_county.py <adcode>` 什么也不生成 | 先把该县加进 `counties.json`（需要它的 wgs 中心，可用 DataV/fetch_counties 补） |
-| 7 | **想要真实坡度舒适，但 Open-Meteo 被限流** | own 路径**没有高程注入字段**，仍调 Open-Meteo；失败 → `slope=0` → 归一后 `comfort` 全 = 100（不区分） | 所有县城舒适分都顶满 100，坡度优劣看不出来 | 让我给 own 格式加 `elev:[[lat,lng,h],…]` 或 DEM 栅格注入 |
+| 7 | **想要真实坡度舒适，但 Open-Meteo 被限流** | own 路径若未注入高程，仍调 Open-Meteo；失败 → `slope=0` → 归一后 `comfort` 全 = 100（不区分） | 所有县城舒适分都顶满 100，坡度优劣看不出来 | ✅ 已内置预案：`"elev":[[lng,lat,h],…]` 注入自带高程（米），声明后跳过 Open-Meteo，真实区分坡度（注意：elev 固定 `[lng,lat,h]`，不受 `coord_order` 影响，只受 `coord_sys` 反算影响） |
 | 8 | **数据用的是投影坐标（如 Web Mercator 米）而非经纬度** | 所有几何被当成"度"解读 | 全盘错乱、点飞到海外 | 先转成 WGS-84 十进制度 |
 | 9 | **密度过低**（POI 只有几个 / 路网只有一两条） | `access`/`attr`/`conn` 都靠数量和分布，样本太少无法撑起分数 | 大量灰格、友好区极小甚至无连片 | 保证中心 ±2200m 内有足够 POI 与路网密度 |
 
 > 一句话总结契约：**WGS-84 经纬度 + 路网（必需）+ 5 类 POI（核心）+ 覆盖 ±2200m**。这四条对齐了，结果就靠谱；任意一条对不上，上表就是对应的"症状—药方"。
+
+### 数据不匹配预案：4 个已内置旋钮（格式 B 顶层声明）
+
+上面风险表里的 ①/②/③/⑦ 现在都有**代码级预案**，不用你手工对齐数据。全部在 `data/own/<adcode>.json` 的**顶层**声明，与 `pois`/`roads` 同级：
+
+| 旋钮 | 取值 | 解决的问题 | 作用域 |
+|------|------|-----------|--------|
+| `coord_sys` | `"wgs84"`(默认) \| `"gcj02"` | ① GCJ-02（高德/腾讯/百度导出）自动反算回 WGS-84 | 所有坐标（pois 命名字段 + roads/greens/buildings/elev 数组） |
+| `coord_order` | `"lnglat"`(默认) \| `"latlng"` | ③ 数组坐标按 `[lat,lng]` 存时自动交换 | 仅 roads/greens/buildings 数组；pois 的 `lng`/`lat` 命名字段不受影响 |
+| `type_map` | `{"源类别":"目标类别"}` | ② 任意 POI 类别归并到 5 类，不再静默丢弃 | 仅 pois 的 `type` |
+| `type_fallback` | 5 类之一（如 `"shop"`） | ② 未命中 `type_map` 的兜底类别（不在 5 类内会被忽略） | 仅 pois 的 `type` |
+| `elev` | `[[lng,lat,h], …]`（米） | ⑦ 自带高程，跳过 Open-Meteo，真实区分坡度 | —（固定 `[lng,lat,h]`，只受 `coord_sys` 反算，不受 `coord_order` 影响） |
+
+**完整示例**（GCJ-02 + 数组写反 + 类别非标 + 自带高程，四种情况同时命中）：
+
+```json
+{
+  "coord_sys": "gcj02",
+  "coord_order": "latlng",
+  "type_map": { "restaurant": "shop", "bank": "shop", "cafe": "shop" },
+  "type_fallback": "shop",
+  "elev": [
+    [116.890, 33.490, 12], [116.915, 33.490, 85],
+    [116.900, 33.510, 40], [116.902, 33.500, 60]
+  ],
+  "pois": [
+    { "lng": 116.901, "lat": 33.501, "type": "shop",      "name": "便利店" },
+    { "lng": 116.905, "lat": 33.498, "type": "restaurant","name": "餐馆" },
+    { "lng": 116.899, "lat": 33.503, "type": "bank",      "name": "银行" }
+  ],
+  "roads": [
+    { "highway": "residential", "geometry": [[33.495,116.895],[33.495,116.910]] },
+    { "highway": "primary",     "geometry": [[33.500,116.890],[33.500,116.915]] }
+  ]
+}
+```
+
+> 上面的 `geometry` 写成 `[[lat,lng],…]`（因 `coord_order:"latlng"`）、`pois` 里 `restaurant`/`bank` 会被 `type_map` 归成 `shop`、`elev` 自带米制高程——管线全部自动处理，你不必预先转坐标、不必改类别、不必等 Open-Meteo。
+>
+> ⚠️ 已知坑（已修）：`elev` **固定为 `[lng,lat,h]`**，不要因 `coord_order:"latlng"` 而写成 `[lat,lng,h]`，否则高程会被当成纬度>90 而查表全失效、坡度变 0。
+>
+> ⚠️ 坐标反算用的是 `wandergis/coordtransform` 标准 GCJ-02 算法（本仓库 `fetch_provinces.py` 同款）。BD-09（百度）需先转 GCJ-02 再喂本管线。
 
 ## 文件结构
 
@@ -183,6 +225,10 @@ METHODOLOGY.md      计算依据与迭代路线图
 - **已算 48/280**（全在安徽），其中 **28 个县城**有友好连片（其余 20 个无连片被跳过）；山东/江苏/河南尚未开算。
 - **Overpass 被封禁**：本项目沙箱出网走代理，此前数小时批量刷 `overpass-api.de` 触发了出口 IP 限流——5 个镜像 4 个连不上、1 个返回空。批量任务已暂停。**当前推进计算的最稳路径就是用你自己的 POI/路网数据（见上）**，或等封禁冷却（通常数小时~1 天）后一键续跑。
 - 封禁期间 `build_county.py` 已加 `signal.alarm(150s)` 硬超时与断点续跑，避免单县城假死卡住整批。
+- **已修复两个影响数据质量的 bug（针对自有数据路径）**：
+  1. GCJ-02 反算主公式分母写错 + `sin` 参数漏 `/180.0`，会把 GCJ-02 坐标算飞到 `1e10` 量级——现已对齐 `wandergis/coordtransform` 标准算法，往返误差 ~1e-7 度（厘米级）。
+  2. 坡度（舒适因子）的网格角点查表与建表坐标错开半个格（80m），导致 **169 格全部 miss、坡度永远 0**（舒适分恒为 100、不区分坡度）。现已对齐网格，自有 `elev` 注入与 Open-Meteo 路径的坡度均正常。
+  - 注：已算的 48 个县城（走 Overpass）当时也受 bug 2 影响，舒适维度是平的；待 Overpass 恢复后续算会自动修正。
 
 ## 部署
 
