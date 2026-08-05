@@ -169,6 +169,8 @@ def build_record(roads, pois, elev, args):
         rec["type_fallback"] = args.type_fallback
     if elev is not None:
         rec["elev"] = elev
+    if getattr(args, "simulated", False):
+        rec["simulated"] = True
     return rec
 
 def parse_type_map(s):
@@ -205,6 +207,8 @@ def main():
     ap.add_argument("--type_map", help='分类重映射, 如 "restaurant=shop,bank=shop"')
     ap.add_argument("--type_fallback", help="未命中 type_map 的兜底类别(须为5类之一)")
     ap.add_argument("--batch", help="整目录批量：扫描 <adcode>_roads.* / <adcode>_pois.* / <adcode>_elev.*")
+    ap.add_argument("--simulated", action="store_true",
+                    help="标记为模拟/演示数据（写入 simulated=true，build_county 透传到产物；真实数据到达后覆盖即可清除）")
     ap.add_argument("--out", help="输出目录（默认 counties/data/own）")
     args = ap.parse_args()
 
@@ -247,7 +251,8 @@ def batch_mode(args, d, out_dir):
         a = argparse.Namespace(
             roads=rf, pois=pf, elev=ef,
             coord_sys=args.coord_sys, coord_order=args.coord_order,
-            type_map=args.type_map, type_fallback=args.type_fallback)
+            type_map=args.type_map, type_fallback=args.type_fallback,
+            simulated=args.simulated)
         roads, pois, elev = load_inputs(a)
         rec = build_record(roads, pois, elev, a)
         _write(out_dir, adcode, rec)
