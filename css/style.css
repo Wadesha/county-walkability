@@ -6,6 +6,8 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .detail-ui{display:none}
 body.detail .detail-ui{display:block}
 body.detail .overview-ui{display:none}
+/* 覆盖 #chip/#dir 等带 ID 的 overview 控件的 display 规则 */
+body.detail #chip, body.detail #dir, body.detail #hint { display:none !important }
 
 /* 顶部：标题 + 省份筛选，极简半透明 */
 #chip{top:8px;left:8px;display:flex;align-items:center;gap:8px;background:rgba(17,24,39,.55);backdrop-filter:blur(4px);padding:5px 9px;border-radius:8px;font-size:11px}
