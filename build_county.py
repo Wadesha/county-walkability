@@ -114,6 +114,46 @@ def elev_batch(points, retries=2):
             return {}
     return out
 
+# ---------------------------------------------------------------------------
+# GCJ-02 ↔ WGS-84（中国测绘局偏移）。OSM/Overpass 数据是 WGS-84；
+# 高德/腾讯/百度导出常是 GCJ-02（百度是 BD-09，需先转 GCJ-02，本管线不处理 BD-09）。
+# 自有数据可声明 coord_sys:"gcj02"，由管线反算回 WGS-84，避免与底图错位。
+# ---------------------------------------------------------------------------
+def _t_lat(x, y):
+    r = -100.0 + 2.0*x + 3.0*y + 0.2*y*y + 0.1*x*y + 0.2*math.sqrt(abs(x))
+    r += (20.0*math.sin(6.0*x*math.pi/180.0) + 20.0*math.sin(2.0*x*math.pi/180.0)) * 2.0/3.0
+    r += (20.0*math.sin(y*math.pi/180.0) + 40.0*math.sin(y/3.0*math.pi/180.0)) * 2.0/3.0
+    r += (160.0*math.sin(y/12.0*math.pi/180.0) + 320*math.sin(y*math.pi/30.0/180.0)) * 2.0/3.0
+    return r
+
+def _t_lng(x, y):
+    r = 300.0 + x + 2.0*y + 0.1*x*x + 0.1*x*y + 0.1*math.sqrt(abs(x))
+    r += (20.0*math.sin(6.0*x*math.pi/180.0) + 20.0*math.sin(2.0*x*math.pi/180.0)) * 2.0/3.0
+    r += (20.0*math.sin(x*math.pi/180.0) + 40.0*math.sin(x/3.0*math.pi/180.0)) * 2.0/3.0
+    r += (150.0*math.sin(x/12.0*math.pi/180.0) + 300*math.sin(x/30.0*math.pi/180.0)) * 2.0/3.0
+    return r
+
+def wgs2gcj(lat, lng):
+    # 正确 GCJ-02 正算（与 fetch_provinces.py 一致；权威实现 wandergis/coordtransform）。
+    # 主公式分母是 ((a*(1-ee))/(magic*sqrtmagic)*pi) 与 (a/sqrtmagic*cos(radlat)*pi)，
+    # 旧写法 (dlat*a)/(magic*sqrtmagic)*180/pi 会把坐标算飞到 1e10 量级。
+    if not (73.66 < lng < 135.05 and 3.86 < lat < 53.55):
+        return lat, lng
+    a = 6378245.0; ee = 0.00669342162296594323
+    dlat = _t_lat(lng-105.0, lat-35.0)
+    dlng = _t_lng(lng-105.0, lat-35.0)
+    radlat = lat/180.0*math.pi
+    magic = math.sin(radlat); magic = 1 - ee*magic*magic
+    sqrtmagic = math.sqrt(magic)
+    dlat = (dlat*180.0) / ((a*(1-ee))/(magic*sqrtmagic)*math.pi)
+    dlng = (dlng*180.0) / (a/sqrtmagic*math.cos(radlat)*math.pi)
+    return lat+dlat, lng+dlng
+
+def gcj2wgs(lng, lat):
+    """GCJ-02 → WGS-84 近似反算（WGS ≈ 2·GCJ − wgs2gcj(GCJ)）。"""
+    glat, glng = wgs2gcj(lat, lng)
+    return lng*2 - glng, lat*2 - glat
+
 def classify(tags):
     if not tags: return None
     if tags.get("leisure") in ("park","garden"): return "park"
@@ -163,31 +203,65 @@ def _parse_elements(data):
 def load_own(rec):
     """返回自有数据 dict，或 None（None=走默认 Overpass）。
     两种子格式：
-      A) {"elements":[...]}           透传 Overpass 原始数据（nodes/ways + geometry/tags）
-      B) {"pois":[...],"roads":[...]} 简化 POI+路网；pois.type ∈ park/metro/shop/school/hospital
+      A) {"elements":[...]}           透传 Overpass 原始数据（nodes/ways + geometry/tags），WGS-84
+      B) {"pois":[...],"roads":[...]} 简化 POI+路网，支持以下防不匹配旋钮：
+         - coord_sys:   "wgs84"(默认) | "gcj02"（高德/腾讯/百度导出，自动反算回 WGS-84）
+         - coord_order: "lnglat"(默认) | "latlng"（数组按 [lat,lng] 存，自动交换）
+         - type_map:    {源类别: 目标类别}  把任意类别归并到 5 类，避免静默丢弃
+         - type_fallback: 字符串  未命中 type_map 时的兜底类别（须在 5 类中）
+         - elev:        [[lng,lat,h], ...]  自带高程（米），注入后不依赖 Open-Meteo。
+                         elev 固定为 [lng,lat,h]，只受 coord_sys 影响，不受 coord_order 交换影响。
+    注意：pois 用命名字段 lng/lat（不受 coord_order 影响，只受 coord_sys 影响）；
+          roads/greens/buildings 用数组坐标，受 coord_order + coord_sys 共同影响。
     """
     p=os.path.join(OWN_DIR,f"{rec['adcode']}.json")
     if not os.path.exists(p): return None
     d=json.load(open(p,encoding="utf-8"))
     if "elements" in d:
         return {"mode":"overpass","elements":d["elements"]}
+    coord_sys = d.get("coord_sys","wgs84")        # "wgs84" | "gcj02"
+    coord_order = d.get("coord_order","lnglat")   # "lnglat" | "latlng"
+    def convert(lng, lat):
+        if coord_sys == "gcj02":
+            lng, lat = gcj2wgs(lng, lat)
+        return lng, lat
+    def to_xy(c):
+        a, b = c[0], c[1]
+        lng, lat = (b, a) if coord_order == "latlng" else (a, b)
+        return convert(lng, lat)
     ways=[]
     for r in d.get("roads",[]):
         geo=r.get("geometry",[])
         if len(geo)<2: continue
+        pts=[to_xy(c) for c in geo]
         ways.append({"type":"way",
-                     "geometry":[{"lon":c[0],"lat":c[1]} for c in geo],
+                     "geometry":[{"lon":x,"lat":y} for (x,y) in pts],
                      "tags":{"highway":r.get("highway","residential")}})
+    type_map = d.get("type_map",{})
+    allowed = {"park","metro","shop","school","hospital"}
+    fallback = d.get("type_fallback")
+    if fallback and fallback not in allowed: fallback = None
     pois=[]
     for p0 in d.get("pois",[]):
-        t=p0.get("type")
-        if t not in ("park","metro","shop","school","hospital"): continue
-        pois.append({"lng":p0["lng"],"lat":p0["lat"],"type":t,
-                     "name":p0.get("name") or t})
+        lng, lat = convert(p0["lng"], p0["lat"])
+        t = p0.get("type")
+        t = type_map.get(t, t)
+        if t not in allowed:
+            if fallback: t = fallback
+            else: continue
+        pois.append({"lng":lng,"lat":lat,"type":t,"name":p0.get("name") or t})
     greens=[w for w in d.get("greens",[]) if w.get("geometry")]
     buildings=[w for w in d.get("buildings",[]) if w.get("geometry")]
+    own_elev=None
+    if d.get("elev"):
+        # elev 固定为 [lng,lat,h]（不受 coord_order 影响，只受 coord_sys 反算），
+        # 避免与 roads 的数组顺序混用导致 lat/lng 写反、hav 出 NaN。
+        own_elev=[]
+        for e in d["elev"]:
+            lng, lat = convert(e[0], e[1])        # 直接 (lng,lat)，仅做 gcj02→wgs
+            own_elev.append((lat, lng, e[2]))     # 存 (lat,lng,h) 便于按角点查
     return {"mode":"simple","ways":ways,"pois":pois,
-            "greens":greens,"buildings":buildings}
+            "greens":greens,"buildings":buildings,"elev":own_elev}
 
 def build_graph(ways, skip=("motorway","motorway_link")):
     adj={}; nodes={}
@@ -283,14 +357,26 @@ out geom;""").replace("__BBOX__",bbox)
     adj, nodes = build_graph(ways)
     print(f"[{sid} {name}]      图节点 {len(nodes)} ｜ 边 {sum(len(v) for v in adj.values())//2}")
 
+    # 注意：格点必须与下方逐格 slope 查表的坐标对齐（格角点 = 中心±CELL_M/2，
+    # 即 -GRID_HALF + k*CELL_M），不要带 +CELL_M/2，否则 key 错位、坡度永远查不到(=0)。
     corners=[]
     for i in range(N+1):
         for j in range(N+1):
-            cx=lng0+(-GRID_HALF+i*CELL_M+CELL_M/2)/mLng
-            cy=lat0+(-GRID_HALF+j*CELL_M+CELL_M/2)/mLat
+            cx=lng0+(-GRID_HALF+i*CELL_M)/mLng
+            cy=lat0+(-GRID_HALF+j*CELL_M)/mLat
             corners.append((round(cy,6),round(cx,6)))
-    elev=elev_batch(list(set(corners)))
-    print(f"[{sid} {name}]      高程采样 {len(elev)}")
+    if own and own.get("elev") is not None:
+        elev={}
+        for (la,ln) in set(corners):
+            best=None; bd=1e18
+            for (ea,eb,eh) in own["elev"]:
+                dd=hav(eb,ea,ln,la)
+                if dd<bd: bd=dd; best=eh
+            elev[(round(la,6),round(ln,6))]=best
+        print(f"[{sid} {name}]      自有高程注入 {len(elev)} 角点（最近邻）")
+    else:
+        elev=elev_batch(list(set(corners)))
+        print(f"[{sid} {name}]      高程采样 {len(elev)}")
 
     major=[]
     for w in ways:
