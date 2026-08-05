@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>县城步行友好 · 宏观图</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://map.qq.com/api/gljs?v=1.exp&key=__KEY__"></script>
+</head>
+<body>
+<div id="map"></div>
+
+<!-- 宏观图：极简标题 + 省份筛选（半透明、小字） -->
+<div id="chip" class="overview-ui">
+  <span class="t">县城步行友好</span>
+  <span id="provtabs"></span>
+</div>
+
+<!-- 宏观图：极简密集目录（可收起，横向滚动不换行） -->
+<div id="dir" class="overview-ui">
+  <span id="dirtoggle" class="dt">目录 ▸</span>
+  <div id="dirlist"></div>
+</div>
+
+<div id="hint" class="overview-ui">绿点 = 已有数据，点绿点下钻 · 灰点 = 收集中</div>
+
+<!-- 详情：返回宏观图 -->
+<div id="back" class="detail-ui">← 宏观图</div>
+
+<!-- 详情：右下角小卡片 -->
+<div id="detailcard" class="detail-ui"></div>
+
+<!-- 悬浮名称提示 -->
+<div id="tip"></div>
+
+<script src="config.local.js"></script>
+<script src="data_bundle.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
