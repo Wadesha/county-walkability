@@ -116,6 +116,41 @@ node deploy.js                # 上传到 GitHub Pages
 
 每个县城的产物会写 `data/<adcode>.json`，其中 `own_supplied: true` 且 `source` 标记为「自有数据(roads+POIs 注入)」，数据溯源透明。
 
+### 字段速查表（精确到字段名 / 类型 / 必需性）
+
+> 功能上**只有 2 类输入真正进打分**：路网（必需）+ 多类 POI（核心）；高程是第 3 类（可选，影响舒适）；建筑 / 绿地只用于可视化，不进打分。
+
+| 维度 | 格式 A（Overpass 透传）字段 | 格式 B（自有简化）字段 | 类型 / 取值 | 必需性 | 进哪些因子 |
+|------|------------------------------|--------------------------|-------------|--------|------------|
+| **路网** | `elements[]` 中 `type:"way"` 且 `tags.highway` 存在；需 `geometry`（节点序列） | `roads[]`：`geometry:[[lng,lat],…]`（≥2 点）、`highway?`（默认 `residential`） | `highway ∈ {footway,path,pedestrian,living_street,residential,service,unclassified,tertiary,secondary,primary,trunk}`；`motorway/motorway_link` 被跳过 | **必需** | 可达 / 连通 / 安全 / 街道好走度 |
+| **POI** | `elements[]` 中 node/way，按 `classify()` 映射：`tags.leisure∈{park,garden}`→park；`tags.railway∈{station,halt,stop,tram_stop}` 或 `station:subway`→metro；`tags.shop`→shop；`tags.amenity∈{hospital,clinic,dentist}`→hospital；`tags.amenity∈{school,university,college,kindergarten}`→school；其余 `amenity`→shop | `pois[]`：`lng`(float)、`lat`(float)、`type∈{park,metro,shop,school,hospital}`、`name?` | 点坐标；`type` 仅这 5 种 | **强烈建议（核心）** | 可达 / 吸引 |
+| **高程** | 不来自 A；管线固定调 Open-Meteo 在网格角点采样 | 当前**不接受注入**（own 路径仍走 Open-Meteo） | 米；用于算坡度 | 可选 | 舒适 / 街道好走度(slope) |
+| **建筑** | `elements[]` 中 `type:"way"` 且 `tags.building`，需 `geometry`（≥3 点成面） | `buildings[]`：`geometry:[[lng,lat],…]`（≥3 点） | 多边形 | 可选（仅可视化） | 不参与 |
+| **绿地** | `elements[]` 中 `type:"way"` 且 `tags.leisure∈{park,garden}`，需 `geometry`（≥3 点） | `greens[]`：`geometry:[[lng,lat],…]`（≥3 点） | 多边形 | 可选（仅可视化） | 不参与 |
+| **坐标基准** | 全部 `lon/lat` 为 **WGS-84 十进制度** | 同左：`geometry` 与 `pois` 的 `lng/lat` 均为 WGS-84 | 经度 lng、纬度 lat | 必需 | — |
+| **覆盖半径** | 以县城中心 ±**2200m** 的盒子（`QUERY_R_M=2200`） | 你提供的 roads/pois 也应覆盖中心 ±2200m | 米 | 建议 | — |
+
+- `classify()` 对格式 A：节点需带 `lat/lon`（node）或 `geometry`（way）；way 的中心点取几何均值后落为一个 POI。
+- 5 类 `type` 的权重（`W_ACCESS`）：metro 1.2 / park 1.0 / shop 0.9 / hospital 0.8 / school 0.7；可达按 `exp(-d/450)` 衰减、1400m 内计、800m 内计类型多样性；吸引 = 800m 内不同 `type` 数 / 5。
+
+### ⚠️ 数据不匹配风险预判（提前堵坑）
+
+管线假设你给的数据**完全符合上面的契约**。一旦「你有的」和「管线要的」对不上，下面这些症状会直接出现——提前知道好对症：
+
+| # | 不匹配情形 | 代码里为什么会错 | 表面症状 | 提前规避 |
+|---|------------|------------------|----------|----------|
+| 1 | **坐标系是 GCJ-02 / 百度 BD-09，未转 WGS-84**（高德/腾讯/百度导出常见） | 网格中心用 `rec.wgs`（已是 WGS-84），而 own 数据**不做任何坐标转换**，直接按 WGS-84 解读 | 整体偏移 **50–500m**：POI 落错格、路网与网格错位、友好区中心偏掉、**与 MapLibre 真实底图（WGS-84）对不上** | 喂之前把数据转成 WGS-84；或让我给 own 数据加一个 `coord_sys:"gcj02"` 自动反算开关 |
+| 2 | **POI 类别不在 5 类内**（restaurant/bank/cafe/pharmacy/gas_station/gym/library…） | 格式 B：`load_own` 第 184 行 `if t not in (...) : continue` **静默丢弃**；格式 A：非已知 `amenity` 一律归 `shop`（可能错类） | 一大半 POI 凭空消失 → 可达/吸引塌缩，或全被错算成 shop | 喂之前把类别归并到 5 类；或让我加一张**可配置的类别映射表**（不再静默丢） |
+| 3 | **经纬度顺序写反**（GeoJSON 是 `[lng,lat]`，很多 CSV 是 `[lat,lng]`） | 格式 B 读 `c[0]` 当经度、`c[1]` 当纬度；写反后整条路/点跑到错误半球 | 路网/POI 跑到离谱位置（如把纬度当经度），全城分数错乱 | 统一 `[lng,lat]`；或让我在 own 格式加 `coord_order:"latlng"` 声明 |
+| 4 | **只给 POI、不给路网**（你说"我有一些 poi 数据"很可能就是这个） | `ways` 为空 → `build_graph` 返回空图 → 每格 `conn_raw=0`、`safe_raw=9999`、街道层为空 | 连通=0、安全=0、街道好走度图层空；分数只剩 `0.30·可达 + 0.20·吸引 + 0.17·中性舒适`，**连通/安全两个维度彻底缺失** | 尽量补全路网；接受"缺连通/安全"的降级结果；或后续用路网密度近似 |
+| 5 | **数据只覆盖县城主城区，< 2200m** | 网格外圈格在 ±1000m 外、可达靠 1400m 衰减，路网稀疏 → 外圈 `conn=0` | 友好区偏小、偏中心，外圈全灰，排名失真 | 提供中心 ±2200m 的完整盒子 |
+| 6 | **该县城不在 `data/counties.json`**（你手上是鲁苏豫皖以外，或名单漏了） | `main()` 遍历 `counties.json` 按 `adcode` 匹配，找不到就跳过（哪怕有 own 文件） | 跑 `build_county.py <adcode>` 什么也不生成 | 先把该县加进 `counties.json`（需要它的 wgs 中心，可用 DataV/fetch_counties 补） |
+| 7 | **想要真实坡度舒适，但 Open-Meteo 被限流** | own 路径**没有高程注入字段**，仍调 Open-Meteo；失败 → `slope=0` → 归一后 `comfort` 全 = 100（不区分） | 所有县城舒适分都顶满 100，坡度优劣看不出来 | 让我给 own 格式加 `elev:[[lat,lng,h],…]` 或 DEM 栅格注入 |
+| 8 | **数据用的是投影坐标（如 Web Mercator 米）而非经纬度** | 所有几何被当成"度"解读 | 全盘错乱、点飞到海外 | 先转成 WGS-84 十进制度 |
+| 9 | **密度过低**（POI 只有几个 / 路网只有一两条） | `access`/`attr`/`conn` 都靠数量和分布，样本太少无法撑起分数 | 大量灰格、友好区极小甚至无连片 | 保证中心 ±2200m 内有足够 POI 与路网密度 |
+
+> 一句话总结契约：**WGS-84 经纬度 + 路网（必需）+ 5 类 POI（核心）+ 覆盖 ±2200m**。这四条对齐了，结果就靠谱；任意一条对不上，上表就是对应的"症状—药方"。
+
 ## 文件结构
 
 ```
