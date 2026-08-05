@@ -38,7 +38,7 @@ def main():
         zones.append({"id":d["id"],"name":d["name"],"province":d.get("province"),
             "parent":d.get("parent"),"center":d["center"],"gcj_center":d.get("gcj_center"),
             "score_avg":ma["score_avg"],"score_mean":score_mean,"size":ma["size"],
-            "quality":d.get("quality",{}),"cells":cells})
+            "quality":d.get("quality",{}),"simulated":d.get("simulated",False),"cells":cells})
     zones.sort(key=lambda z:(z["province"],z["parent"],-z["score_mean"],z["name"]))
 
     # 迭代5：min-max 归一化 + 排名
