@@ -23,12 +23,14 @@ socket.setdefaulttimeout(60)
 HERE = os.path.dirname(os.path.abspath(__file__))
 COUNTIES = os.path.join(HERE, "data", "counties.json")
 
+# 端点顺序按「当前可用度」排（2026-08-06 实测：maps.mail.ru 真实可拉、overpass-api.de 偶发504、
+# kumi/private.coffee 沙箱出网 000）。overpass.osm.ch 已剔除——它是空壳镜像（永远 200 但
+# elements 为空，会静默拿到空路网）。失败时按此顺序换端点 + 指数退避。
 OVERPASS_ENDPOINTS = [
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
     "https://overpass.private.coffee/api/interpreter",
-    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
-    "https://overpass.osm.ch/api/interpreter",
 ]
 ELEV_API = "https://api.open-meteo.com/v1/elevation"
 
@@ -56,25 +58,39 @@ class _OverpassHardTimeout(Exception):
 def _on_alarm(signum, frame):
     raise _OverpassHardTimeout()
 
-def overpass(q, tries=2):
+def overpass(q, tries=3):
     """逐端点尝试；单端点硬超时 150s（signal.alarm 兜底，专治“连接通但无数据”的假死）。
-    任一端点成功即返回；全部失败抛异常，由 batch 跳过该县城继续。"""
+    成功条件：HTTP 200 且返回 elements 非空。遇 429 限流 / 504 网关超时 / 空结果，
+    按指数退避（3s→6s→12s，封顶 60s）换端点重试，避免被限流乃至封 IP。
+    全部失败抛异常，由 batch 跳过该县城继续。"""
+    import urllib.error
     last=None
     prev=None
     try:
         prev=signal.signal(signal.SIGALRM,_on_alarm)
         for ep in OVERPASS_ENDPOINTS:
             for attempt in range(tries):
+                backoff = min(2**attempt * 3, 60)
                 signal.alarm(150)
                 try:
                     data=urllib.parse.urlencode({"data":q}).encode()
                     req=urllib.request.Request(ep,data=data,headers={"User-Agent":"county-walk/1.0"})
                     with urllib.request.urlopen(req,timeout=60) as resp:
-                        return json.load(resp)
+                        if resp.status != 200:
+                            last=RuntimeError("overpass %s http=%s"%(ep,resp.status))
+                            time.sleep(backoff); continue
+                        j=json.load(resp)
+                        if not j.get("elements"):
+                            # 空壳镜像（如已剔除的 overpass.osm.ch）或真无数据：换端点重试
+                            last=RuntimeError("overpass %s 返回空 elements"%ep)
+                            time.sleep(backoff); continue
+                        return j
                 except _OverpassHardTimeout:
-                    last=RuntimeError("overpass 硬超时150s @ %s"%ep); time.sleep(2); continue
+                    last=RuntimeError("overpass 硬超时150s @ %s"%ep); time.sleep(backoff); continue
+                except urllib.error.HTTPError as he:
+                    last=he; time.sleep(backoff); continue   # 429/504 退避重试
                 except Exception as e:
-                    last=e; time.sleep(3)
+                    last=e; time.sleep(backoff); continue
                 finally:
                     signal.alarm(0)
     finally:
@@ -261,7 +277,8 @@ def load_own(rec):
             lng, lat = convert(e[0], e[1])        # 直接 (lng,lat)，仅做 gcj02→wgs
             own_elev.append((lat, lng, e[2]))     # 存 (lat,lng,h) 便于按角点查
     return {"mode":"simple","ways":ways,"pois":pois,
-            "greens":greens,"buildings":buildings,"elev":own_elev}
+            "greens":greens,"buildings":buildings,"elev":own_elev,
+            "simulated": bool(d.get("simulated", False))}
 
 def build_graph(ways, skip=("motorway","motorway_link")):
     adj={}; nodes={}
@@ -337,7 +354,23 @@ def compute_county(rec):
   way["leisure"~"park|garden"](__BBOX__);
 );
 out geom;""").replace("__BBOX__",bbox)
-        data=overpass(q)
+        # 防 block：原始 Overpass 响应按县城缓存到 data/raw/<adcode>.json，
+        # 命中即跳过网络——续跑/重跑不再打扰服务器，是避免被限流/封 IP 最关键的一环。
+        raw_path=os.path.join(HERE,"data","raw",f"{rec['adcode']}.json")
+        data=None
+        if os.path.exists(raw_path):
+            try:
+                data=json.load(open(raw_path,encoding="utf-8"))
+                print(f"[{sid} {name}]      命中本地 Overpass 缓存，跳过网络")
+            except Exception:
+                data=None
+        if data is None:
+            data=overpass(q)
+            try:
+                os.makedirs(os.path.dirname(raw_path),exist_ok=True)
+                json.dump(data,open(raw_path,"w",encoding="utf-8"))
+            except Exception as e:
+                print(f"[{sid} {name}]      缓存写入失败（不影响计算）: {e}")
         ways, pois, buildings, greens = _parse_elements(data)
     print(f"[{sid} {name}]      路网 {len(ways)} ｜ POI {len(pois)} ｜ 建筑 {len(buildings)} ｜ 绿地 {len(greens)}")
 
@@ -502,6 +535,7 @@ out geom;""").replace("__BBOX__",bbox)
         "generated":"2026-08-05",
         "source":("自有数据(roads+POIs 注入)" if own else "OSM Overpass(路网/POI/建筑/绿地) + Open-Meteo 高程；5因子加权(可达.30/连通.18/舒适.17/安全.15/吸引.20)；友好区域=无POI重加权连通聚类"),
         "own_supplied": bool(own),
+        "simulated": bool(own and own.get("simulated", False)),
         "friendly_threshold":FRIENDLY_THRESH,
         "quality":{"ways":len(ways),"pois":len(pois),"buildings":len(buildings),"greens":len(greens)},
         "cells":{"type":"FeatureCollection","features":cells},
