@@ -116,6 +116,39 @@ node deploy.js                # 上传到 GitHub Pages
 
 每个县城的产物会写 `data/<adcode>.json`，其中 `own_supplied: true` 且 `source` 标记为「自有数据(roads+POIs 注入)」，数据溯源透明。
 
+### 一键导入：import_own.py（GeoJSON / CSV → own 文件）
+
+你手上多半是**导出的 GeoJSON 或 CSV**，不是手写 JSON。本仓库自带转换器，把常见格式直接合成 `data/own/<adcode>.json`（格式 B + 旋钮），不用手工拼 JSON：
+
+```bash
+# 单县：路网(GeoJSON) + POI(CSV) + 高程(CSV)，声明 GCJ-02 与类别重映射
+python3 import_own.py --adcode 370522 \
+    --roads 370522_roads.geojson \
+    --pois  370522_pois.csv \
+    --elev  370522_elev.csv \
+    --coord_sys gcj02 \
+    --type_map "restaurant=shop,bank=shop" --type_fallback shop
+
+# 整目录批量：把 <adcode>_roads.* / <adcode>_pois.* / <adcode>_elev.* 丢进一个文件夹
+python3 import_own.py --batch ./my_own_data/
+```
+
+**输入格式约定**
+
+| 输入 | 支持格式 | 字段 / 说明 |
+|------|----------|------------|
+| 路网 `--roads` | GeoJSON（`LineString` / `MultiLineString`，`highway` 取 `properties.highway`，缺省 `residential`） | 推荐用高德/腾讯/OSM 导出的路网 GeoJSON |
+| 路网 `--roads` | CSV（`id` 分组，`seq` 排序可选，`lng`,`lat`,`highway` 可选） | 无 `id` 列时整张表当作一条线 |
+| POI `--pois` | GeoJSON（`Point`，`type`/`name` 取 `properties`） | — |
+| POI `--pois` | CSV（`lng`,`lat`,`type`,`name`；表头自动识别中英文：`经度/纬度/类型/名称` 等） | `type` 可任意，靠 `--type_map` 归并到 5 类 |
+| 高程 `--elev` | CSV（`lng,lat,h`）或 JSON（`[[lng,lat,h],…]`） | 米；声明后跳过 Open-Meteo |
+
+**旋钮原样透传**：`--coord_sys`（wgs84/gcj02）、`--coord_order`、`--type_map`、`--type_fallback` 都写进 own 文件顶层，真正的坐标反算/重映射由 `build_county.load_own` 统一做——所以**导入时不用预先转坐标、不用改类别**（`build_county.py` 一节已验证：GCJ-02 + 类别非标 + 自带高程四件套同时命中也能正确出分）。
+
+> ⚠️ **坐标系要统一**：`--roads`/`--pois`/`--elev` 必须是**同一种**坐标系，再用 `--coord_sys` 声明。混合坐标系（如路网 GCJ-02、POI WGS-84）无法用一个旋钮覆盖，请先统一再导入。
+>
+> ⚠️ **数据要盖住县城中心 ±2200m**：管线以 `data/counties.json` 里该县 `wgs` 中心做 169 格网格（±~1040m 盒 + 打分半径）。路网/POI 若离中心太远（>~1.5km），会落在网格盒外 → 连通/可达直接退化。**导出数据时请以县城中心为范围中心**，不要只截主城区一角。
+
 ### 字段速查表（精确到字段名 / 类型 / 必需性）
 
 > 功能上**只有 2 类输入真正进打分**：路网（必需）+ 多类 POI（核心）；高程是第 3 类（可选，影响舒适）；建筑 / 绿地只用于可视化，不进打分。
@@ -206,6 +239,7 @@ data/<adcode>.json  单县城计算结果（build_county.py 生成）
 data/own/<adcode>.json  你自己的 POI/路网数据（可选，优先级高于 Overpass）
 
 build_county.py     单县城计算（OSM Overpass / 自有数据 + Open-Meteo 高程）
+import_own.py        把 GeoJSON/CSV 路网+POI+高程 合成 data/own/<adcode>.json（绕过 Overpass）
 batch_counties.py   断点续跑批量计算
 extract_zones.py    抽取最大连片 + 可比排名
 gen_bundle.py       把数据内联成 data_bundle.js
