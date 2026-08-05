@@ -1,6 +1,6 @@
 {
  "generated": "2026-08-05",
- "count": 28,
+ "count": 29,
  "zones": [
   {
    "id": 341621,
@@ -51,7 +51,7 @@
     }
    ],
    "comparable_score": 28.5,
-   "global_rank": 18,
+   "global_rank": 19,
    "province_rank": 18
   },
   {
@@ -495,7 +495,7 @@
     }
    ],
    "comparable_score": 81.3,
-   "global_rank": 4,
+   "global_rank": 5,
    "province_rank": 4
   },
   {
@@ -563,7 +563,7 @@
     }
    ],
    "comparable_score": 43.0,
-   "global_rank": 13,
+   "global_rank": 14,
    "province_rank": 13
   },
   {
@@ -607,7 +607,7 @@
     }
    ],
    "comparable_score": 21.5,
-   "global_rank": 24,
+   "global_rank": 25,
    "province_rank": 24
   },
   {
@@ -1123,7 +1123,7 @@
     }
    ],
    "comparable_score": 100.0,
-   "global_rank": 1,
+   "global_rank": 2,
    "province_rank": 1
   },
   {
@@ -1415,7 +1415,7 @@
     }
    ],
    "comparable_score": 75.4,
-   "global_rank": 5,
+   "global_rank": 6,
    "province_rank": 5
   },
   {
@@ -1555,7 +1555,7 @@
     }
    ],
    "comparable_score": 69.0,
-   "global_rank": 8,
+   "global_rank": 9,
    "province_rank": 8
   },
   {
@@ -2007,7 +2007,7 @@
     }
    ],
    "comparable_score": 60.6,
-   "global_rank": 11,
+   "global_rank": 12,
    "province_rank": 11
   },
   {
@@ -2099,7 +2099,7 @@
     }
    ],
    "comparable_score": 59.2,
-   "global_rank": 12,
+   "global_rank": 13,
    "province_rank": 12
   },
   {
@@ -2199,7 +2199,7 @@
     }
    ],
    "comparable_score": 62.0,
-   "global_rank": 10,
+   "global_rank": 11,
    "province_rank": 10
   },
   {
@@ -2291,7 +2291,7 @@
     }
    ],
    "comparable_score": 31.3,
-   "global_rank": 17,
+   "global_rank": 18,
    "province_rank": 17
   },
   {
@@ -2343,7 +2343,7 @@
     }
    ],
    "comparable_score": 18.7,
-   "global_rank": 25,
+   "global_rank": 26,
    "province_rank": 25
   },
   {
@@ -2387,7 +2387,7 @@
     }
    ],
    "comparable_score": 2.1,
-   "global_rank": 27,
+   "global_rank": 28,
    "province_rank": 27
   },
   {
@@ -2431,7 +2431,7 @@
     }
    ],
    "comparable_score": 24.3,
-   "global_rank": 20,
+   "global_rank": 21,
    "province_rank": 20
   },
   {
@@ -2515,7 +2515,7 @@
     }
    ],
    "comparable_score": 24.3,
-   "global_rank": 21,
+   "global_rank": 22,
    "province_rank": 21
   },
   {
@@ -2567,7 +2567,7 @@
     }
    ],
    "comparable_score": 12.7,
-   "global_rank": 26,
+   "global_rank": 27,
    "province_rank": 26
   },
   {
@@ -2659,7 +2659,7 @@
     }
    ],
    "comparable_score": 0.0,
-   "global_rank": 28,
+   "global_rank": 29,
    "province_rank": 28
   },
   {
@@ -2703,7 +2703,7 @@
     }
    ],
    "comparable_score": 23.6,
-   "global_rank": 22,
+   "global_rank": 23,
    "province_rank": 22
   },
   {
@@ -2803,7 +2803,7 @@
     }
    ],
    "comparable_score": 40.8,
-   "global_rank": 14,
+   "global_rank": 15,
    "province_rank": 14
   },
   {
@@ -2983,7 +2983,7 @@
     }
    ],
    "comparable_score": 62.7,
-   "global_rank": 9,
+   "global_rank": 10,
    "province_rank": 9
   },
   {
@@ -3467,7 +3467,7 @@
     }
    ],
    "comparable_score": 83.8,
-   "global_rank": 2,
+   "global_rank": 3,
    "province_rank": 2
   },
   {
@@ -3783,7 +3783,7 @@
     }
    ],
    "comparable_score": 71.5,
-   "global_rank": 7,
+   "global_rank": 8,
    "province_rank": 7
   },
   {
@@ -3851,7 +3851,7 @@
     }
    ],
    "comparable_score": 35.6,
-   "global_rank": 16,
+   "global_rank": 17,
    "province_rank": 16
   },
   {
@@ -3903,7 +3903,7 @@
     }
    ],
    "comparable_score": 23.6,
-   "global_rank": 23,
+   "global_rank": 24,
    "province_rank": 23
   },
   {
@@ -4219,7 +4219,7 @@
     }
    ],
    "comparable_score": 75.0,
-   "global_rank": 6,
+   "global_rank": 7,
    "province_rank": 6
   },
   {
@@ -4551,7 +4551,7 @@
     }
    ],
    "comparable_score": 83.1,
-   "global_rank": 3,
+   "global_rank": 4,
    "province_rank": 3
   },
   {
@@ -4739,7 +4739,7 @@
     }
    ],
    "comparable_score": 25.0,
-   "global_rank": 19,
+   "global_rank": 20,
    "province_rank": 19
   },
   {
@@ -4847,8 +4847,204 @@
     }
    ],
    "comparable_score": 38.7,
-   "global_rank": 15,
+   "global_rank": 16,
    "province_rank": 15
+  },
+  {
+   "id": 370522,
+   "name": "利津县",
+   "province": "山东",
+   "parent": "东营市",
+   "center": [
+    118.244781,
+    37.493726
+   ],
+   "gcj_center": [
+    118.24885,
+    37.49336
+   ],
+   "score_avg": 80.2,
+   "score_mean": 66.0,
+   "size": 21,
+   "quality": {
+    "ways": 19,
+    "pois": 38,
+    "buildings": 0,
+    "greens": 0
+   },
+   "cells": [
+    {
+     "c": [
+      118.250668,
+      37.488336
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.250668,
+      37.489773
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.250668,
+      37.491211
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.248857,
+      37.491211
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.247045,
+      37.491211
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.247045,
+      37.489773
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.247045,
+      37.488336
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.247045,
+      37.486899
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.247045,
+      37.485462
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.245234,
+      37.488336
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.247045,
+      37.492648
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.247045,
+      37.494085
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.245234,
+      37.491211
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.25248,
+      37.491211
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.25248,
+      37.489773
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.25248,
+      37.488336
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.25248,
+      37.486899
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.25248,
+      37.485462
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.254291,
+      37.488336
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.25248,
+      37.492648
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    },
+    {
+     "c": [
+      118.25248,
+      37.494085
+     ],
+     "w": 0.0009058,
+     "h": 0.0007186
+    }
+   ],
+   "comparable_score": 50.0,
+   "global_rank": 1,
+   "province_rank": 1
   }
  ]
 }
