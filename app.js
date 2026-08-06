@@ -11,6 +11,8 @@
   var mode = "overview", curProv = "全部";
   var ML = window.maplibregl;
   var map = null, mapLibreOk = false;
+  var COUNTY_CACHE = {};   // adcode -> Promise<json>（县城明细，含路网 GeoJSON）
+  var roadsAdcode = null; // 当前下钻县城，防止竞态
 
   function byAdcode(ad) {
     for (var i = 0; i < COUNTIES.length; i++) if (String(COUNTIES[i].adcode) === String(ad)) return COUNTIES[i];
@@ -124,6 +126,82 @@
     return { type: "FeatureCollection", features: [{ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: z.center } }] };
   }
 
+  // ===================== 县城明细懒加载（路网 GeoJSON，WGS-84 直标，与底图对齐） =====================
+  function loadCounty(adcode) {
+    if (COUNTY_CACHE[adcode]) return COUNTY_CACHE[adcode];
+    var p = fetch("data/" + adcode + ".json").then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).catch(function (e) { delete COUNTY_CACHE[adcode]; throw e; });
+    COUNTY_CACHE[adcode] = p;
+    return p;
+  }
+  function hwColor(hw) {
+    return ({ trunk: "#f59e0b", primary: "#f97316", secondary: "#38bdf8",
+      tertiary: "#7dd3fc", residential: "#cbd5e1", service: "#64748b",
+      unclassified: "#cbd5e1", path: "#a3a3a3", footway: "#a3a3a3" })[hw] || "#94a3b8";
+  }
+  function hwWidth(hw) {
+    return ({ trunk: 4, primary: 3.2, secondary: 2.4, tertiary: 1.8,
+      residential: 1.4, service: 1, unclassified: 1.4, path: 0.8, footway: 0.8 })[hw] || 1.4;
+  }
+  function addRoadLayer(layer) {
+    var before = map.getLayer("detail-center") ? "detail-center" : undefined;
+    map.addLayer(layer, before);
+  }
+  function renderRoadsML(adcode) {
+    roadsAdcode = adcode;
+    loadCounty(adcode).then(function (d) {
+      if (roadsAdcode !== adcode || !mapLibreOk) return; // 已离开该县城，丢弃
+      var roads = d && d.roads;
+      if (!roads || !roads.features || !roads.features.length) return; // 无路网（稀疏/模拟）
+      if (!map.getSource("roads")) {
+        map.addSource("roads", { type: "geojson", data: roads });
+        addRoadLayer({ id: "roads-casing", type: "line", source: "roads",
+          paint: { "line-color": "#0b1220", "line-width": ["interpolate", ["linear"], ["zoom"], 11, 2, 15, 5], "line-opacity": 0.4 } });
+        addRoadLayer({ id: "roads-line", type: "line", source: "roads",
+          paint: {
+            "line-color": ["match", ["get", "hw"],
+              "trunk", "#f59e0b", "primary", "#f97316", "secondary", "#38bdf8",
+              "tertiary", "#7dd3fc", "residential", "#cbd5e1", "service", "#64748b",
+              "unclassified", "#cbd5e1", "path", "#a3a3a3", "footway", "#a3a3a3", "#94a3b8"],
+            "line-width": ["interpolate", ["linear"], ["zoom"], 11,
+              ["match", ["get", "hw"], "trunk", 1.5, "primary", 1.2, "secondary", 0.9, "tertiary", 0.7, "residential", 0.6, "service", 0.4, "unclassified", 0.6, "path", 0.3, "footway", 0.3, 0.6],
+              15, ["match", ["get", "hw"], "trunk", 4, "primary", 3.2, "secondary", 2.4, "tertiary", 1.8, "residential", 1.4, "service", 1, "unclassified", 1.4, "path", 0.8, "footway", 0.8, 1.4]]
+          } });
+      } else {
+        map.getSource("roads").setData(roads);
+      }
+    }).catch(function (e) { console.warn("路网加载失败", adcode, e); });
+  }
+  function clearRoadsML() {
+    if (map && map.getSource("roads")) {
+      ["roads-line", "roads-casing"].forEach(function (id) { try { map.removeLayer(id); } catch (e) {} });
+      try { map.removeSource("roads"); } catch (e) {}
+    }
+    roadsAdcode = null;
+  }
+  function renderRoadsSvg(adcode) {
+    loadCounty(adcode).then(function (d) {
+      var roads = d && d.roads;
+      if (!roads || !roads.features) return;
+      roads.features.forEach(function (f) {
+        var g = f.geometry || {};
+        var lines = g.type === "LineString" ? [g.coordinates] : (g.type === "MultiLineString" ? g.coordinates : []);
+        lines.forEach(function (coords) {
+          var pts = coords.map(function (p) { var q = toXY(p[0], p[1]); return q[0].toFixed(1) + "," + q[1].toFixed(1); }).join(" ");
+          var pl = document.createElementNS(NS, "polyline");
+          pl.setAttribute("points", pts);
+          pl.setAttribute("fill", "none");
+          pl.setAttribute("stroke", hwColor(f.properties && f.properties.hw));
+          pl.setAttribute("stroke-width", Math.max(0.5, hwWidth(f.properties && f.properties.hw) * 0.4));
+          pl.setAttribute("stroke-opacity", "0.9");
+          svgG.appendChild(pl);
+        });
+      });
+    }).catch(function () {});
+  }
+
   // ===================== MapLibre 真实底图路径 =====================
   function tryInitMapLibre() {
     try {
@@ -185,8 +263,10 @@
     }
     map.flyTo({ center: z.center, zoom: 13 });
     showCard(z);
+    renderRoadsML(String(z.id)); // 懒加载该县路网，下钻时才取
   }
   function maplibreExitDetail() {
+    clearRoadsML();
     if (map.getSource("detail-fill")) {
       ["detail-line", "detail-fill", "detail-center"].forEach(function (id) { try { map.removeLayer(id); } catch (e) {} });
       ["detail-fill", "detail-center"].forEach(function (id) { try { map.removeSource(id); } catch (e) {} });
@@ -283,6 +363,7 @@
     cdot.setAttribute("fill", "rgba(249,115,22,0.95)"); cdot.setAttribute("stroke", "#fff"); cdot.setAttribute("stroke-width", 1.5);
     svgG.appendChild(cdot);
     showCard(z);
+    renderRoadsSvg(adcode); // 兜底 SVG 路径也画路网（best-effort）
   }
 
   function fallbackSvg() {
