@@ -37,6 +37,51 @@
 <!-- 详情：路网好走度图例（红→黄→绿） -->
 <div id="roadlegend" class="roadlegend detail-ui"></div>
 
+<!-- 详情：图层切换 + 权重 + 方法学 -->
+<div id="layerbar" class="detail-ui">
+  <div class="lb-row">
+    <button class="lb on" data-k="friendly">友好区</button>
+    <button class="lb" data-k="score">综合分</button>
+    <button class="lb" data-k="access">可达</button>
+    <button class="lb" data-k="conn">连通</button>
+    <button class="lb" data-k="comfort">舒适</button>
+    <button class="lb" data-k="safety">安全</button>
+    <button class="lb" data-k="attr">吸引</button>
+  </div>
+  <div class="lb-row2">
+    <button id="wtoggle" class="lb2">权重 ▾</button>
+    <button id="mbtn" class="lb2">方法学</button>
+  </div>
+  <div id="wpanel" style="display:none">
+    <div id="wnote" class="wnote"></div>
+  </div>
+</div>
+
+<!-- 详情：单格解读（点格子弹出） -->
+<div id="cellnote"></div>
+
+<!-- 方法学弹层 -->
+<div id="methodmodal">
+  <div class="mm-box">
+    <button id="mclose" class="mclose">关闭 ✕</button>
+    <div class="mm-body">
+      <h3>步行友好度 · 计算方法学</h3>
+      <p><b>每格（约 160m×160m，每县 13×13=169 格）</b>独立算 5 个因子，再加权合成。</p>
+      <table class="mm-t">
+        <tr><th>因子</th><th>权重</th><th>含义 / 数据来源</th></tr>
+        <tr><td>可达性 access</td><td>30%</td><td>15 分钟步行可达的 POI 数量与多样度（OSM）</td></tr>
+        <tr><td>连通度 conn</td><td>18%</td><td>道路交叉口密度（degree≥3 节点）</td></tr>
+        <tr><td>舒适度 comfort</td><td>17%</td><td>坡度（来自高程）</td></tr>
+        <tr><td>安全度 safety</td><td>15%</td><td>离主干道距离（代理）</td></tr>
+        <tr><td>吸引力 attr</td><td>20%</td><td>公园 / 商业 / 公共空间多样度</td></tr>
+      </table>
+      <p><b>综合分</b> = Σ(权重ᵢ × 因子ᵢ)（各因子先按全县 min-max 归一到 0–100）。</p>
+      <p><b>友好区判定</b>：刻意<b>去掉吸引力</b>，用其余 4 因子重归一化，均分 ≥ 阈值（默认 65）即判为友好格，连片即形成「友好区」——避免 POI 少的县城被系统性惩罚。</p>
+      <p class="mm-note">⚠ 已知局限：① 分数为<b>全县相对值</b>，跨县不可直接比（站点已做同省排名校正）；② 安全度用「离主干道距离」代理，未用 OSM 的 sidewalk/lit/crossing 标签；③ 舒适度只看坡度，绿地数据已采集但未进模型；④ 升级标准（绿地 / 步道 / 路灯）的演示见 <a href="demo.html" style="color:#7dd3fc">架空县城演示页</a>。</p>
+    </div>
+  </div>
+</div>
+
 <!-- 悬浮名称提示 -->
 <div id="tip"></div>
 
