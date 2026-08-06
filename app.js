@@ -127,7 +127,8 @@
     var box = document.getElementById("dirlist"); box.innerHTML = "";
     visible().forEach(function (c) {
       var s = document.createElement("span");
-      s.className = "c " + (DETAIL[c.adcode] ? "on" : "off");
+      var zd = DETAIL[c.adcode];
+      s.className = "c " + (zd ? (zd.size > 0 ? "on" : "") : "off");
       s.textContent = c.name;
       s.onclick = function () { if (DETAIL[c.adcode]) enterDetail(String(c.adcode)); else flash(c.name); };
       box.appendChild(s);
@@ -220,7 +221,8 @@
   // ===================== GeoJSON 构造（MapLibre 用，坐标均为 WGS-84） =====================
   function countyPointFC() {
     var feats = visible().map(function (c) {
-      return { type: "Feature", properties: { adcode: String(c.adcode), name: c.name, hasData: DETAIL[c.adcode] ? 1 : 0 },
+      var z0 = DETAIL[c.adcode];
+      return { type: "Feature", properties: { adcode: String(c.adcode), name: c.name, hasData: z0 ? 1 : 0, hasArea: (z0 && z0.size > 0) ? 1 : 0 },
                geometry: { type: "Point", coordinates: [c.wgs[0], c.wgs[1]] } };
     });
     return { type: "FeatureCollection", features: feats };
@@ -337,16 +339,16 @@
       map.addSource("county-points", { type: "geojson", data: countyPointFC() });
       map.addLayer({ id: "county-points", type: "circle", source: "county-points",
         paint: {
-          "circle-radius": ["case", ["==", ["get", "hasData"], 1], 5, 3],
-          "circle-color": ["case", ["==", ["get", "hasData"], 1], "#16a34a", "rgba(148,163,184,0.5)"],
-          "circle-stroke-color": ["case", ["==", ["get", "hasData"], 1], "#bbf7d0", "rgba(148,163,184,0.7)"],
+          "circle-radius": ["case", ["==", ["get", "hasArea"], 1], 5, 4],
+          "circle-color": ["case", ["==", ["get", "hasArea"], 1], "#16a34a", "rgba(148,163,184,0.6)"],
+          "circle-stroke-color": ["case", ["==", ["get", "hasArea"], 1], "#bbf7d0", "rgba(148,163,184,0.8)"],
           "circle-stroke-width": 1
         } });
       map.on("click", "county-points", onPointClick);
       map.on("mousemove", "county-points", onPointMove);
       map.on("mouseleave", "county-points", onPointLeave);
       if (svg) svg.style.display = "none";
-      document.getElementById("hint").textContent = "真实底图(OpenFreeMap) · 绿点=已有数据，点绿点下钻 · 灰点=收集中";
+      document.getElementById("hint").textContent = "真实底图(OpenFreeMap) · 绿点=有连片友好区，灰点=已接入(暂无连片友好区)，点任意点下钻";
     });
     map.on("error", function (e) {
       if (!mapLibreOk) { console.warn("MapLibre 底图加载失败，回退 SVG:", e && e.error); fallbackSvg(); }
@@ -445,15 +447,16 @@
     }
     visible().forEach(function (c) {
       var p = toXY(c.wgs[0], c.wgs[1]);
-      var has = !!DETAIL[c.adcode];
+      var z = DETAIL[c.adcode];
+      var drill = !!z, area = z && z.size > 0;
       var dot = document.createElementNS(NS, "circle");
       dot.setAttribute("cx", p[0]); dot.setAttribute("cy", p[1]);
-      dot.setAttribute("r", has ? 4.5 : 3);
-      dot.setAttribute("fill", has ? "rgba(22,163,74,0.95)" : "rgba(148,163,184,0.45)");
-      dot.setAttribute("stroke", has ? "#bbf7d0" : "rgba(148,163,184,0.6)");
+      dot.setAttribute("r", area ? 4.5 : (drill ? 4 : 3));
+      dot.setAttribute("fill", area ? "rgba(22,163,74,0.95)" : "rgba(148,163,184,0.5)");
+      dot.setAttribute("stroke", area ? "#bbf7d0" : "rgba(148,163,184,0.7)");
       dot.setAttribute("stroke-width", 1);
       dot.style.cursor = "pointer";
-      dot.addEventListener("click", function () { if (has) enterDetail(String(c.adcode)); else flash(c.name); });
+      dot.addEventListener("click", function () { if (drill) enterDetail(String(c.adcode)); else flash(c.name); });
       dot.addEventListener("mousemove", function (e) {
         var t = document.getElementById("tip");
         t.textContent = c.name; t.style.display = "block";
@@ -490,7 +493,7 @@
     try { if (map) map.remove(); } catch (e) {}
     map = null;
     ensureSvg(); setProj(116.5, 34, 17); renderOverviewSvg();
-    document.getElementById("hint").textContent = "（离线示意图：真实底图不可用）· 绿点=已有数据，点绿点下钻 · 灰点=收集中";
+    document.getElementById("hint").textContent = "（离线示意图：真实底图不可用）· 绿点=有连片友好区，灰点=已接入(暂无连片友好区)，点任意点下钻";
   }
 
   // ===================== 县城内交互：图层 / 单格下钻 / 权重 / 方法学 =====================
@@ -675,7 +678,7 @@
       if (m && m[1]) fbMs = parseInt(m[1], 10);
       setTimeout(function () { if (!mapLibreOk) fallbackSvg(); }, fbMs);
     } else {
-      document.getElementById("hint").textContent = "（离线示意图：未引入地图库）· 绿点=已有数据，点绿点下钻 · 灰点=收集中";
+      document.getElementById("hint").textContent = "（离线示意图：未引入地图库）· 绿点=有连片友好区，灰点=已接入(暂无连片友好区)，点任意点下钻";
     }
   }
   boot();
