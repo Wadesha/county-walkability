@@ -8,6 +8,7 @@ body.detail .detail-ui{display:block}
 body.detail .overview-ui{display:none}
 /* 覆盖 #chip/#dir 等带 ID 的 overview 控件的 display 规则 */
 body.detail #chip, body.detail #dir, body.detail #hint { display:none !important }
+#demolink{top:8px;right:8px;background:rgba(17,24,39,.7);padding:5px 9px;border-radius:8px;border:1px solid rgba(55,65,81,.5)}
 
 /* 顶部：标题 + 省份筛选，极简半透明 */
 #chip{top:8px;left:8px;display:flex;align-items:center;gap:8px;background:rgba(17,24,39,.55);backdrop-filter:blur(4px);padding:5px 9px;border-radius:8px;font-size:11px}
@@ -41,5 +42,25 @@ body.detail #chip, body.detail #dir, body.detail #hint { display:none !important
 #detailcard .nextrow{margin-top:7px;padding-top:5px;border-top:1px solid rgba(55,65,81,.5)}
 #detailcard .nextc{display:inline-block;color:#475569;font-size:10px;cursor:pointer;letter-spacing:.5px;user-select:none}
 #detailcard .nextc:hover{color:#86efac}
+
+/* 路网好走度图例（红→黄→绿），仅县城详情显示 */
+.roadlegend{bottom:8px;left:8px;background:rgba(17,24,39,.72);backdrop-filter:blur(6px);border:1px solid rgba(55,65,81,.5);border-radius:10px;padding:8px 10px;font-size:10px;color:#cbd5e1;align-items:center;gap:8px}
+body.detail .roadlegend{display:flex}
+.roadlegend .rl-t{color:#94a3b8;white-space:nowrap}
+.roadlegend .rl-bar{width:90px;height:8px;border-radius:4px;background:linear-gradient(90deg,#ef4444,#facc15,#22c55e)}
+.roadlegend .rl-l{display:flex;flex-direction:column;align-items:center;line-height:1.05}
+
+/* Step 2：县城卡片五因子分解面板 */
+.factorbox{margin-top:7px;padding-top:6px;border-top:1px solid rgba(55,65,81,.5)}
+.factorbox .ftitle{color:#94a3b8;font-size:10px;margin-bottom:4px}
+.factorbox .fw{color:#64748b}
+.factorbox .frow{display:flex;align-items:center;gap:6px;margin:2px 0}
+.factorbox .fl{width:42px;color:#cbd5e1;font-size:10px;flex:0 0 auto}
+.factorbox .ftrack{flex:1;height:7px;background:rgba(148,163,184,.18);border-radius:4px;overflow:hidden}
+.factorbox .fbar{display:block;height:100%;border-radius:4px}
+.factorbox .fv{width:50px;text-align:right;font-size:11px;font-weight:600;color:#e2e8f0;flex:0 0 auto}
+.factorbox .fw2{color:#64748b;font-weight:400;font-size:9px;margin-left:2px}
+.factorbox .fsum{margin-top:5px;font-size:10px;color:#94a3b8}
+.factorbox .fnote{color:#64748b;font-size:10px}
 
 #tip{position:absolute;z-index:20;pointer-events:none;background:rgba(0,0,0,.78);color:#fff;font-size:11px;padding:2px 6px;border-radius:5px;display:none;transform:translate(-50%,-150%)}
