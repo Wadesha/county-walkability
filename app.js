@@ -13,6 +13,7 @@
   var map = null, mapLibreOk = false;
   var COUNTY_CACHE = {};   // adcode -> Promise<json>（县城明细，含路网 GeoJSON）
   var roadsAdcode = null; // 当前下钻县城，防止竞态
+  var curDetailAdcode = null; // 当前下钻县城 adcode（用于"下一个县城"导航）
 
   function byAdcode(ad) {
     for (var i = 0; i < COUNTIES.length; i++) if (String(COUNTIES[i].adcode) === String(ad)) return COUNTIES[i];
@@ -40,7 +41,8 @@
         '<div class="b"><div class="k">可比均分</div><div class="v">' + (z.comparable_score != null ? z.comparable_score : "—") + '<span style="font-size:10px;color:#94a3b8"> /100</span></div></div>' +
         '<div class="b"><div class="k">同省排名</div><div class="v">' + (z.province_rank ? ("#" + z.province_rank) : "—") + '</div></div>' +
         '<div class="b"><div class="k">全省名</div><div class="v">' + (z.global_rank ? ("#" + z.global_rank) : "—") + '</div></div>' +
-      '</div>' + warn;
+      '</div>' + warn +
+      '<div class="nextrow"><span id="nextc" class="nextc">下一个县城 ›</span></div>';
   }
 
   // ===================== 省份筛选 + 密集目录（DOM，两路共用） =====================
@@ -77,6 +79,13 @@
       d.classList.toggle("collapsed");
       document.getElementById("dirtoggle").textContent = d.classList.contains("collapsed") ? "目录 ▸" : "目录 ▾";
     };
+    // 详情卡片内的「下一个县城」——事件委托（innerHTML 重建后依然有效）
+    document.getElementById("detailcard").addEventListener("click", function (e) {
+      if (e.target && e.target.id === "nextc") {
+        var n = nextCountyAdcode();
+        if (n) enterDetail(n);
+      }
+    });
   }
 
   // ===================== 入口分发 =====================
@@ -88,7 +97,23 @@
     document.body.classList.add("detail");
     var z = DETAIL[adcode];
     if (!z) { document.body.classList.remove("detail"); mode = "overview"; return; }
+    curDetailAdcode = String(adcode); // 记录当前县城，供"下一个县城"使用
     if (mapLibreOk) maplibreEnterDetail(z); else drawDetailSvg(adcode);
+  }
+  // 在「当前省份筛选」顺序中，找下一个有数据的县城（循环到开头）
+  function nextCountyAdcode() {
+    if (!curDetailAdcode) return null;
+    var list = visible();
+    var idx = -1;
+    for (var i = 0; i < list.length; i++) {
+      if (String(list[i].adcode) === curDetailAdcode) { idx = i; break; }
+    }
+    if (idx < 0) return null;
+    for (var k = 1; k <= list.length; k++) {
+      var cand = list[(idx + k) % list.length];
+      if (DETAIL[cand.adcode]) return String(cand.adcode);
+    }
+    return null;
   }
   function backToOverview() {
     mode = "overview";
