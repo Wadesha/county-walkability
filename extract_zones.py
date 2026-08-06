@@ -24,20 +24,23 @@ def main():
         if not fn.endswith(".json") or not fn[:-5].isdigit(): continue
         d=json.load(open(os.path.join(DATA,fn),encoding="utf-8"))
         ma=d.get("max_area")
-        if not ma:
-            skipped.append(d["name"]); continue
         lat0=d["center"][1]; mLng=111320.0*math.cos(lat0*math.pi/180); mLat=111320.0
         w=CELL_M/mLng/2; h=CELL_M/mLat/2
-        cells=[{"c":[round(cx,6),round(cy,6)],"w":round(w,7),"h":round(h,7)}
-               for (cx,cy) in [d["cells"]["features"][i*13+j]["properties"]["center"]
-                               for (i,j) in ma["cells"]]]
-        # 县城整体好走度均值（全部 169 格）
+        # 县城整体好走度均值（全部 169 格），无论有无连片都算
         allscores=[f["properties"]["score"] for f in d["cells"]["features"]]
         score_mean=round(sum(allscores)/len(allscores),1) if allscores else 0
+        if ma:
+            cells=[{"c":[round(cx,6),round(cy,6)],"w":round(w,7),"h":round(h,7)}
+                   for (cx,cy) in [d["cells"]["features"][i*13+j]["properties"]["center"]
+                                   for (i,j) in ma["cells"]]]
+            score_avg=ma["score_avg"]; size=ma["size"]
+        else:
+            # 无连片友好区：仍接入下钻（可看路网与五因子），连片字段留空
+            cells=[]; score_avg=None; size=0
         rec=recs.get(d["id"],{})
         zones.append({"id":d["id"],"name":d["name"],"province":d.get("province"),
             "parent":d.get("parent"),"center":d["center"],"gcj_center":d.get("gcj_center"),
-            "score_avg":ma["score_avg"],"score_mean":score_mean,"size":ma["size"],
+            "score_avg":score_avg,"score_mean":score_mean,"size":size,
             "quality":d.get("quality",{}),"simulated":d.get("simulated",False),"cells":cells})
     zones.sort(key=lambda z:(z["province"],z["parent"],-z["score_mean"],z["name"]))
 
@@ -57,12 +60,13 @@ def main():
         zs_sorted=sorted(zs,key=lambda z:-z["score_mean"])
         for i,z in enumerate(zs_sorted): z["province_rank"]=i+1
 
-    out={"generated":"2026-08-05","count":len(zones),"zones":zones}
+    out={"generated":"2026-08-06","count":len(zones),"zones":zones}
     with open(os.path.join(DATA,"zones.json"),"w",encoding="utf-8") as f:
         json.dump(out,f,ensure_ascii=False,indent=1)
     from collections import Counter
     c=Counter(z["province"] for z in zones)
-    print(f"zones.json 写出 ✅ 共 {len(zones)} 县城有友好连片（跳过 {len(skipped)} 个无连片）")
+    n_area=sum(1 for z in zones if z["size"]>0)
+    print(f"zones.json 写出 ✅ 共 {len(zones)} 县城接入下钻（{n_area} 个有友好连片，{len(zones)-n_area} 个暂无连片但仍可下钻）")
     for k,v in c.items(): print(f"  {k}: {v}")
     # 打印各省略影：同省前3
     print("--- 各省最好走的县城（同省排名）---")
