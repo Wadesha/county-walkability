@@ -1,6 +1,6 @@
 {
- "generated": "2026-08-05",
- "count": 168,
+ "generated": "2026-08-06",
+ "count": 280,
  "zones": [
   {
    "id": 341621,
@@ -51,9 +51,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 26.8,
-   "global_rank": 117,
-   "province_rank": 26
+   "comparable_score": 44.3,
+   "global_rank": 118,
+   "province_rank": 27
+  },
+  {
+   "id": 341622,
+   "name": "蒙城县",
+   "province": "安徽",
+   "parent": "亳州市",
+   "center": [
+    116.556728,
+    33.261412
+   ],
+   "gcj_center": [
+    116.56034,
+    33.26081
+   ],
+   "score_avg": null,
+   "score_mean": 42.3,
+   "size": 0,
+   "quality": {
+    "ways": 167,
+    "pois": 26,
+    "buildings": 40,
+    "greens": 6
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 43.6,
+   "global_rank": 123,
+   "province_rank": 28
+  },
+  {
+   "id": 341623,
+   "name": "利辛县",
+   "province": "安徽",
+   "parent": "亳州市",
+   "center": [
+    116.204197,
+    33.144114
+   ],
+   "gcj_center": [
+    116.20778,
+    33.1435
+   ],
+   "score_avg": null,
+   "score_mean": 35.9,
+   "size": 0,
+   "quality": {
+    "ways": 105,
+    "pois": 13,
+    "buildings": 3,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 27.5,
+   "global_rank": 205,
+   "province_rank": 43
   },
   {
    "id": 341523,
@@ -496,7 +552,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 76.5,
+   "comparable_score": 82.1,
    "global_rank": 29,
    "province_rank": 5
   },
@@ -565,9 +621,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 40.4,
-   "global_rank": 77,
-   "province_rank": 17
+   "comparable_score": 54.7,
+   "global_rank": 78,
+   "province_rank": 18
   },
   {
    "id": 341522,
@@ -610,9 +666,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 20.2,
-   "global_rank": 143,
-   "province_rank": 34
+   "comparable_score": 39.3,
+   "global_rank": 148,
+   "province_rank": 36
+  },
+  {
+   "id": 341524,
+   "name": "金寨县",
+   "province": "安徽",
+   "parent": "六安市",
+   "center": [
+    115.875059,
+    31.682292
+   ],
+   "gcj_center": [
+    115.87851,
+    31.68162
+   ],
+   "score_avg": null,
+   "score_mean": 25.0,
+   "size": 0,
+   "quality": {
+    "ways": 59,
+    "pois": 0,
+    "buildings": 4,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 0.0,
+   "global_rank": 280,
+   "province_rank": 59
   },
   {
    "id": 340124,
@@ -1127,7 +1211,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 94.0,
+   "comparable_score": 95.5,
    "global_rank": 13,
    "province_rank": 2
   },
@@ -1420,7 +1504,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 70.9,
+   "comparable_score": 77.8,
    "global_rank": 33,
    "province_rank": 6
   },
@@ -1561,7 +1645,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 64.9,
+   "comparable_score": 73.3,
    "global_rank": 43,
    "province_rank": 10
   },
@@ -2014,7 +2098,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 57.0,
+   "comparable_score": 67.3,
    "global_rank": 55,
    "province_rank": 15
   },
@@ -2107,7 +2191,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 55.6,
+   "comparable_score": 66.2,
    "global_rank": 59,
    "province_rank": 16
   },
@@ -2208,9 +2292,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 58.3,
+   "comparable_score": 68.3,
    "global_rank": 54,
    "province_rank": 14
+  },
+  {
+   "id": 340822,
+   "name": "怀宁县",
+   "province": "安徽",
+   "parent": "安庆市",
+   "center": [
+    116.825242,
+    30.735668
+   ],
+   "gcj_center": [
+    116.82866,
+    30.73499
+   ],
+   "score_avg": null,
+   "score_mean": 46.8,
+   "size": 0,
+   "quality": {
+    "ways": 126,
+    "pois": 20,
+    "buildings": 2,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 54.9,
+   "global_rank": 75,
+   "province_rank": 17
   },
   {
    "id": 340882,
@@ -2301,9 +2413,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 29.5,
-   "global_rank": 111,
-   "province_rank": 24
+   "comparable_score": 46.3,
+   "global_rank": 112,
+   "province_rank": 25
   },
   {
    "id": 340828,
@@ -2354,9 +2466,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 17.5,
-   "global_rank": 148,
-   "province_rank": 35
+   "comparable_score": 37.3,
+   "global_rank": 158,
+   "province_rank": 38
+  },
+  {
+   "id": 340881,
+   "name": "桐城市",
+   "province": "安徽",
+   "parent": "安庆市",
+   "center": [
+    116.956205,
+    31.051238
+   ],
+   "gcj_center": [
+    116.95966,
+    31.05058
+   ],
+   "score_avg": null,
+   "score_mean": 35.9,
+   "size": 0,
+   "quality": {
+    "ways": 215,
+    "pois": 11,
+    "buildings": 33,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 27.5,
+   "global_rank": 206,
+   "province_rank": 44
   },
   {
    "id": 340826,
@@ -2399,9 +2539,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 2.0,
-   "global_rank": 162,
-   "province_rank": 37
+   "comparable_score": 25.4,
+   "global_rank": 209,
+   "province_rank": 45
+  },
+  {
+   "id": 340827,
+   "name": "望江县",
+   "province": "安徽",
+   "parent": "安庆市",
+   "center": [
+    116.687556,
+    30.125604
+   ],
+   "gcj_center": [
+    116.69093,
+    30.12491
+   ],
+   "score_avg": null,
+   "score_mean": 35.1,
+   "size": 0,
+   "quality": {
+    "ways": 106,
+    "pois": 20,
+    "buildings": 49,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 25.4,
+   "global_rank": 210,
+   "province_rank": 46
   },
   {
    "id": 341823,
@@ -2444,9 +2612,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 22.8,
-   "global_rank": 131,
-   "province_rank": 29
+   "comparable_score": 41.3,
+   "global_rank": 133,
+   "province_rank": 31
   },
   {
    "id": 341821,
@@ -2529,9 +2697,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 22.8,
-   "global_rank": 132,
-   "province_rank": 30
+   "comparable_score": 41.3,
+   "global_rank": 134,
+   "province_rank": 32
   },
   {
    "id": 341824,
@@ -2582,9 +2750,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 11.9,
-   "global_rank": 154,
-   "province_rank": 36
+   "comparable_score": 33.0,
+   "global_rank": 173,
+   "province_rank": 41
+  },
+  {
+   "id": 341882,
+   "name": "广德市",
+   "province": "安徽",
+   "parent": "宣城市",
+   "center": [
+    119.413981,
+    30.893732
+   ],
+   "gcj_center": [
+    119.41752,
+    30.89312
+   ],
+   "score_avg": null,
+   "score_mean": 35.0,
+   "size": 0,
+   "quality": {
+    "ways": 635,
+    "pois": 51,
+    "buildings": 124,
+    "greens": 5
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 25.2,
+   "global_rank": 211,
+   "province_rank": 47
   },
   {
    "id": 341825,
@@ -2675,9 +2871,149 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 0.0,
-   "global_rank": 164,
-   "province_rank": 38
+   "comparable_score": 23.9,
+   "global_rank": 216,
+   "province_rank": 48
+  },
+  {
+   "id": 341881,
+   "name": "宁国市",
+   "province": "安徽",
+   "parent": "宣城市",
+   "center": [
+    118.979906,
+    30.627161
+   ],
+   "gcj_center": [
+    118.98341,
+    30.62653
+   ],
+   "score_avg": null,
+   "score_mean": 34.3,
+   "size": 0,
+   "quality": {
+    "ways": 204,
+    "pois": 23,
+    "buildings": 53,
+    "greens": 5
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 23.4,
+   "global_rank": 218,
+   "province_rank": 50
+  },
+  {
+   "id": 341323,
+   "name": "灵璧县",
+   "province": "安徽",
+   "parent": "宿州市",
+   "center": [
+    117.547816,
+    33.541192
+   ],
+   "gcj_center": [
+    117.55149,
+    33.54063
+   ],
+   "score_avg": null,
+   "score_mean": 38.1,
+   "size": 0,
+   "quality": {
+    "ways": 181,
+    "pois": 30,
+    "buildings": 8,
+    "greens": 6
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 33.0,
+   "global_rank": 174,
+   "province_rank": 42
+  },
+  {
+   "id": 341324,
+   "name": "泗县",
+   "province": "安徽",
+   "parent": "宿州市",
+   "center": [
+    117.881757,
+    33.478137
+   ],
+   "gcj_center": [
+    117.88544,
+    33.47758
+   ],
+   "score_avg": null,
+   "score_mean": 32.9,
+   "size": 0,
+   "quality": {
+    "ways": 196,
+    "pois": 26,
+    "buildings": 68,
+    "greens": 9
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 19.9,
+   "global_rank": 230,
+   "province_rank": 52
+  },
+  {
+   "id": 341322,
+   "name": "萧县",
+   "province": "安徽",
+   "parent": "宿州市",
+   "center": [
+    116.941695,
+    34.183818
+   ],
+   "gcj_center": [
+    116.9454,
+    34.18327
+   ],
+   "score_avg": null,
+   "score_mean": 30.1,
+   "size": 0,
+   "quality": {
+    "ways": 167,
+    "pois": 8,
+    "buildings": 1,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 12.8,
+   "global_rank": 261,
+   "province_rank": 55
+  },
+  {
+   "id": 341321,
+   "name": "砀山县",
+   "province": "安徽",
+   "parent": "宿州市",
+   "center": [
+    116.347415,
+    34.426804
+   ],
+   "gcj_center": [
+    116.35111,
+    34.42625
+   ],
+   "score_avg": null,
+   "score_mean": 28.5,
+   "size": 0,
+   "quality": {
+    "ways": 191,
+    "pois": 3,
+    "buildings": 33,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 8.8,
+   "global_rank": 272,
+   "province_rank": 56
   },
   {
    "id": 341723,
@@ -2720,9 +3056,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 22.2,
-   "global_rank": 135,
-   "province_rank": 32
+   "comparable_score": 40.8,
+   "global_rank": 139,
+   "province_rank": 34
+  },
+  {
+   "id": 341722,
+   "name": "石台县",
+   "province": "安徽",
+   "parent": "池州市",
+   "center": [
+    117.479499,
+    30.210999
+   ],
+   "gcj_center": [
+    117.48291,
+    30.21032
+   ],
+   "score_avg": null,
+   "score_mean": 27.9,
+   "size": 0,
+   "quality": {
+    "ways": 90,
+    "pois": 2,
+    "buildings": 128,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 7.3,
+   "global_rank": 276,
+   "province_rank": 57
+  },
+  {
+   "id": 341721,
+   "name": "东至县",
+   "province": "安徽",
+   "parent": "池州市",
+   "center": [
+    117.018094,
+    30.097255
+   ],
+   "gcj_center": [
+    117.02148,
+    30.09657
+   ],
+   "score_avg": null,
+   "score_mean": 26.3,
+   "size": 0,
+   "quality": {
+    "ways": 166,
+    "pois": 1,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 3.3,
+   "global_rank": 278,
+   "province_rank": 58
   },
   {
    "id": 340621,
@@ -2821,9 +3213,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 38.4,
-   "global_rank": 83,
-   "province_rank": 18
+   "comparable_score": 53.1,
+   "global_rank": 84,
+   "province_rank": 19
   },
   {
    "id": 340422,
@@ -3002,9 +3394,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 58.9,
+   "comparable_score": 68.8,
    "global_rank": 52,
    "province_rank": 13
+  },
+  {
+   "id": 340421,
+   "name": "凤台县",
+   "province": "安徽",
+   "parent": "淮南市",
+   "center": [
+    116.719198,
+    32.705996
+   ],
+   "gcj_center": [
+    116.72277,
+    32.70538
+   ],
+   "score_avg": null,
+   "score_mean": 39.5,
+   "size": 0,
+   "quality": {
+    "ways": 80,
+    "pois": 18,
+    "buildings": 0,
+    "greens": 5
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 36.5,
+   "global_rank": 161,
+   "province_rank": 39
   },
   {
    "id": 341124,
@@ -3487,7 +3907,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 78.8,
+   "comparable_score": 83.9,
    "global_rank": 25,
    "province_rank": 3
   },
@@ -3804,7 +4224,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 67.2,
+   "comparable_score": 75.1,
    "global_rank": 40,
    "province_rank": 8
   },
@@ -3873,9 +4293,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 33.4,
-   "global_rank": 97,
-   "province_rank": 22
+   "comparable_score": 49.4,
+   "global_rank": 98,
+   "province_rank": 23
   },
   {
    "id": 341126,
@@ -3926,9 +4346,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 22.2,
-   "global_rank": 136,
-   "province_rank": 33
+   "comparable_score": 40.8,
+   "global_rank": 140,
+   "province_rank": 35
+  },
+  {
+   "id": 341122,
+   "name": "来安县",
+   "province": "安徽",
+   "parent": "滁州市",
+   "center": [
+    118.429669,
+    32.450814
+   ],
+   "gcj_center": [
+    118.43329,
+    32.45023
+   ],
+   "score_avg": null,
+   "score_mean": 39.0,
+   "size": 0,
+   "quality": {
+    "ways": 87,
+    "pois": 12,
+    "buildings": 34,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 35.3,
+   "global_rank": 166,
+   "province_rank": 40
+  },
+  {
+   "id": 341181,
+   "name": "天长市",
+   "province": "安徽",
+   "parent": "滁州市",
+   "center": [
+    119.007543,
+    32.682062
+   ],
+   "gcj_center": [
+    119.01121,
+    32.6815
+   ],
+   "score_avg": null,
+   "score_mean": 30.2,
+   "size": 0,
+   "quality": {
+    "ways": 195,
+    "pois": 6,
+    "buildings": 944,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 13.1,
+   "global_rank": 259,
+   "province_rank": 54
   },
   {
    "id": 340281,
@@ -4243,9 +4719,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 70.5,
+   "comparable_score": 77.6,
    "global_rank": 35,
    "province_rank": 7
+  },
+  {
+   "id": 340223,
+   "name": "南陵县",
+   "province": "安徽",
+   "parent": "芜湖市",
+   "center": [
+    118.333607,
+    30.920274
+   ],
+   "gcj_center": [
+    118.3371,
+    30.91964
+   ],
+   "score_avg": null,
+   "score_mean": 40.1,
+   "size": 0,
+   "quality": {
+    "ways": 161,
+    "pois": 19,
+    "buildings": 18,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 38.0,
+   "global_rank": 152,
+   "province_rank": 37
   },
   {
    "id": 340322,
@@ -4576,7 +5080,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 78.1,
+   "comparable_score": 83.4,
    "global_rank": 26,
    "province_rank": 4
   },
@@ -4765,9 +5269,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 23.5,
-   "global_rank": 129,
-   "province_rank": 28
+   "comparable_score": 41.8,
+   "global_rank": 131,
+   "province_rank": 30
+  },
+  {
+   "id": 340323,
+   "name": "固镇县",
+   "province": "安徽",
+   "parent": "蚌埠市",
+   "center": [
+    117.312314,
+    33.319256
+   ],
+   "gcj_center": [
+    117.31596,
+    33.31868
+   ],
+   "score_avg": null,
+   "score_mean": 34.5,
+   "size": 0,
+   "quality": {
+    "ways": 117,
+    "pois": 10,
+    "buildings": 50,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 23.9,
+   "global_rank": 217,
+   "province_rank": 49
   },
   {
    "id": 340722,
@@ -4874,9 +5406,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 36.4,
-   "global_rank": 88,
-   "province_rank": 19
+   "comparable_score": 51.6,
+   "global_rank": 89,
+   "province_rank": 20
   },
   {
    "id": 341222,
@@ -5127,7 +5659,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 59.3,
+   "comparable_score": 69.0,
    "global_rank": 51,
    "province_rank": 12
   },
@@ -5220,9 +5752,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 35.4,
-   "global_rank": 91,
-   "province_rank": 21
+   "comparable_score": 50.9,
+   "global_rank": 92,
+   "province_rank": 22
   },
   {
    "id": 341282,
@@ -5329,9 +5861,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 28.5,
-   "global_rank": 114,
-   "province_rank": 25
+   "comparable_score": 45.6,
+   "global_rank": 115,
+   "province_rank": 26
   },
   {
    "id": 341225,
@@ -5526,9 +6058,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 25.5,
-   "global_rank": 123,
-   "province_rank": 27
+   "comparable_score": 43.3,
+   "global_rank": 125,
+   "province_rank": 29
+  },
+  {
+   "id": 341221,
+   "name": "临泉县",
+   "province": "安徽",
+   "parent": "阜阳市",
+   "center": [
+    115.258151,
+    33.063336
+   ],
+   "gcj_center": [
+    115.26169,
+    33.0627
+   ],
+   "score_avg": null,
+   "score_mean": 33.4,
+   "size": 0,
+   "quality": {
+    "ways": 112,
+    "pois": 6,
+    "buildings": 1,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 21.2,
+   "global_rank": 224,
+   "province_rank": 51
   },
   {
    "id": 340522,
@@ -6408,7 +6968,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 60.9,
+   "comparable_score": 70.3,
    "global_rank": 50,
    "province_rank": 11
   },
@@ -6453,9 +7013,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 36.1,
-   "global_rank": 89,
-   "province_rank": 20
+   "comparable_score": 51.4,
+   "global_rank": 90,
+   "province_rank": 21
   },
   {
    "id": 341021,
@@ -6634,7 +7194,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 66.9,
+   "comparable_score": 74.8,
    "global_rank": 41,
    "province_rank": 9
   },
@@ -6735,9 +7295,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 32.1,
-   "global_rank": 102,
-   "province_rank": 23
+   "comparable_score": 48.4,
+   "global_rank": 103,
+   "province_rank": 24
   },
   {
    "id": 341023,
@@ -6780,9 +7340,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 22.8,
-   "global_rank": 133,
-   "province_rank": 31
+   "comparable_score": 41.3,
+   "global_rank": 135,
+   "province_rank": 33
+  },
+  {
+   "id": 341024,
+   "name": "祁门县",
+   "province": "安徽",
+   "parent": "黄山市",
+   "center": [
+    117.713846,
+    29.854151
+   ],
+   "gcj_center": [
+    117.71724,
+    29.85347
+   ],
+   "score_avg": null,
+   "score_mean": 32.6,
+   "size": 0,
+   "quality": {
+    "ways": 70,
+    "pois": 4,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 19.1,
+   "global_rank": 236,
+   "province_rank": 53
   },
   {
    "id": 370522,
@@ -6977,7 +7565,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 76.7,
+   "comparable_score": 78.9,
    "global_rank": 4,
    "province_rank": 3
   },
@@ -7030,8 +7618,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 19.7,
-   "global_rank": 124,
+   "comparable_score": 27.2,
+   "global_rank": 126,
    "province_rank": 42
   },
   {
@@ -7643,7 +8231,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 66.4,
+   "comparable_score": 69.6,
    "global_rank": 16,
    "province_rank": 6
   },
@@ -8024,7 +8612,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 63.8,
+   "comparable_score": 67.2,
    "global_rank": 17,
    "province_rank": 7
   },
@@ -8285,7 +8873,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 40.5,
+   "comparable_score": 46.1,
    "global_rank": 62,
    "province_rank": 23
   },
@@ -8490,7 +9078,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 36.0,
+   "comparable_score": 42.0,
    "global_rank": 71,
    "province_rank": 26
   },
@@ -8559,8 +9147,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 26.6,
-   "global_rank": 92,
+   "comparable_score": 33.5,
+   "global_rank": 93,
    "province_rank": 34
   },
   {
@@ -8708,8 +9296,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 20.4,
-   "global_rank": 118,
+   "comparable_score": 27.8,
+   "global_rank": 119,
    "province_rank": 41
   },
   {
@@ -8833,9 +9421,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 17.3,
-   "global_rank": 137,
-   "province_rank": 45
+   "comparable_score": 25.0,
+   "global_rank": 141,
+   "province_rank": 46
+  },
+  {
+   "id": 371328,
+   "name": "蒙阴县",
+   "province": "山东",
+   "parent": "临沂市",
+   "center": [
+    117.939384,
+    35.712894
+   ],
+   "gcj_center": [
+    117.94327,
+    35.71243
+   ],
+   "score_avg": null,
+   "score_mean": 41.1,
+   "size": 0,
+   "quality": {
+    "ways": 187,
+    "pois": 31,
+    "buildings": 2,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 24.8,
+   "global_rank": 144,
+   "province_rank": 49
   },
   {
    "id": 371322,
@@ -8886,9 +9502,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 0.0,
-   "global_rank": 166,
-   "province_rank": 59
+   "comparable_score": 9.3,
+   "global_rank": 221,
+   "province_rank": 70
   },
   {
    "id": 371082,
@@ -9083,9 +9699,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 41.0,
+   "comparable_score": 46.5,
    "global_rank": 61,
    "province_rank": 22
+  },
+  {
+   "id": 371083,
+   "name": "乳山市",
+   "province": "山东",
+   "parent": "威海市",
+   "center": [
+    121.53216,
+    36.919935
+   ],
+   "gcj_center": [
+    121.53635,
+    36.91962
+   ],
+   "score_avg": null,
+   "score_mean": 40.5,
+   "size": 0,
+   "quality": {
+    "ways": 461,
+    "pois": 14,
+    "buildings": 0,
+    "greens": 6
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 23.5,
+   "global_rank": 149,
+   "province_rank": 52
   },
   {
    "id": 371481,
@@ -9776,7 +10420,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 73.4,
+   "comparable_score": 75.9,
    "global_rank": 8,
    "province_rank": 5
   },
@@ -9973,7 +10617,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 40.3,
+   "comparable_score": 45.9,
    "global_rank": 63,
    "province_rank": 24
   },
@@ -10082,7 +10726,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 36.5,
+   "comparable_score": 42.4,
    "global_rank": 70,
    "province_rank": 25
   },
@@ -10383,7 +11027,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 34.3,
+   "comparable_score": 40.4,
    "global_rank": 72,
    "province_rank": 27
   },
@@ -10452,9 +11096,177 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 7.4,
-   "global_rank": 159,
-   "province_rank": 56
+   "comparable_score": 16.1,
+   "global_rank": 193,
+   "province_rank": 64
+  },
+  {
+   "id": 371424,
+   "name": "临邑县",
+   "province": "山东",
+   "parent": "德州市",
+   "center": [
+    116.863055,
+    37.192458
+   ],
+   "gcj_center": [
+    116.86703,
+    37.19204
+   ],
+   "score_avg": null,
+   "score_mean": 36.5,
+   "size": 0,
+   "quality": {
+    "ways": 193,
+    "pois": 7,
+    "buildings": 0,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 14.8,
+   "global_rank": 198,
+   "province_rank": 67
+  },
+  {
+   "id": 371428,
+   "name": "武城县",
+   "province": "山东",
+   "parent": "德州市",
+   "center": [
+    116.074692,
+    37.209963
+   ],
+   "gcj_center": [
+    116.07863,
+    37.20953
+   ],
+   "score_avg": null,
+   "score_mean": 32.9,
+   "size": 0,
+   "quality": {
+    "ways": 209,
+    "pois": 2,
+    "buildings": 1,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 7.0,
+   "global_rank": 231,
+   "province_rank": 73
+  },
+  {
+   "id": 371427,
+   "name": "夏津县",
+   "province": "山东",
+   "parent": "德州市",
+   "center": [
+    115.999909,
+    36.950952
+   ],
+   "gcj_center": [
+    116.00382,
+    36.9505
+   ],
+   "score_avg": null,
+   "score_mean": 30.8,
+   "size": 0,
+   "quality": {
+    "ways": 238,
+    "pois": 1,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 2.4,
+   "global_rank": 252,
+   "province_rank": 76
+  },
+  {
+   "id": 371422,
+   "name": "宁津县",
+   "province": "山东",
+   "parent": "德州市",
+   "center": [
+    116.789707,
+    37.650011
+   ],
+   "gcj_center": [
+    116.79372,
+    37.64962
+   ],
+   "score_avg": null,
+   "score_mean": 30.4,
+   "size": 0,
+   "quality": {
+    "ways": 183,
+    "pois": 2,
+    "buildings": 1,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 1.5,
+   "global_rank": 256,
+   "province_rank": 77
+  },
+  {
+   "id": 371122,
+   "name": "莒县",
+   "province": "山东",
+   "parent": "日照市",
+   "center": [
+    118.82894,
+    35.588558
+   ],
+   "gcj_center": [
+    118.83286,
+    35.58812
+   ],
+   "score_avg": null,
+   "score_mean": 34.1,
+   "size": 0,
+   "quality": {
+    "ways": 114,
+    "pois": 7,
+    "buildings": 1,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 9.6,
+   "global_rank": 219,
+   "province_rank": 69
+  },
+  {
+   "id": 371121,
+   "name": "五莲县",
+   "province": "山东",
+   "parent": "日照市",
+   "center": [
+    119.202793,
+    35.752362
+   ],
+   "gcj_center": [
+    119.20674,
+    35.75194
+   ],
+   "score_avg": null,
+   "score_mean": 34.0,
+   "size": 0,
+   "quality": {
+    "ways": 152,
+    "pois": 6,
+    "buildings": 0,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 9.3,
+   "global_rank": 222,
+   "province_rank": 71
   },
   {
    "id": 370481,
@@ -11185,7 +11997,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 84.2,
+   "comparable_score": 85.7,
    "global_rank": 2,
    "province_rank": 2
   },
@@ -11430,7 +12242,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 52.5,
+   "comparable_score": 57.0,
    "global_rank": 34,
    "province_rank": 13
   },
@@ -11555,8 +12367,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 30.7,
-   "global_rank": 75,
+   "comparable_score": 37.2,
+   "global_rank": 76,
    "province_rank": 28
   },
   {
@@ -11712,8 +12524,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 18.7,
-   "global_rank": 126,
+   "comparable_score": 26.3,
+   "global_rank": 128,
    "province_rank": 43
   },
   {
@@ -11757,9 +12569,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 2.4,
-   "global_rank": 163,
-   "province_rank": 58
+   "comparable_score": 11.5,
+   "global_rank": 212,
+   "province_rank": 68
   },
   {
    "id": 370126,
@@ -11842,9 +12654,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 14.1,
-   "global_rank": 146,
-   "province_rank": 50
+   "comparable_score": 22.2,
+   "global_rank": 155,
+   "province_rank": 53
   },
   {
    "id": 370124,
@@ -11911,9 +12723,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 13.9,
-   "global_rank": 149,
-   "province_rank": 51
+   "comparable_score": 22.0,
+   "global_rank": 159,
+   "province_rank": 54
   },
   {
    "id": 370826,
@@ -12044,7 +12856,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 57.6,
+   "comparable_score": 61.5,
    "global_rank": 27,
    "province_rank": 10
   },
@@ -12177,7 +12989,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 45.8,
+   "comparable_score": 50.9,
    "global_rank": 48,
    "province_rank": 18
   },
@@ -12286,7 +13098,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 41.5,
+   "comparable_score": 47.0,
    "global_rank": 60,
    "province_rank": 21
   },
@@ -12483,8 +13295,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 29.5,
-   "global_rank": 81,
+   "comparable_score": 36.1,
+   "global_rank": 82,
    "province_rank": 30
   },
   {
@@ -12552,8 +13364,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 26.4,
-   "global_rank": 93,
+   "comparable_score": 33.3,
+   "global_rank": 94,
    "province_rank": 35
   },
   {
@@ -12621,9 +13433,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 18.0,
-   "global_rank": 130,
+   "comparable_score": 25.7,
+   "global_rank": 132,
    "province_rank": 44
+  },
+  {
+   "id": 370828,
+   "name": "金乡县",
+   "province": "山东",
+   "parent": "济宁市",
+   "center": [
+    116.306612,
+    35.070301
+   ],
+   "gcj_center": [
+    116.31036,
+    35.06977
+   ],
+   "score_avg": null,
+   "score_mean": 41.4,
+   "size": 0,
+   "quality": {
+    "ways": 124,
+    "pois": 9,
+    "buildings": 1,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 25.4,
+   "global_rank": 136,
+   "province_rank": 45
   },
   {
    "id": 370830,
@@ -12818,9 +13658,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 13.9,
-   "global_rank": 150,
-   "province_rank": 52
+   "comparable_score": 22.0,
+   "global_rank": 160,
+   "province_rank": 55
+  },
+  {
+   "id": 370831,
+   "name": "泗水县",
+   "province": "山东",
+   "parent": "济宁市",
+   "center": [
+    117.269756,
+    35.653695
+   ],
+   "gcj_center": [
+    117.27361,
+    35.65322
+   ],
+   "score_avg": null,
+   "score_mean": 31.4,
+   "size": 0,
+   "quality": {
+    "ways": 60,
+    "pois": 1,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 3.7,
+   "global_rank": 249,
+   "province_rank": 74
   },
   {
    "id": 370323,
@@ -13247,7 +14115,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 47.5,
+   "comparable_score": 52.4,
    "global_rank": 44,
    "province_rank": 17
   },
@@ -13436,9 +14304,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 25.2,
-   "global_rank": 98,
+   "comparable_score": 32.2,
+   "global_rank": 99,
    "province_rank": 36
+  },
+  {
+   "id": 370322,
+   "name": "高青县",
+   "province": "山东",
+   "parent": "淄博市",
+   "center": [
+    117.82582,
+    37.16997
+   ],
+   "gcj_center": [
+    117.82984,
+    37.16958
+   ],
+   "score_avg": null,
+   "score_mean": 33.1,
+   "size": 0,
+   "quality": {
+    "ways": 90,
+    "pois": 2,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 7.4,
+   "global_rank": 227,
+   "province_rank": 72
   },
   {
    "id": 371622,
@@ -13657,7 +14553,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 53.7,
+   "comparable_score": 58.0,
    "global_rank": 31,
    "province_rank": 11
   },
@@ -13950,7 +14846,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 52.0,
+   "comparable_score": 56.5,
    "global_rank": 36,
    "province_rank": 14
   },
@@ -14195,8 +15091,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 30.5,
-   "global_rank": 78,
+   "comparable_score": 37.0,
+   "global_rank": 79,
    "province_rank": 29
   },
   {
@@ -14296,9 +15192,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 17.3,
-   "global_rank": 138,
-   "province_rank": 46
+   "comparable_score": 25.0,
+   "global_rank": 142,
+   "province_rank": 47
   },
   {
    "id": 371621,
@@ -14357,9 +15253,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 8.4,
-   "global_rank": 156,
-   "province_rank": 55
+   "comparable_score": 17.0,
+   "global_rank": 182,
+   "province_rank": 63
   },
   {
    "id": 370786,
@@ -16199,7 +17095,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 59.7,
+   "comparable_score": 63.5,
    "global_rank": 22,
    "province_rank": 9
   },
@@ -16684,7 +17580,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 49.2,
+   "comparable_score": 53.9,
    "global_rank": 42,
    "province_rank": 16
   },
@@ -16761,7 +17657,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 43.6,
+   "comparable_score": 48.9,
    "global_rank": 53,
    "province_rank": 19
   },
@@ -16862,8 +17758,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 23.3,
-   "global_rank": 109,
+   "comparable_score": 30.4,
+   "global_rank": 110,
    "province_rank": 38
   },
   {
@@ -16939,9 +17835,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 21.6,
-   "global_rank": 115,
+   "comparable_score": 28.9,
+   "global_rank": 116,
    "province_rank": 40
+  },
+  {
+   "id": 370725,
+   "name": "昌乐县",
+   "province": "山东",
+   "parent": "潍坊市",
+   "center": [
+    118.83597,
+    36.70364
+   ],
+   "gcj_center": [
+    118.84,
+    36.70325
+   ],
+   "score_avg": null,
+   "score_mean": 38.6,
+   "size": 0,
+   "quality": {
+    "ways": 201,
+    "pois": 34,
+    "buildings": 2,
+    "greens": 11
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 19.3,
+   "global_rank": 169,
+   "province_rank": 57
+  },
+  {
+   "id": 370785,
+   "name": "高密市",
+   "province": "山东",
+   "parent": "潍坊市",
+   "center": [
+    119.752993,
+    36.377922
+   ],
+   "gcj_center": [
+    119.75703,
+    36.37754
+   ],
+   "score_avg": null,
+   "score_mean": 37.9,
+   "size": 0,
+   "quality": {
+    "ways": 136,
+    "pois": 15,
+    "buildings": 2,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 17.8,
+   "global_rank": 177,
+   "province_rank": 60
   },
   {
    "id": 370683,
@@ -17568,7 +18520,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 75.8,
+   "comparable_score": 78.0,
    "global_rank": 5,
    "province_rank": 4
   },
@@ -17765,8 +18717,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 29.0,
-   "global_rank": 84,
+   "comparable_score": 35.7,
+   "global_rank": 85,
    "province_rank": 31
   },
   {
@@ -17930,8 +18882,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 28.5,
-   "global_rank": 86,
+   "comparable_score": 35.2,
+   "global_rank": 87,
    "province_rank": 33
   },
   {
@@ -17983,9 +18935,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 13.2,
-   "global_rank": 151,
-   "province_rank": 53
+   "comparable_score": 21.3,
+   "global_rank": 162,
+   "province_rank": 56
+  },
+  {
+   "id": 370681,
+   "name": "龙口市",
+   "province": "山东",
+   "parent": "烟台市",
+   "center": [
+    120.52412,
+    37.648741
+   ],
+   "gcj_center": [
+    120.52833,
+    37.64845
+   ],
+   "score_avg": null,
+   "score_mean": 38.1,
+   "size": 0,
+   "quality": {
+    "ways": 415,
+    "pois": 13,
+    "buildings": 0,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 18.3,
+   "global_rank": 175,
+   "province_rank": 58
   },
   {
    "id": 370682,
@@ -18028,9 +19008,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 6.2,
-   "global_rank": 160,
-   "province_rank": 57
+   "comparable_score": 15.0,
+   "global_rank": 197,
+   "province_rank": 66
   },
   {
    "id": 371581,
@@ -18217,8 +19197,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 24.7,
-   "global_rank": 100,
+   "comparable_score": 31.7,
+   "global_rank": 101,
    "province_rank": 37
   },
   {
@@ -18342,9 +19322,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 16.8,
-   "global_rank": 142,
-   "province_rank": 49
+   "comparable_score": 24.6,
+   "global_rank": 147,
+   "province_rank": 51
   },
   {
    "id": 371526,
@@ -18483,9 +19463,93 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 9.8,
-   "global_rank": 155,
-   "province_rank": 54
+   "comparable_score": 18.3,
+   "global_rank": 176,
+   "province_rank": 59
+  },
+  {
+   "id": 371521,
+   "name": "阳谷县",
+   "province": "山东",
+   "parent": "聊城市",
+   "center": [
+    115.780468,
+    36.114206
+   ],
+   "gcj_center": [
+    115.78429,
+    36.11371
+   ],
+   "score_avg": null,
+   "score_mean": 37.8,
+   "size": 0,
+   "quality": {
+    "ways": 118,
+    "pois": 14,
+    "buildings": 1,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 17.6,
+   "global_rank": 179,
+   "province_rank": 61
+  },
+  {
+   "id": 371522,
+   "name": "莘县",
+   "province": "山东",
+   "parent": "聊城市",
+   "center": [
+    115.663466,
+    36.238093
+   ],
+   "gcj_center": [
+    115.66729,
+    36.2376
+   ],
+   "score_avg": null,
+   "score_mean": 37.7,
+   "size": 0,
+   "quality": {
+    "ways": 169,
+    "pois": 11,
+    "buildings": 4,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 17.4,
+   "global_rank": 180,
+   "province_rank": 62
+  },
+  {
+   "id": 371525,
+   "name": "冠县",
+   "province": "山东",
+   "parent": "聊城市",
+   "center": [
+    115.440972,
+    36.484244
+   ],
+   "gcj_center": [
+    115.44481,
+    36.48375
+   ],
+   "score_avg": null,
+   "score_mean": 29.7,
+   "size": 0,
+   "quality": {
+    "ways": 129,
+    "pois": 5,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 0.0,
+   "global_rank": 267,
+   "province_rank": 78
   },
   {
    "id": 371723,
@@ -19072,7 +20136,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 62.6,
+   "comparable_score": 66.1,
    "global_rank": 20,
    "province_rank": 8
   },
@@ -19437,7 +20501,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 51.1,
+   "comparable_score": 55.7,
    "global_rank": 37,
    "province_rank": 15
   },
@@ -19578,8 +20642,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 28.8,
-   "global_rank": 85,
+   "comparable_score": 35.4,
+   "global_rank": 86,
    "province_rank": 32
   },
   {
@@ -19655,8 +20719,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 22.1,
-   "global_rank": 113,
+   "comparable_score": 29.3,
+   "global_rank": 114,
    "province_rank": 39
   },
   {
@@ -19740,9 +20804,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 17.0,
-   "global_rank": 140,
-   "province_rank": 48
+   "comparable_score": 24.8,
+   "global_rank": 145,
+   "province_rank": 50
+  },
+  {
+   "id": 371726,
+   "name": "鄄城县",
+   "province": "山东",
+   "parent": "菏泽市",
+   "center": [
+    115.510583,
+    35.560788
+   ],
+   "gcj_center": [
+    115.51434,
+    35.56026
+   ],
+   "score_avg": null,
+   "score_mean": 36.9,
+   "size": 0,
+   "quality": {
+    "ways": 72,
+    "pois": 6,
+    "buildings": 2,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 15.7,
+   "global_rank": 195,
+   "province_rank": 65
+  },
+  {
+   "id": 371724,
+   "name": "巨野县",
+   "province": "山东",
+   "parent": "菏泽市",
+   "center": [
+    116.085572,
+    35.391522
+   ],
+   "gcj_center": [
+    116.08934,
+    35.391
+   ],
+   "score_avg": null,
+   "score_mean": 31.4,
+   "size": 0,
+   "quality": {
+    "ways": 75,
+    "pois": 10,
+    "buildings": 0,
+    "greens": 8
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 3.7,
+   "global_rank": 250,
+   "province_rank": 75
   },
   {
    "id": 370281,
@@ -20121,7 +21241,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 53.7,
+   "comparable_score": 58.0,
    "global_rank": 32,
    "province_rank": 12
   },
@@ -20294,7 +21414,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 41.7,
+   "comparable_score": 47.2,
    "global_rank": 57,
    "province_rank": 20
   },
@@ -20355,9 +21475,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 17.3,
-   "global_rank": 139,
-   "province_rank": 47
+   "comparable_score": 25.0,
+   "global_rank": 143,
+   "province_rank": 48
   },
   {
    "id": 320682,
@@ -20912,7 +22032,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 87.4,
+   "comparable_score": 88.7,
    "global_rank": 14,
    "province_rank": 5
   },
@@ -21237,7 +22357,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 69.4,
+   "comparable_score": 72.5,
    "global_rank": 30,
    "province_rank": 13
   },
@@ -21330,9 +22450,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 32.6,
-   "global_rank": 110,
+   "comparable_score": 39.3,
+   "global_rank": 111,
    "province_rank": 21
+  },
+  {
+   "id": 320623,
+   "name": "如东县",
+   "province": "江苏",
+   "parent": "南通市",
+   "center": [
+    121.182354,
+    32.312366
+   ],
+   "gcj_center": [
+    121.18609,
+    32.31183
+   ],
+   "score_avg": null,
+   "score_mean": 39.9,
+   "size": 0,
+   "quality": {
+    "ways": 396,
+    "pois": 17,
+    "buildings": 4,
+    "greens": 6
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 29.8,
+   "global_rank": 156,
+   "province_rank": 24
   },
   {
    "id": 321323,
@@ -21839,7 +22987,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 85.1,
+   "comparable_score": 86.6,
    "global_rank": 15,
    "province_rank": 6
   },
@@ -22092,9 +23240,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 75.7,
+   "comparable_score": 78.1,
    "global_rank": 23,
    "province_rank": 10
+  },
+  {
+   "id": 321324,
+   "name": "泗洪县",
+   "province": "江苏",
+   "parent": "宿迁市",
+   "center": [
+    118.208125,
+    33.457088
+   ],
+   "gcj_center": [
+    118.21182,
+    33.45654
+   ],
+   "score_avg": null,
+   "score_mean": 29.4,
+   "size": 0,
+   "quality": {
+    "ways": 251,
+    "pois": 7,
+    "buildings": 0,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 2.8,
+   "global_rank": 268,
+   "province_rank": 39
   },
   {
    "id": 320481,
@@ -22537,7 +23713,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 80.9,
+   "comparable_score": 82.8,
    "global_rank": 19,
    "province_rank": 8
   },
@@ -22870,9 +24046,121 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 61.4,
+   "comparable_score": 65.3,
    "global_rank": 46,
    "province_rank": 15
+  },
+  {
+   "id": 320382,
+   "name": "邳州市",
+   "province": "江苏",
+   "parent": "徐州市",
+   "center": [
+    117.960161,
+    34.315229
+   ],
+   "gcj_center": [
+    117.96392,
+    34.31471
+   ],
+   "score_avg": null,
+   "score_mean": 37.4,
+   "size": 0,
+   "quality": {
+    "ways": 162,
+    "pois": 7,
+    "buildings": 1,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 23.4,
+   "global_rank": 184,
+   "province_rank": 26
+  },
+  {
+   "id": 320381,
+   "name": "新沂市",
+   "province": "江苏",
+   "parent": "徐州市",
+   "center": [
+    118.342043,
+    34.369289
+   ],
+   "gcj_center": [
+    118.34583,
+    34.36878
+   ],
+   "score_avg": null,
+   "score_mean": 32.4,
+   "size": 0,
+   "quality": {
+    "ways": 304,
+    "pois": 4,
+    "buildings": 0,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 10.5,
+   "global_rank": 239,
+   "province_rank": 33
+  },
+  {
+   "id": 320324,
+   "name": "睢宁县",
+   "province": "江苏",
+   "parent": "徐州市",
+   "center": [
+    117.946935,
+    33.899761
+   ],
+   "gcj_center": [
+    117.95066,
+    33.89922
+   ],
+   "score_avg": null,
+   "score_mean": 32.2,
+   "size": 0,
+   "quality": {
+    "ways": 288,
+    "pois": 5,
+    "buildings": 1,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 10.0,
+   "global_rank": 242,
+   "province_rank": 34
+  },
+  {
+   "id": 320322,
+   "name": "沛县",
+   "province": "江苏",
+   "parent": "徐州市",
+   "center": [
+    116.933431,
+    34.729573
+   ],
+   "gcj_center": [
+    116.93718,
+    34.72904
+   ],
+   "score_avg": null,
+   "score_mean": 30.1,
+   "size": 0,
+   "quality": {
+    "ways": 86,
+    "pois": 1,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 4.6,
+   "global_rank": 262,
+   "province_rank": 38
   },
   {
    "id": 321084,
@@ -23291,7 +24579,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 75.7,
+   "comparable_score": 78.1,
    "global_rank": 24,
    "province_rank": 11
   },
@@ -23440,7 +24728,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 50.9,
+   "comparable_score": 55.8,
    "global_rank": 67,
    "province_rank": 16
   },
@@ -23661,8 +24949,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 36.3,
-   "global_rank": 94,
+   "comparable_score": 42.7,
+   "global_rank": 95,
    "province_rank": 19
   },
   {
@@ -24159,8 +25447,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 27.1,
-   "global_rank": 128,
+   "comparable_score": 34.4,
+   "global_rank": 130,
    "province_rank": 22
   },
   {
@@ -24892,7 +26180,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 93.1,
+   "comparable_score": 93.8,
    "global_rank": 6,
    "province_rank": 2
   },
@@ -25377,7 +26665,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 65.1,
+   "comparable_score": 68.6,
    "global_rank": 39,
    "province_rank": 14
   },
@@ -25422,8 +26710,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 23.4,
-   "global_rank": 144,
+   "comparable_score": 31.1,
+   "global_rank": 151,
    "province_rank": 23
   },
   {
@@ -25947,9 +27235,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 88.9,
+   "comparable_score": 90.0,
    "global_rank": 12,
    "province_rank": 4
+  },
+  {
+   "id": 320826,
+   "name": "涟水县",
+   "province": "江苏",
+   "parent": "淮安市",
+   "center": [
+    119.262304,
+    33.771822
+   ],
+   "gcj_center": [
+    119.26608,
+    33.77131
+   ],
+   "score_avg": null,
+   "score_mean": 32.8,
+   "size": 0,
+   "quality": {
+    "ways": 157,
+    "pois": 7,
+    "buildings": 1,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 11.6,
+   "global_rank": 232,
+   "province_rank": 30
+  },
+  {
+   "id": 320830,
+   "name": "盱眙县",
+   "province": "江苏",
+   "parent": "淮安市",
+   "center": [
+    118.49015,
+    33.004951
+   ],
+   "gcj_center": [
+    118.49382,
+    33.00439
+   ],
+   "score_avg": null,
+   "score_mean": 30.5,
+   "size": 0,
+   "quality": {
+    "ways": 120,
+    "pois": 11,
+    "buildings": 2,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 5.7,
+   "global_rank": 254,
+   "province_rank": 36
   },
   {
    "id": 320925,
@@ -26160,9 +27504,93 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 37.7,
-   "global_rank": 90,
+   "comparable_score": 44.0,
+   "global_rank": 91,
    "province_rank": 18
+  },
+  {
+   "id": 320981,
+   "name": "东台市",
+   "province": "江苏",
+   "parent": "盐城市",
+   "center": [
+    120.310359,
+    32.853703
+   ],
+   "gcj_center": [
+    120.3141,
+    32.85317
+   ],
+   "score_avg": null,
+   "score_mean": 36.2,
+   "size": 0,
+   "quality": {
+    "ways": 273,
+    "pois": 7,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 20.3,
+   "global_rank": 203,
+   "province_rank": 28
+  },
+  {
+   "id": 320922,
+   "name": "滨海县",
+   "province": "江苏",
+   "parent": "盐城市",
+   "center": [
+    119.824614,
+    33.990381
+   ],
+   "gcj_center": [
+    119.82843,
+    33.98989
+   ],
+   "score_avg": null,
+   "score_mean": 33.6,
+   "size": 0,
+   "quality": {
+    "ways": 287,
+    "pois": 20,
+    "buildings": 5,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 13.6,
+   "global_rank": 223,
+   "province_rank": 29
+  },
+  {
+   "id": 320924,
+   "name": "射阳县",
+   "province": "江苏",
+   "parent": "盐城市",
+   "center": [
+    120.253624,
+    33.774272
+   ],
+   "gcj_center": [
+    120.25744,
+    33.77378
+   ],
+   "score_avg": null,
+   "score_mean": 32.7,
+   "size": 0,
+   "quality": {
+    "ways": 249,
+    "pois": 4,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 11.3,
+   "global_rank": 234,
+   "province_rank": 31
   },
   {
    "id": 320923,
@@ -26237,9 +27665,37 @@
      "h": 0.0007186
     }
    ],
+   "comparable_score": 10.0,
+   "global_rank": 243,
+   "province_rank": 35
+  },
+  {
+   "id": 320921,
+   "name": "响水县",
+   "province": "江苏",
+   "parent": "盐城市",
+   "center": [
+    119.575746,
+    34.200449
+   ],
+   "gcj_center": [
+    119.57957,
+    34.19996
+   ],
+   "score_avg": null,
+   "score_mean": 28.3,
+   "size": 0,
+   "quality": {
+    "ways": 175,
+    "pois": 7,
+    "buildings": 3,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
    "comparable_score": 0.0,
-   "global_rank": 168,
-   "province_rank": 25
+   "global_rank": 274,
+   "province_rank": 40
   },
   {
    "id": 320583,
@@ -26898,7 +28354,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 92.6,
+   "comparable_score": 93.3,
    "global_rank": 9,
    "province_rank": 3
   },
@@ -27223,7 +28679,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 81.1,
+   "comparable_score": 83.0,
    "global_rank": 18,
    "province_rank": 7
   },
@@ -27652,7 +29108,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 78.6,
+   "comparable_score": 80.7,
    "global_rank": 21,
    "province_rank": 9
   },
@@ -28153,7 +29609,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 72.9,
+   "comparable_score": 75.6,
    "global_rank": 28,
    "province_rank": 12
   },
@@ -28318,9 +29774,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 50.3,
+   "comparable_score": 55.3,
    "global_rank": 68,
    "province_rank": 17
+  },
+  {
+   "id": 320723,
+   "name": "灌云县",
+   "province": "江苏",
+   "parent": "连云港市",
+   "center": [
+    119.25192,
+    34.298928
+   ],
+   "gcj_center": [
+    119.25574,
+    34.29844
+   ],
+   "score_avg": null,
+   "score_mean": 32.7,
+   "size": 0,
+   "quality": {
+    "ways": 196,
+    "pois": 6,
+    "buildings": 1,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 11.3,
+   "global_rank": 235,
+   "province_rank": 32
+  },
+  {
+   "id": 320724,
+   "name": "灌南县",
+   "province": "江苏",
+   "parent": "连云港市",
+   "center": [
+    119.348524,
+    34.093051
+   ],
+   "gcj_center": [
+    119.35233,
+    34.09255
+   ],
+   "score_avg": null,
+   "score_mean": 30.3,
+   "size": 0,
+   "quality": {
+    "ways": 111,
+    "pois": 1,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 5.1,
+   "global_rank": 257,
+   "province_rank": 37
   },
   {
    "id": 321181,
@@ -28539,8 +30051,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 33.4,
-   "global_rank": 106,
+   "comparable_score": 40.1,
+   "global_rank": 107,
    "province_rank": 20
   },
   {
@@ -28616,9 +30128,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 18.3,
-   "global_rank": 153,
-   "province_rank": 24
+   "comparable_score": 26.5,
+   "global_rank": 170,
+   "province_rank": 25
+  },
+  {
+   "id": 321182,
+   "name": "扬中市",
+   "province": "江苏",
+   "parent": "镇江市",
+   "center": [
+    119.824387,
+    32.237828
+   ],
+   "gcj_center": [
+    119.82805,
+    32.23727
+   ],
+   "score_avg": null,
+   "score_mean": 37.4,
+   "size": 0,
+   "quality": {
+    "ways": 539,
+    "pois": 13,
+    "buildings": 0,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 23.4,
+   "global_rank": 185,
+   "province_rank": 27
   },
   {
    "id": 411224,
@@ -28717,9 +30257,93 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 31.4,
-   "global_rank": 122,
+   "comparable_score": 42.6,
+   "global_rank": 124,
    "province_rank": 34
+  },
+  {
+   "id": 411221,
+   "name": "渑池县",
+   "province": "河南",
+   "parent": "三门峡市",
+   "center": [
+    111.759468,
+    34.764165
+   ],
+   "gcj_center": [
+    111.76299,
+    34.76349
+   ],
+   "score_avg": null,
+   "score_mean": 35.0,
+   "size": 0,
+   "quality": {
+    "ways": 130,
+    "pois": 10,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 23.1,
+   "global_rank": 213,
+   "province_rank": 70
+  },
+  {
+   "id": 411282,
+   "name": "灵宝市",
+   "province": "河南",
+   "parent": "三门峡市",
+   "center": [
+    110.882302,
+    34.521979
+   ],
+   "gcj_center": [
+    110.88577,
+    34.52126
+   ],
+   "score_avg": null,
+   "score_mean": 30.2,
+   "size": 0,
+   "quality": {
+    "ways": 188,
+    "pois": 4,
+    "buildings": 0,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 10.4,
+   "global_rank": 260,
+   "province_rank": 92
+  },
+  {
+   "id": 411281,
+   "name": "义马市",
+   "province": "河南",
+   "parent": "三门峡市",
+   "center": [
+    111.86589,
+    34.747543
+   ],
+   "gcj_center": [
+    111.86942,
+    34.74687
+   ],
+   "score_avg": null,
+   "score_mean": 28.7,
+   "size": 0,
+   "quality": {
+    "ways": 148,
+    "pois": 1,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 6.4,
+   "global_rank": 271,
+   "province_rank": 99
   },
   {
    "id": 411525,
@@ -29383,8 +31007,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 31.7,
-   "global_rank": 119,
+   "comparable_score": 42.8,
+   "global_rank": 120,
    "province_rank": 31
   },
   {
@@ -29428,9 +31052,149 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 23.8,
-   "global_rank": 147,
-   "province_rank": 40
+   "comparable_score": 36.2,
+   "global_rank": 157,
+   "province_rank": 43
+  },
+  {
+   "id": 411522,
+   "name": "光山县",
+   "province": "河南",
+   "parent": "信阳市",
+   "center": [
+    114.900136,
+    32.011081
+   ],
+   "gcj_center": [
+    114.90358,
+    32.0104
+   ],
+   "score_avg": null,
+   "score_mean": 38.3,
+   "size": 0,
+   "quality": {
+    "ways": 143,
+    "pois": 24,
+    "buildings": 5,
+    "greens": 8
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 31.9,
+   "global_rank": 171,
+   "province_rank": 49
+  },
+  {
+   "id": 411528,
+   "name": "息县",
+   "province": "河南",
+   "parent": "信阳市",
+   "center": [
+    114.737253,
+    32.34542
+   ],
+   "gcj_center": [
+    114.74071,
+    32.34474
+   ],
+   "score_avg": null,
+   "score_mean": 33.2,
+   "size": 0,
+   "quality": {
+    "ways": 122,
+    "pois": 9,
+    "buildings": 1,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 18.4,
+   "global_rank": 226,
+   "province_rank": 75
+  },
+  {
+   "id": 411527,
+   "name": "淮滨县",
+   "province": "河南",
+   "parent": "信阳市",
+   "center": [
+    115.411955,
+    32.453294
+   ],
+   "gcj_center": [
+    115.41545,
+    32.45264
+   ],
+   "score_avg": null,
+   "score_mean": 31.5,
+   "size": 0,
+   "quality": {
+    "ways": 122,
+    "pois": 10,
+    "buildings": 1,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 13.8,
+   "global_rank": 248,
+   "province_rank": 87
+  },
+  {
+   "id": 411524,
+   "name": "商城县",
+   "province": "河南",
+   "parent": "信阳市",
+   "center": [
+    115.402852,
+    31.800658
+   ],
+   "gcj_center": [
+    115.4063,
+    31.79998
+   ],
+   "score_avg": null,
+   "score_mean": 30.1,
+   "size": 0,
+   "quality": {
+    "ways": 171,
+    "pois": 9,
+    "buildings": 0,
+    "greens": 6
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 10.1,
+   "global_rank": 263,
+   "province_rank": 93
+  },
+  {
+   "id": 411521,
+   "name": "罗山县",
+   "province": "河南",
+   "parent": "信阳市",
+   "center": [
+    114.529974,
+    32.203892
+   ],
+   "gcj_center": [
+    114.53341,
+    32.20321
+   ],
+   "score_avg": null,
+   "score_mean": 29.0,
+   "size": 0,
+   "quality": {
+    "ways": 74,
+    "pois": 0,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 7.2,
+   "global_rank": 270,
+   "province_rank": 98
   },
   {
    "id": 411322,
@@ -30054,8 +31818,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 39.4,
-   "global_rank": 96,
+   "comparable_score": 49.2,
+   "global_rank": 97,
    "province_rank": 21
   },
   {
@@ -30179,9 +31943,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 36.2,
-   "global_rank": 107,
+   "comparable_score": 46.5,
+   "global_rank": 108,
    "province_rank": 27
+  },
+  {
+   "id": 411327,
+   "name": "社旗县",
+   "province": "河南",
+   "parent": "南阳市",
+   "center": [
+    112.934839,
+    33.056829
+   ],
+   "gcj_center": [
+    112.93828,
+    33.05613
+   ],
+   "score_avg": null,
+   "score_mean": 37.6,
+   "size": 0,
+   "quality": {
+    "ways": 140,
+    "pois": 15,
+    "buildings": 0,
+    "greens": 10
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 30.1,
+   "global_rank": 181,
+   "province_rank": 52
   },
   {
    "id": 411321,
@@ -30224,9 +32016,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 15.2,
-   "global_rank": 158,
-   "province_rank": 43
+   "comparable_score": 29.0,
+   "global_rank": 191,
+   "province_rank": 59
+  },
+  {
+   "id": 411328,
+   "name": "唐河县",
+   "province": "河南",
+   "parent": "南阳市",
+   "center": [
+    112.835084,
+    32.68861
+   ],
+   "gcj_center": [
+    112.83849,
+    32.68789
+   ],
+   "score_avg": null,
+   "score_mean": 36.2,
+   "size": 0,
+   "quality": {
+    "ways": 145,
+    "pois": 8,
+    "buildings": 0,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 26.3,
+   "global_rank": 204,
+   "province_rank": 67
   },
   {
    "id": 411330,
@@ -30333,9 +32153,121 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 5.4,
-   "global_rank": 165,
-   "province_rank": 45
+   "comparable_score": 20.7,
+   "global_rank": 220,
+   "province_rank": 73
+  },
+  {
+   "id": 411329,
+   "name": "新野县",
+   "province": "河南",
+   "parent": "南阳市",
+   "center": [
+    112.362247,
+    32.524743
+   ],
+   "gcj_center": [
+    112.36562,
+    32.52401
+   ],
+   "score_avg": null,
+   "score_mean": 32.8,
+   "size": 0,
+   "quality": {
+    "ways": 129,
+    "pois": 5,
+    "buildings": 1,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 17.3,
+   "global_rank": 233,
+   "province_rank": 78
+  },
+  {
+   "id": 411323,
+   "name": "西峡县",
+   "province": "河南",
+   "parent": "南阳市",
+   "center": [
+    111.482372,
+    33.303719
+   ],
+   "gcj_center": [
+    111.48577,
+    33.30298
+   ],
+   "score_avg": null,
+   "score_mean": 32.5,
+   "size": 0,
+   "quality": {
+    "ways": 126,
+    "pois": 3,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 16.5,
+   "global_rank": 238,
+   "province_rank": 80
+  },
+  {
+   "id": 411381,
+   "name": "邓州市",
+   "province": "河南",
+   "parent": "南阳市",
+   "center": [
+    112.089338,
+    32.682382
+   ],
+   "gcj_center": [
+    112.09272,
+    32.68164
+   ],
+   "score_avg": null,
+   "score_mean": 32.3,
+   "size": 0,
+   "quality": {
+    "ways": 173,
+    "pois": 3,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 16.0,
+   "global_rank": 241,
+   "province_rank": 82
+  },
+  {
+   "id": 411324,
+   "name": "镇平县",
+   "province": "河南",
+   "parent": "南阳市",
+   "center": [
+    112.229312,
+    33.037376
+   ],
+   "gcj_center": [
+    112.23272,
+    33.03665
+   ],
+   "score_avg": null,
+   "score_mean": 30.8,
+   "size": 0,
+   "quality": {
+    "ways": 89,
+    "pois": 5,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 12.0,
+   "global_rank": 253,
+   "province_rank": 89
   },
   {
    "id": 411622,
@@ -30442,9 +32374,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 31.7,
-   "global_rank": 120,
+   "comparable_score": 42.8,
+   "global_rank": 121,
    "province_rank": 32
+  },
+  {
+   "id": 411627,
+   "name": "太康县",
+   "province": "河南",
+   "parent": "周口市",
+   "center": [
+    114.850233,
+    34.065924
+   ],
+   "gcj_center": [
+    114.85383,
+    34.06531
+   ],
+   "score_avg": null,
+   "score_mean": 36.9,
+   "size": 0,
+   "quality": {
+    "ways": 72,
+    "pois": 6,
+    "buildings": 1,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 28.2,
+   "global_rank": 196,
+   "province_rank": 62
+  },
+  {
+   "id": 411681,
+   "name": "项城市",
+   "province": "河南",
+   "parent": "周口市",
+   "center": [
+    114.895969,
+    33.443719
+   ],
+   "gcj_center": [
+    114.89952,
+    33.44309
+   ],
+   "score_avg": null,
+   "score_mean": 36.3,
+   "size": 0,
+   "quality": {
+    "ways": 325,
+    "pois": 14,
+    "buildings": 0,
+    "greens": 6
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 26.6,
+   "global_rank": 202,
+   "province_rank": 66
   },
   {
    "id": 411628,
@@ -30495,9 +32483,121 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 11.1,
-   "global_rank": 161,
-   "province_rank": 44
+   "comparable_score": 25.5,
+   "global_rank": 207,
+   "province_rank": 68
+  },
+  {
+   "id": 411621,
+   "name": "扶沟县",
+   "province": "河南",
+   "parent": "周口市",
+   "center": [
+    114.388428,
+    34.054687
+   ],
+   "gcj_center": [
+    114.39201,
+    34.05406
+   ],
+   "score_avg": null,
+   "score_mean": 33.4,
+   "size": 0,
+   "quality": {
+    "ways": 272,
+    "pois": 7,
+    "buildings": 1,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 18.9,
+   "global_rank": 225,
+   "province_rank": 74
+  },
+  {
+   "id": 411625,
+   "name": "郸城县",
+   "province": "河南",
+   "parent": "周口市",
+   "center": [
+    115.185419,
+    33.644471
+   ],
+   "gcj_center": [
+    115.189,
+    33.64385
+   ],
+   "score_avg": null,
+   "score_mean": 31.8,
+   "size": 0,
+   "quality": {
+    "ways": 88,
+    "pois": 5,
+    "buildings": 0,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 14.6,
+   "global_rank": 246,
+   "province_rank": 85
+  },
+  {
+   "id": 411624,
+   "name": "沈丘县",
+   "province": "河南",
+   "parent": "周口市",
+   "center": [
+    115.074819,
+    33.396145
+   ],
+   "gcj_center": [
+    115.07837,
+    33.39551
+   ],
+   "score_avg": null,
+   "score_mean": 26.4,
+   "size": 0,
+   "quality": {
+    "ways": 137,
+    "pois": 6,
+    "buildings": 2,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 0.3,
+   "global_rank": 277,
+   "province_rank": 102
+  },
+  {
+   "id": 411623,
+   "name": "商水县",
+   "province": "河南",
+   "parent": "周口市",
+   "center": [
+    114.605722,
+    33.544484
+   ],
+   "gcj_center": [
+    114.60927,
+    33.54384
+   ],
+   "score_avg": null,
+   "score_mean": 26.3,
+   "size": 0,
+   "quality": {
+    "ways": 59,
+    "pois": 4,
+    "buildings": 1,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 0.0,
+   "global_rank": 279,
+   "province_rank": 103
   },
   {
    "id": 411421,
@@ -30828,7 +32928,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 72.4,
+   "comparable_score": 76.9,
    "global_rank": 38,
    "province_rank": 3
   },
@@ -31009,7 +33109,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 57.8,
+   "comparable_score": 64.6,
    "global_rank": 65,
    "province_rank": 10
   },
@@ -31070,7 +33170,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 47.3,
+   "comparable_score": 55.9,
    "global_rank": 74,
    "province_rank": 14
   },
@@ -31211,8 +33311,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 37.8,
-   "global_rank": 101,
+   "comparable_score": 47.9,
+   "global_rank": 102,
    "province_rank": 23
   },
   {
@@ -31256,9 +33356,205 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 16.2,
-   "global_rank": 157,
+   "comparable_score": 29.8,
+   "global_rank": 183,
+   "province_rank": 53
+  },
+  {
+   "id": 411422,
+   "name": "睢县",
+   "province": "河南",
+   "parent": "商丘市",
+   "center": [
+    115.066469,
+    34.429025
+   ],
+   "gcj_center": [
+    115.07011,
+    34.42843
+   ],
+   "score_avg": null,
+   "score_mean": 37.3,
+   "size": 0,
+   "quality": {
+    "ways": 92,
+    "pois": 11,
+    "buildings": 1,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 29.3,
+   "global_rank": 189,
+   "province_rank": 57
+  },
+  {
+   "id": 411424,
+   "name": "柘城县",
+   "province": "河南",
+   "parent": "商丘市",
+   "center": [
+    115.303811,
+    34.075876
+   ],
+   "gcj_center": [
+    115.30743,
+    34.07528
+   ],
+   "score_avg": null,
+   "score_mean": 30.3,
+   "size": 0,
+   "quality": {
+    "ways": 72,
+    "pois": 3,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 10.6,
+   "global_rank": 258,
+   "province_rank": 91
+  },
+  {
+   "id": 410527,
+   "name": "内黄县",
+   "province": "河南",
+   "parent": "安阳市",
+   "center": [
+    114.900819,
+    35.954233
+   ],
+   "gcj_center": [
+    114.90458,
+    35.9537
+   ],
+   "score_avg": null,
+   "score_mean": 40.0,
+   "size": 0,
+   "quality": {
+    "ways": 316,
+    "pois": 26,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 36.4,
+   "global_rank": 154,
    "province_rank": 42
+  },
+  {
+   "id": 410581,
+   "name": "林州市",
+   "province": "河南",
+   "parent": "安阳市",
+   "center": [
+    113.820045,
+    36.063962
+   ],
+   "gcj_center": [
+    113.82377,
+    36.0634
+   ],
+   "score_avg": null,
+   "score_mean": 37.4,
+   "size": 0,
+   "quality": {
+    "ways": 325,
+    "pois": 16,
+    "buildings": 0,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 29.5,
+   "global_rank": 186,
+   "province_rank": 54
+  },
+  {
+   "id": 410526,
+   "name": "滑县",
+   "province": "河南",
+   "parent": "安阳市",
+   "center": [
+    114.520287,
+    35.575187
+   ],
+   "gcj_center": [
+    114.524,
+    35.57463
+   ],
+   "score_avg": null,
+   "score_mean": 36.5,
+   "size": 0,
+   "quality": {
+    "ways": 411,
+    "pois": 10,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 27.1,
+   "global_rank": 199,
+   "province_rank": 63
+  },
+  {
+   "id": 410523,
+   "name": "汤阴县",
+   "province": "河南",
+   "parent": "安阳市",
+   "center": [
+    114.358622,
+    35.922898
+   ],
+   "gcj_center": [
+    114.36236,
+    35.92235
+   ],
+   "score_avg": null,
+   "score_mean": 34.8,
+   "size": 0,
+   "quality": {
+    "ways": 520,
+    "pois": 18,
+    "buildings": 1,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 22.6,
+   "global_rank": 215,
+   "province_rank": 72
+  },
+  {
+   "id": 410522,
+   "name": "安阳县",
+   "province": "河南",
+   "parent": "安阳市",
+   "center": [
+    114.126464,
+    36.131131
+   ],
+   "gcj_center": [
+    114.13021,
+    36.13059
+   ],
+   "score_avg": null,
+   "score_mean": 33.0,
+   "size": 0,
+   "quality": {
+    "ways": 368,
+    "pois": 7,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 17.8,
+   "global_rank": 228,
+   "province_rank": 76
   },
   {
    "id": 410423,
@@ -31501,8 +33797,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 36.2,
-   "global_rank": 108,
+   "comparable_score": 46.5,
+   "global_rank": 109,
    "province_rank": 28
   },
   {
@@ -31562,8 +33858,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 31.7,
-   "global_rank": 121,
+   "comparable_score": 42.8,
+   "global_rank": 122,
    "province_rank": 33
   },
   {
@@ -31623,9 +33919,93 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 28.6,
-   "global_rank": 134,
+   "comparable_score": 40.2,
+   "global_rank": 137,
    "province_rank": 37
+  },
+  {
+   "id": 410421,
+   "name": "宝丰县",
+   "province": "河南",
+   "parent": "平顶山市",
+   "center": [
+    113.063304,
+    33.86703
+   ],
+   "gcj_center": [
+    113.06681,
+    33.86636
+   ],
+   "score_avg": null,
+   "score_mean": 35.5,
+   "size": 0,
+   "quality": {
+    "ways": 417,
+    "pois": 18,
+    "buildings": 1,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 24.5,
+   "global_rank": 208,
+   "province_rank": 69
+  },
+  {
+   "id": 410482,
+   "name": "汝州市",
+   "province": "河南",
+   "parent": "平顶山市",
+   "center": [
+    112.841814,
+    34.168075
+   ],
+   "gcj_center": [
+    112.84534,
+    34.16741
+   ],
+   "score_avg": null,
+   "score_mean": 32.6,
+   "size": 0,
+   "quality": {
+    "ways": 118,
+    "pois": 12,
+    "buildings": 1,
+    "greens": 5
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 16.8,
+   "global_rank": 237,
+   "province_rank": 79
+  },
+  {
+   "id": 410481,
+   "name": "舞钢市",
+   "province": "河南",
+   "parent": "平顶山市",
+   "center": [
+    113.522767,
+    33.30276
+   ],
+   "gcj_center": [
+    113.52625,
+    33.30208
+   ],
+   "score_avg": null,
+   "score_mean": 32.0,
+   "size": 0,
+   "quality": {
+    "ways": 96,
+    "pois": 14,
+    "buildings": 1,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 15.2,
+   "global_rank": 245,
+   "province_rank": 84
   },
   {
    "id": 410223,
@@ -31684,8 +34064,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 37.1,
-   "global_rank": 103,
+   "comparable_score": 47.3,
+   "global_rank": 104,
    "province_rank": 24
   },
   {
@@ -31865,9 +34245,65 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 34.9,
-   "global_rank": 112,
+   "comparable_score": 45.5,
+   "global_rank": 113,
    "province_rank": 29
+  },
+  {
+   "id": 410221,
+   "name": "杞县",
+   "province": "河南",
+   "parent": "开封市",
+   "center": [
+    114.766835,
+    34.55518
+   ],
+   "gcj_center": [
+    114.77047,
+    34.55459
+   ],
+   "score_avg": null,
+   "score_mean": 38.9,
+   "size": 0,
+   "quality": {
+    "ways": 87,
+    "pois": 19,
+    "buildings": 0,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 33.5,
+   "global_rank": 167,
+   "province_rank": 47
+  },
+  {
+   "id": 410222,
+   "name": "通许县",
+   "province": "河南",
+   "parent": "开封市",
+   "center": [
+    114.464116,
+    34.477909
+   ],
+   "gcj_center": [
+    114.46773,
+    34.4773
+   ],
+   "score_avg": null,
+   "score_mean": 28.0,
+   "size": 0,
+   "quality": {
+    "ways": 93,
+    "pois": 1,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 4.5,
+   "global_rank": 275,
+   "province_rank": 101
   },
   {
    "id": 410724,
@@ -32238,7 +34674,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 53.7,
+   "comparable_score": 61.2,
    "global_rank": 69,
    "province_rank": 12
   },
@@ -32379,8 +34815,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 44.8,
-   "global_rank": 80,
+   "comparable_score": 53.7,
+   "global_rank": 81,
    "province_rank": 17
   },
   {
@@ -32496,9 +34932,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 33.3,
-   "global_rank": 116,
+   "comparable_score": 44.1,
+   "global_rank": 117,
    "province_rank": 30
+  },
+  {
+   "id": 410781,
+   "name": "卫辉市",
+   "province": "河南",
+   "parent": "新乡市",
+   "center": [
+    114.062178,
+    35.404875
+   ],
+   "gcj_center": [
+    114.06585,
+    35.40429
+   ],
+   "score_avg": null,
+   "score_mean": 41.4,
+   "size": 0,
+   "quality": {
+    "ways": 348,
+    "pois": 15,
+    "buildings": 0,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 40.2,
+   "global_rank": 138,
+   "province_rank": 38
   },
   {
    "id": 410725,
@@ -32621,9 +35085,9 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 24.4,
-   "global_rank": 145,
-   "province_rank": 39
+   "comparable_score": 36.7,
+   "global_rank": 153,
+   "province_rank": 41
   },
   {
    "id": 410727,
@@ -32690,9 +35154,289 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 21.9,
-   "global_rank": 152,
-   "province_rank": 41
+   "comparable_score": 34.6,
+   "global_rank": 163,
+   "province_rank": 44
+  },
+  {
+   "id": 410782,
+   "name": "辉县市",
+   "province": "河南",
+   "parent": "新乡市",
+   "center": [
+    113.798848,
+    35.461904
+   ],
+   "gcj_center": [
+    113.80252,
+    35.46132
+   ],
+   "score_avg": null,
+   "score_mean": 38.2,
+   "size": 0,
+   "quality": {
+    "ways": 642,
+    "pois": 9,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 31.6,
+   "global_rank": 172,
+   "province_rank": 50
+  },
+  {
+   "id": 410721,
+   "name": "新乡县",
+   "province": "河南",
+   "parent": "新乡市",
+   "center": [
+    113.802539,
+    35.190618
+   ],
+   "gcj_center": [
+    113.80619,
+    35.19002
+   ],
+   "score_avg": null,
+   "score_mean": 29.3,
+   "size": 0,
+   "quality": {
+    "ways": 339,
+    "pois": 5,
+    "buildings": 0,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 8.0,
+   "global_rank": 269,
+   "province_rank": 97
+  },
+  {
+   "id": 410323,
+   "name": "新安县",
+   "province": "河南",
+   "parent": "洛阳市",
+   "center": [
+    112.137866,
+    34.729346
+   ],
+   "gcj_center": [
+    112.1414,
+    34.72868
+   ],
+   "score_avg": null,
+   "score_mean": 38.9,
+   "size": 0,
+   "quality": {
+    "ways": 390,
+    "pois": 22,
+    "buildings": 0,
+    "greens": 12
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 33.5,
+   "global_rank": 168,
+   "province_rank": 48
+  },
+  {
+   "id": 410328,
+   "name": "洛宁县",
+   "province": "河南",
+   "parent": "洛阳市",
+   "center": [
+    111.651909,
+    34.387874
+   ],
+   "gcj_center": [
+    111.6554,
+    34.38718
+   ],
+   "score_avg": null,
+   "score_mean": 37.2,
+   "size": 0,
+   "quality": {
+    "ways": 164,
+    "pois": 15,
+    "buildings": 1,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 29.0,
+   "global_rank": 192,
+   "province_rank": 60
+  },
+  {
+   "id": 410329,
+   "name": "伊川县",
+   "province": "河南",
+   "parent": "洛阳市",
+   "center": [
+    112.425859,
+    34.424086
+   ],
+   "gcj_center": [
+    112.42938,
+    34.42342
+   ],
+   "score_avg": null,
+   "score_mean": 34.9,
+   "size": 0,
+   "quality": {
+    "ways": 152,
+    "pois": 8,
+    "buildings": 2,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 22.9,
+   "global_rank": 214,
+   "province_rank": 71
+  },
+  {
+   "id": 410325,
+   "name": "嵩县",
+   "province": "河南",
+   "parent": "洛阳市",
+   "center": [
+    112.084277,
+    34.132254
+   ],
+   "gcj_center": [
+    112.08777,
+    34.13156
+   ],
+   "score_avg": null,
+   "score_mean": 31.8,
+   "size": 0,
+   "quality": {
+    "ways": 142,
+    "pois": 5,
+    "buildings": 0,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 14.6,
+   "global_rank": 247,
+   "province_rank": 86
+  },
+  {
+   "id": 410324,
+   "name": "栾川县",
+   "province": "河南",
+   "parent": "洛阳市",
+   "center": [
+    111.614944,
+    33.783913
+   ],
+   "gcj_center": [
+    111.61839,
+    33.78319
+   ],
+   "score_avg": null,
+   "score_mean": 29.9,
+   "size": 0,
+   "quality": {
+    "ways": 134,
+    "pois": 2,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 9.6,
+   "global_rank": 264,
+   "province_rank": 94
+  },
+  {
+   "id": 410326,
+   "name": "汝阳县",
+   "province": "河南",
+   "parent": "洛阳市",
+   "center": [
+    112.470283,
+    34.153908
+   ],
+   "gcj_center": [
+    112.47379,
+    34.15323
+   ],
+   "score_avg": null,
+   "score_mean": 29.9,
+   "size": 0,
+   "quality": {
+    "ways": 130,
+    "pois": 2,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 9.6,
+   "global_rank": 265,
+   "province_rank": 95
+  },
+  {
+   "id": 410327,
+   "name": "宜阳县",
+   "province": "河南",
+   "parent": "洛阳市",
+   "center": [
+    112.176467,
+    34.517152
+   ],
+   "gcj_center": [
+    112.17999,
+    34.51648
+   ],
+   "score_avg": null,
+   "score_mean": 28.5,
+   "size": 0,
+   "quality": {
+    "ways": 178,
+    "pois": 4,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 5.9,
+   "global_rank": 273,
+   "province_rank": 100
+  },
+  {
+   "id": 419001,
+   "name": "济源市",
+   "province": "河南",
+   "parent": "济源市",
+   "center": [
+    112.586462,
+    35.091017
+   ],
+   "gcj_center": [
+    112.59005,
+    35.09038
+   ],
+   "score_avg": null,
+   "score_mean": 37.4,
+   "size": 0,
+   "quality": {
+    "ways": 351,
+    "pois": 21,
+    "buildings": 2,
+    "greens": 8
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 29.5,
+   "global_rank": 187,
+   "province_rank": 55
   },
   {
    "id": 411121,
@@ -32863,8 +35607,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 36.8,
-   "global_rank": 105,
+   "comparable_score": 47.1,
+   "global_rank": 106,
    "province_rank": 26
   },
   {
@@ -32972,8 +35716,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 30.5,
-   "global_rank": 125,
+   "comparable_score": 41.8,
+   "global_rank": 127,
    "province_rank": 35
   },
   {
@@ -33329,7 +36073,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 67.3,
+   "comparable_score": 72.6,
    "global_rank": 47,
    "province_rank": 5
   },
@@ -33462,7 +36206,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 65.7,
+   "comparable_score": 71.3,
    "global_rank": 49,
    "province_rank": 6
   },
@@ -33867,7 +36611,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 60.3,
+   "comparable_score": 66.8,
    "global_rank": 58,
    "province_rank": 8
   },
@@ -33992,9 +36736,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 45.7,
-   "global_rank": 76,
+   "comparable_score": 54.5,
+   "global_rank": 77,
    "province_rank": 15
+  },
+  {
+   "id": 410927,
+   "name": "台前县",
+   "province": "河南",
+   "parent": "濮阳市",
+   "center": [
+    115.851869,
+    35.996976
+   ],
+   "gcj_center": [
+    115.85568,
+    35.99647
+   ],
+   "score_avg": null,
+   "score_mean": 40.5,
+   "size": 0,
+   "quality": {
+    "ways": 323,
+    "pois": 17,
+    "buildings": 2,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 37.8,
+   "global_rank": 150,
+   "province_rank": 40
   },
   {
    "id": 410825,
@@ -34117,7 +36889,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 57.8,
+   "comparable_score": 64.6,
    "global_rank": 66,
    "province_rank": 11
   },
@@ -34194,8 +36966,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 39.7,
-   "global_rank": 95,
+   "comparable_score": 49.5,
+   "global_rank": 96,
    "province_rank": 20
   },
   {
@@ -34271,9 +37043,93 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 37.1,
-   "global_rank": 104,
+   "comparable_score": 47.3,
+   "global_rank": 105,
    "province_rank": 25
+  },
+  {
+   "id": 410882,
+   "name": "沁阳市",
+   "province": "河南",
+   "parent": "焦作市",
+   "center": [
+    112.930938,
+    35.089638
+   ],
+   "gcj_center": [
+    112.93454,
+    35.08901
+   ],
+   "score_avg": null,
+   "score_mean": 37.9,
+   "size": 0,
+   "quality": {
+    "ways": 213,
+    "pois": 10,
+    "buildings": 3,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 30.9,
+   "global_rank": 178,
+   "province_rank": 51
+  },
+  {
+   "id": 410821,
+   "name": "修武县",
+   "province": "河南",
+   "parent": "焦作市",
+   "center": [
+    113.44383,
+    35.230529
+   ],
+   "gcj_center": [
+    113.44746,
+    35.22992
+   ],
+   "score_avg": null,
+   "score_mean": 37.3,
+   "size": 0,
+   "quality": {
+    "ways": 367,
+    "pois": 14,
+    "buildings": 1,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 29.3,
+   "global_rank": 190,
+   "province_rank": 58
+  },
+  {
+   "id": 410822,
+   "name": "博爱县",
+   "province": "河南",
+   "parent": "焦作市",
+   "center": [
+    113.0657,
+    35.170972
+   ],
+   "gcj_center": [
+    113.06931,
+    35.17035
+   ],
+   "score_avg": null,
+   "score_mean": 32.2,
+   "size": 0,
+   "quality": {
+    "ways": 118,
+    "pois": 6,
+    "buildings": 1,
+    "greens": 3
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 15.7,
+   "global_rank": 244,
+   "province_rank": 83
   },
   {
    "id": 411025,
@@ -34484,9 +37340,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 41.9,
-   "global_rank": 87,
+   "comparable_score": 51.3,
+   "global_rank": 88,
    "province_rank": 19
+  },
+  {
+   "id": 411082,
+   "name": "长葛市",
+   "province": "河南",
+   "parent": "许昌市",
+   "center": [
+    113.765346,
+    34.219894
+   ],
+   "gcj_center": [
+    113.76891,
+    34.21926
+   ],
+   "score_avg": null,
+   "score_mean": 37.4,
+   "size": 0,
+   "quality": {
+    "ways": 172,
+    "pois": 13,
+    "buildings": 0,
+    "greens": 4
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 29.5,
+   "global_rank": 188,
+   "province_rank": 56
   },
   {
    "id": 411024,
@@ -34537,9 +37421,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 0.0,
-   "global_rank": 167,
-   "province_rank": 46
+   "comparable_score": 16.2,
+   "global_rank": 240,
+   "province_rank": 81
+  },
+  {
+   "id": 411081,
+   "name": "禹州市",
+   "province": "河南",
+   "parent": "许昌市",
+   "center": [
+    113.467768,
+    34.155051
+   ],
+   "gcj_center": [
+    113.47132,
+    34.1544
+   ],
+   "score_avg": null,
+   "score_mean": 29.9,
+   "size": 0,
+   "quality": {
+    "ways": 137,
+    "pois": 4,
+    "buildings": 1,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 9.6,
+   "global_rank": 266,
+   "province_rank": 96
   },
   {
    "id": 410185,
@@ -34726,7 +37638,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 61.0,
+   "comparable_score": 67.3,
    "global_rank": 56,
    "province_rank": 7
   },
@@ -34787,9 +37699,121 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 45.1,
-   "global_rank": 79,
+   "comparable_score": 54.0,
+   "global_rank": 80,
    "province_rank": 16
+  },
+  {
+   "id": 410184,
+   "name": "新郑市",
+   "province": "河南",
+   "parent": "郑州市",
+   "center": [
+    113.736091,
+    34.39485
+   ],
+   "gcj_center": [
+    113.73967,
+    34.39422
+   ],
+   "score_avg": null,
+   "score_mean": 39.3,
+   "size": 0,
+   "quality": {
+    "ways": 361,
+    "pois": 32,
+    "buildings": 0,
+    "greens": 22
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 34.6,
+   "global_rank": 164,
+   "province_rank": 45
+  },
+  {
+   "id": 410183,
+   "name": "新密市",
+   "province": "河南",
+   "parent": "郑州市",
+   "center": [
+    113.377041,
+    34.538482
+   ],
+   "gcj_center": [
+    113.38062,
+    34.53785
+   ],
+   "score_avg": null,
+   "score_mean": 37.0,
+   "size": 0,
+   "quality": {
+    "ways": 147,
+    "pois": 11,
+    "buildings": 3,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 28.5,
+   "global_rank": 194,
+   "province_rank": 61
+  },
+  {
+   "id": 410182,
+   "name": "荥阳市",
+   "province": "河南",
+   "parent": "郑州市",
+   "center": [
+    113.387927,
+    34.789703
+   ],
+   "gcj_center": [
+    113.39152,
+    34.78908
+   ],
+   "score_avg": null,
+   "score_mean": 36.5,
+   "size": 0,
+   "quality": {
+    "ways": 168,
+    "pois": 14,
+    "buildings": 0,
+    "greens": 10
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 27.1,
+   "global_rank": 200,
+   "province_rank": 64
+  },
+  {
+   "id": 410122,
+   "name": "中牟县",
+   "province": "河南",
+   "parent": "郑州市",
+   "center": [
+    114.018903,
+    34.722586
+   ],
+   "gcj_center": [
+    114.02252,
+    34.72198
+   ],
+   "score_avg": null,
+   "score_mean": 36.4,
+   "size": 0,
+   "quality": {
+    "ways": 332,
+    "pois": 11,
+    "buildings": 1,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 26.9,
+   "global_rank": 201,
+   "province_rank": 65
   },
   {
    "id": 411721,
@@ -35200,7 +38224,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 67.9,
+   "comparable_score": 73.1,
    "global_rank": 45,
    "province_rank": 4
   },
@@ -35277,7 +38301,7 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 49.2,
+   "comparable_score": 57.4,
    "global_rank": 73,
    "province_rank": 13
   },
@@ -35426,8 +38450,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 44.1,
-   "global_rank": 82,
+   "comparable_score": 53.2,
+   "global_rank": 83,
    "province_rank": 18
   },
   {
@@ -35495,8 +38519,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 38.4,
-   "global_rank": 99,
+   "comparable_score": 48.4,
+   "global_rank": 100,
    "province_rank": 22
   },
   {
@@ -35588,8 +38612,8 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 29.8,
-   "global_rank": 127,
+   "comparable_score": 41.2,
+   "global_rank": 129,
    "province_rank": 36
   },
   {
@@ -35729,9 +38753,93 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 27.6,
-   "global_rank": 141,
-   "province_rank": 38
+   "comparable_score": 39.4,
+   "global_rank": 146,
+   "province_rank": 39
+  },
+  {
+   "id": 411723,
+   "name": "平舆县",
+   "province": "河南",
+   "parent": "驻马店市",
+   "center": [
+    114.633602,
+    32.956285
+   ],
+   "gcj_center": [
+    114.63711,
+    32.95563
+   ],
+   "score_avg": null,
+   "score_mean": 33.0,
+   "size": 0,
+   "quality": {
+    "ways": 144,
+    "pois": 5,
+    "buildings": 0,
+    "greens": 1
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 17.8,
+   "global_rank": 229,
+   "province_rank": 77
+  },
+  {
+   "id": 411727,
+   "name": "汝南县",
+   "province": "河南",
+   "parent": "驻马店市",
+   "center": [
+    114.356,
+    33.0052
+   ],
+   "gcj_center": [
+    114.35949,
+    33.00453
+   ],
+   "score_avg": null,
+   "score_mean": 31.4,
+   "size": 0,
+   "quality": {
+    "ways": 209,
+    "pois": 8,
+    "buildings": 1,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 13.6,
+   "global_rank": 251,
+   "province_rank": 88
+  },
+  {
+   "id": 411724,
+   "name": "正阳县",
+   "province": "河南",
+   "parent": "驻马店市",
+   "center": [
+    114.386015,
+    32.602503
+   ],
+   "gcj_center": [
+    114.38948,
+    32.60183
+   ],
+   "score_avg": null,
+   "score_mean": 30.5,
+   "size": 0,
+   "quality": {
+    "ways": 132,
+    "pois": 0,
+    "buildings": 0,
+    "greens": 0
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 11.2,
+   "global_rank": 255,
+   "province_rank": 90
   },
   {
    "id": 410621,
@@ -35854,9 +38962,37 @@
      "h": 0.0007186
     }
    ],
-   "comparable_score": 58.1,
+   "comparable_score": 64.9,
    "global_rank": 64,
    "province_rank": 9
+  },
+  {
+   "id": 410622,
+   "name": "淇县",
+   "province": "河南",
+   "parent": "鹤壁市",
+   "center": [
+    114.196678,
+    35.610045
+   ],
+   "gcj_center": [
+    114.20038,
+    35.60948
+   ],
+   "score_avg": null,
+   "score_mean": 39.1,
+   "size": 0,
+   "quality": {
+    "ways": 274,
+    "pois": 16,
+    "buildings": 0,
+    "greens": 2
+   },
+   "simulated": false,
+   "cells": [],
+   "comparable_score": 34.0,
+   "global_rank": 165,
+   "province_rank": 46
   }
  ]
 }
