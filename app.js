@@ -94,13 +94,14 @@
       '<h2>' + z.name + '</h2>' +
       '<div class="meta">' + z.province + ' · ' + (z.parent || "") + '</div>' +
       '<div class="kv">' +
-        '<div class="b"><div class="k">最大连片</div><div class="v">' + z.size + '<span style="font-size:10px;color:#94a3b8"> 格</span></div></div>' +
-        '<div class="b"><div class="k">连片均分</div><div class="v">' + (z.score_avg || 0) + '</div></div>' +
+        '<div class="b"><div class="k">最大连片</div><div class="v">' + (z.size ? (z.size + '<span style="font-size:10px;color:#94a3b8"> 格</span>') : '—') + '</div></div>' +
+        '<div class="b"><div class="k">连片均分</div><div class="v">' + (z.score_avg != null ? z.score_avg : '—') + '</div></div>' +
         '<div class="b"><div class="k">县城好走度</div><div class="v">' + (z.score_mean || 0) + '</div></div>' +
         '<div class="b"><div class="k">可比均分</div><div class="v">' + (z.comparable_score != null ? z.comparable_score : "—") + '<span style="font-size:10px;color:#94a3b8"> /100</span></div></div>' +
         '<div class="b"><div class="k">同省排名</div><div class="v">' + (z.province_rank ? ("#" + z.province_rank) : "—") + '</div></div>' +
         '<div class="b"><div class="k">全省名</div><div class="v">' + (z.global_rank ? ("#" + z.global_rank) : "—") + '</div></div>' +
       '</div>' + warn +
+      (z.size ? '' : '<div class="warn">该县暂无连片友好区（仍可下钻看路网与五因子分解）</div>') +
       '<div id="factorbox" class="factorbox"></div>' +
       '<div class="nextrow"><span id="nextc" class="nextc">下一个县城 ›</span></div>';
   }
