@@ -152,6 +152,15 @@
     document.querySelectorAll("#layerbar .lb").forEach(function (b) {
       b.onclick = function () { setLayer(b.getAttribute("data-k")); };
     });
+    // 「用户点亮网格」标记模式开关（仅当前会话，点格变红并假装记录）
+    var markBtn = document.getElementById("markbtn");
+    if (markBtn) markBtn.onclick = function () {
+      markMode = !markMode;
+      markBtn.classList.toggle("on", markMode);
+      markBtn.textContent = markMode ? "标记中 ✓" : "标记";
+      updateMarkBadge();
+      refreshCells(); // 重绘当前县城：MapLibre 加红层 / SVG 实时变红
+    };
     // 权重面板开关
     var wt = document.getElementById("wtoggle");
     if (wt) wt.onclick = function () {
@@ -191,6 +200,7 @@
     var z = DETAIL[adcode];
     if (!z) { document.body.classList.remove("detail"); mode = "overview"; return; }
     curDetailAdcode = String(adcode); // 记录当前县城，供"下一个县城"使用
+    marked = {}; updateMarkBadge();    // 进入新县城：清空上一县城的标记（仅会话级）
     var cn = document.getElementById("cellnote"); if (cn) cn.style.display = "none";
     if (mapLibreOk) maplibreEnterDetail(z); else drawDetailSvg(adcode);
     renderFactorPanel(String(adcode)); // Step 2 因子分解面板（与渲染解耦，两路通用）
@@ -213,6 +223,9 @@
   function backToOverview() {
     mode = "overview";
     document.body.classList.remove("detail");
+    markMode = false;
+    var mb2 = document.getElementById("markbtn"); if (mb2) { mb2.classList.remove("on"); mb2.textContent = "标记"; }
+    updateMarkBadge();
     var cn = document.getElementById("cellnote"); if (cn) cn.style.display = "none";
     closeMethod();
     if (mapLibreOk) maplibreExitDetail(); else { setProj(116.5, 34, 17); renderOverviewSvg(); }
@@ -501,6 +514,40 @@
   var curW = {}; FACTOR_META.forEach(function (m) { curW[m.key] = m.w; });
   var cellsData = {};     // adcode -> { features, means, thr }
   var cellAdcode = null;  // 防竞态
+  var markMode = false;   // 「用户点亮网格」标记模式
+  var marked = {};        // cellKey -> true（仅当前会话，刷新即清空，不落盘）
+  function cellKey(p) { var c = p && p.raw && p.raw.center; return c ? (c[0].toFixed(5) + "," + c[1].toFixed(5)) : null; }
+  function markFC() {
+    var ad = cellsData[curDetailAdcode]; if (!ad) return { type: "FeatureCollection", features: [] };
+    var feats = ad.features.filter(function (f) { var k = cellKey(f.properties); return k && marked[k]; })
+      .map(function (f) { return { type: "Feature", properties: {}, geometry: f.geometry }; });
+    return { type: "FeatureCollection", features: feats };
+  }
+  function ensureMarkLayerML() {
+    if (!map || !map.getSource("cells-fill") || map.getSource("cells-marked")) return;
+    map.addSource("cells-marked", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+    map.addLayer({ id: "cells-marked", type: "fill", source: "cells-marked",
+      paint: { "fill-color": "rgba(239,68,68,0.8)", "fill-opacity": 0.85 } }, "cells-fill");
+  }
+  function updateMarkLayer() { if (mapLibreOk && map.getSource("cells-marked")) map.getSource("cells-marked").setData(markFC()); }
+  function updateMarkBadge() {
+    var b = document.getElementById("markbadge"); if (!b) return;
+    if (!markMode) { b.style.display = "none"; return; }
+    var n = Object.keys(marked).length;
+    b.style.display = "block";
+    b.innerHTML = "已标记 <b>" + n + "</b> 格 · 已记录" + (n ? ' <a id="markclear" href="javascript:void(0)">清空</a>' : "");
+    var clr = document.getElementById("markclear"); if (clr) clr.onclick = clearMarks;
+  }
+  function clearMarks() { marked = {}; refreshCells(); updateMarkBadge(); }
+  function refreshCells() {
+    if (mapLibreOk) { ensureMarkLayerML(); updateMarkLayer(); }
+    else if (mode === "detail" && curDetailAdcode) renderCellsSvg(curDetailAdcode);
+  }
+  function toggleMark(p) {
+    var k = cellKey(p); if (!k) return;
+    if (marked[k]) delete marked[k]; else marked[k] = true;
+    refreshCells(); updateMarkBadge();
+  }
 
   function normF(v, mn, mx) { if (mn === mx) return 50; return Math.round((v - mn) / (mx - mn) * 100); }
   function compOf(n) {
@@ -560,6 +607,7 @@
         map.getSource("cells-fill").setData({ type: "FeatureCollection", features: built.features });
         applyCellsPaint();
       }
+      if (markMode) { ensureMarkLayerML(); updateMarkLayer(); }
     }).catch(function (e) { console.warn("cells 加载失败", adcode, e); });
   }
   function onCellMove(e) {
@@ -573,6 +621,7 @@
   function factorName(k) { var m = FACTOR_META.filter(function (x) { return x.key === k; })[0]; return m ? m.name : k; }
   function onCellClick(e) {
     if (!e.features || !e.features.length) return;
+    if (markMode) { toggleMark(e.features[0].properties); return; }
     showCellNote(e.features[0].properties, cellsData[curDetailAdcode]);
   }
   function showCellNote(p, ad) {
@@ -623,12 +672,16 @@
         var pts = ring.map(function (c) { var q = toXY(c[0], c[1]); return q[0].toFixed(1) + "," + q[1].toFixed(1); }).join(" ");
         var pg = document.createElementNS(NS, "polygon");
         pg.setAttribute("points", pts);
+        var isMarked = markMode && marked[cellKey(f.properties)];
         var fill;
-        if (curLayer === "friendly") fill = f.properties.friendly ? "rgba(34,197,94,0.55)" : "rgba(100,116,139,0.05)";
+        if (isMarked) fill = "rgba(239,68,68,0.8)";
+        else if (curLayer === "friendly") fill = f.properties.friendly ? "rgba(34,197,94,0.55)" : "rgba(100,116,139,0.05)";
         else { var key = curLayer === "score" ? "comp" : curLayer; fill = walkColor(f.properties[key]); }
-        pg.setAttribute("fill", fill); pg.setAttribute("stroke", "rgba(15,23,42,0.35)"); pg.setAttribute("stroke-width", 0.3);
+        pg.setAttribute("fill", fill);
+        pg.setAttribute("stroke", isMarked ? "rgba(239,68,68,0.95)" : "rgba(15,23,42,0.35)");
+        pg.setAttribute("stroke-width", isMarked ? 0.8 : 0.3);
         pg.style.cursor = "pointer";
-        pg.addEventListener("click", function () { showCellNote(f.properties, built); });
+        pg.addEventListener("click", function () { if (markMode) toggleMark(f.properties); else showCellNote(f.properties, built); });
         svgG.appendChild(pg);
       });
       if (z) {
