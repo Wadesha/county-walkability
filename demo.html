@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>步行友好标准 · 架空县城演示（云栖县）</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<script src="vendor/maplibre-gl.js"></script>
+<style>
+  html,body{margin:0;height:100%;background:#0b1220;color:#e2e8f0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+  #map{position:absolute;inset:0}
+  .demo-banner{position:absolute;top:8px;left:8px;z-index:20;background:rgba(17,24,39,.82);border:1px solid #f59e0b;color:#fcd34d;
+    padding:6px 10px;border-radius:8px;font-size:12px;max-width:340px;line-height:1.4}
+  .demo-banner b{color:#fde68a}
+  .demo-banner a{color:#7dd3fc}
+  /* 左侧控制面板 */
+  #ctrl{position:absolute;top:64px;left:8px;z-index:20;width:248px;max-height:calc(100% - 80px);overflow:auto;
+    background:rgba(17,24,39,.86);border:1px solid rgba(55,65,81,.6);border-radius:10px;padding:10px 12px;font-size:12px}
+  #ctrl h3{margin:10px 0 6px;font-size:12px;color:#94a3b8;border-top:1px solid rgba(55,65,81,.4);padding-top:8px}
+  #ctrl h3:first-child{border-top:none;padding-top:0;margin-top:0}
+  .layer-opt{display:block;margin:3px 0;cursor:pointer}
+  .layer-opt input{vertical-align:middle;margin-right:6px}
+  .wrow{display:flex;align-items:center;gap:6px;margin:3px 0}
+  .wrow label{width:54px;color:#cbd5e1}
+  .wrow input[type=range]{flex:1}
+  .wrow .wv{width:38px;text-align:right;color:#e2e8f0;font-variant-numeric:tabular-nums}
+  .btn{display:inline-block;margin-top:6px;padding:4px 8px;background:#1e293b;border:1px solid #475569;border-radius:6px;
+    color:#e2e8f0;cursor:pointer;font-size:11px}
+  .btn:hover{background:#334155}
+  #meanbox{margin-top:6px;font-size:11px;color:#94a3b8;line-height:1.5}
+  #meanbox b{color:#86efac}
+  #upgrade-note{margin-top:6px;font-size:11px;color:#fcd34d;line-height:1.4;display:none}
+  /* 右侧单格下钻面板 */
+  #cellpanel{position:absolute;top:64px;right:8px;z-index:20;width:248px;max-height:calc(100% - 80px);overflow:auto;
+    background:rgba(17,24,39,.9);border:1px solid rgba(55,65,81,.6);border-radius:10px;padding:10px 12px;font-size:12px;display:none}
+  #cellpanel h2{font-size:14px;margin:0 0 4px}
+  #cellpanel .close{float:right;cursor:pointer;color:#94a3b8}
+  #cellpanel .narr{margin:8px 0;padding:7px 8px;background:rgba(2,6,23,.6);border-radius:7px;line-height:1.5;color:#cbd5e1}
+  #cellpanel .frow{display:flex;align-items:center;gap:6px;margin:3px 0}
+  #cellpanel .fl{width:54px;color:#cbd5e1}
+  #cellpanel .ftrack{flex:1;height:8px;background:rgba(148,163,184,.18);border-radius:4px;overflow:hidden}
+  #cellpanel .fbar{display:block;height:100%}
+  #cellpanel .fv{width:40px;text-align:right;font-variant-numeric:tabular-nums}
+  #cellpanel .tag{display:inline-block;margin:2px 3px 0 0;padding:1px 6px;border-radius:10px;font-size:10px}
+  .tag-up{background:rgba(34,197,94,.18);color:#86efac;border:1px solid #16a34a}
+  .tag-dn{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid #b91c1c}
+  /* 方法学弹层 */
+  #method{position:absolute;inset:0;z-index:40;background:rgba(2,6,23,.82);display:none;align-items:center;justify-content:center}
+  #method .box{max-width:680px;max-height:86%;overflow:auto;background:#0f172a;border:1px solid #475569;border-radius:12px;
+    padding:18px 22px;font-size:13px;line-height:1.65}
+  #method h2{margin-top:0;color:#7dd3fc}
+  #method h4{color:#94a3b8;margin:14px 0 4px}
+  #method table{border-collapse:collapse;width:100%;margin:6px 0;font-size:12px}
+  #method th,#method td{border:1px solid #334155;padding:4px 8px;text-align:left}
+  #method code{background:#1e293b;padding:1px 5px;border-radius:4px;color:#fcd34d}
+  #method .x{position:absolute;top:24px;right:28px;color:#94a3b8;cursor:pointer;font-size:22px}
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="demo-banner">
+  <b>演示 · 架空县城「云栖县」</b>（虚构数据，仅展示标准如何落地）。<br>
+  底图为真实地图做背景，叠加的全是模拟值。 <a href="index.html">← 返回正式站点</a>
+</div>
+
+<div id="ctrl">
+  <h3>图层（点格子看单格解释）</h3>
+  <label class="layer-opt"><input type="radio" name="field" value="friendly">友好区（去吸引力后的连片）</label>
+  <label class="layer-opt"><input type="radio" name="field" value="score" checked>综合步行分（当前权重）</label>
+  <label class="layer-opt"><input type="radio" name="field" value="access">可达性</label>
+  <label class="layer-opt"><input type="radio" name="field" value="conn">连通度</label>
+  <label class="layer-opt"><input type="radio" name="field" value="comfort">舒适度</label>
+  <label class="layer-opt"><input type="radio" name="field" value="safety">安全度</label>
+  <label class="layer-opt"><input type="radio" name="field" value="attr">吸引力</label>
+
+  <h3>升级标准（对比当前算法）</h3>
+  <label class="layer-opt"><input type="checkbox" id="upg"> 启用升级版：绿地进舒适 · 步道/路灯/过街进安全</label>
+  <div id="upgrade-note"></div>
+
+  <h3>权重可调（实时重算）</h3>
+  <div id="weights"></div>
+  <span class="btn" id="wreset">重置为默认</span>
+  <div id="meanbox"></div>
+
+  <h3>方法学</h3>
+  <span class="btn" id="openmethod">查看完整方法学 →</span>
+</div>
+
+<div id="cellpanel">
+  <span class="close" id="cellclose">✕</span>
+  <h2 id="celltitle">单格解释</h2>
+  <div id="cellbody"></div>
+</div>
+
+<div id="method">
+  <span class="x" id="methodclose">✕</span>
+  <div class="box" id="methodbody"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  // ============ 工具 ============
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  var rnd=mulberry32(20260806);
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function hexMix(a,b,t){var pa=parseInt(a.slice(1),16),pb=parseInt(b.slice(1),16);
+    var ar=(pa>>16)&255,ag=(pa>>8)&255,ab=pa&255,br=(pb>>16)&255,bg=(pb>>8)&255,bb=pb&255;
+    var r=Math.round(ar+(br-ar)*t),g=Math.round(ag+(bg-ag)*t),bl=Math.round(ab+(bb-ab)*t);
+    return "#"+((1<<24)+(r<<16)+(g<<8)+bl).toString(16).slice(1);}
+  function ramp(v){v=clamp(v,0,100);return v<50?hexMix("#ef4444","#facc15",v/50):hexMix("#facc15","#22c55e",(v-50)/50);}
+  function noise(x,y){ // 平滑值噪声 0..1
+    var s=Math.sin(x*1.7+0.3)*Math.cos(y*1.3+1.1)+Math.sin(x*0.6-2.0)*Math.cos(y*0.9+0.5);
+    return clamp((s+2)/4,0,1);
+  }
+  var LAT0=30.05;
+  function dMeters(p,q){var dx=(p[0]-q[0])*Math.cos(LAT0*Math.PI/180)*111000;var dy=(p[1]-q[1])*111000;return Math.sqrt(dx*dx+dy*dy);}
+
+  // ============ 五因子默认权重（与真实算法一致） ============
+  var DEF_W={access:0.30,conn:0.18,comfort:0.17,safety:0.15,attr:0.20};
+  var W_NAME={access:"可达性",conn:"连通度",comfort:"舒适度",safety:"安全度",attr:"吸引力"};
+  var W_COLOR={access:"#38bdf8",conn:"#a78bfa",comfort:"#34d399",safety:"#f472b6",attr:"#fbbf24"};
+  var curW=Object.assign({},DEF_W);
+  var UPGRADE=false;
+
+  // ============ 虚构县城几何 ============
+  var N=13, CELL=0.012, LNG0=120.05;
+  var FRIEND_THRESH=60; // 去吸引力后四因子加权 ≥ 此值算友好格（演示阈值）
+
+  // POI 热点（带类型，用于可达+多样性）
+  var POIS=[
+    {lng:LNG0-0.022,lat:LAT0+0.018,w:1.0,types:["shop","food","school","bank","cafe","hospital"]},
+    {lng:LNG0+0.026,lat:LAT0-0.010,w:0.9,types:["shop","food","park"]},
+    {lng:LNG0+0.004,lat:LAT0+0.034,w:0.8,types:["food","school","cafe"]},
+    {lng:LNG0-0.030,lat:LAT0-0.028,w:0.7,types:["shop","bank"]}
+  ];
+  var ALLTYPES=["shop","food","school","bank","cafe","hospital","park"];
+  // 公园（绿地）
+  var PARKS=[
+    {lng:LNG0+0.010,lat:LAT0+0.006,r:0.014},
+    {lng:LNG0-0.014,lat:LAT0-0.020,r:0.011},
+    {lng:LNG0+0.030,lat:LAT0+0.026,r:0.009}
+  ];
+  // 路网
+  var roadPts=[];      // 用于连通度距离
+  var trunkPts=[];     // 用于安全度（离主干道）
+  var roadFeatures=[];
+  function lineBetween(a,b,n){var out=[];for(var i=0;i<=n;i++){var t=i/n;out.push([lerp(a[0],b[0],t),lerp(a[1],b[1],t)]);}return out;}
+  function buildRoads(){
+    var lines=[];
+    for(var k=-3;k<=3;k++){
+      var lng=LNG0+k*0.018;
+      lines.push({pts:lineBetween([lng,LAT0-0.075],[lng,LAT0+0.075],12),hw:(k===0?"primary":"residential")});
+    }
+    for(var j=-3;j<=3;j++){
+      var lat=LAT0+j*0.018;
+      lines.push({pts:lineBetween([LNG0-0.075,lat],[LNG0+0.075,lat],12),hw:(j===0?"primary":"residential")});
+    }
+    lines.push({pts:lineBetween([LNG0-0.060,LAT0-0.050],[LNG0+0.060,LAT0+0.050],16),hw:"trunk"});
+    lines.push({pts:lineBetween([LNG0-0.050,LAT0+0.055],[LNG0+0.055,LAT0-0.040],14),hw:"secondary"});
+    // 主要道路集合（trunk/primary）用于安全代理
+    var majors=lines.filter(function(l){return l.hw==="trunk"||l.hw==="primary";});
+    lines.forEach(function(l){
+      l.pts.forEach(function(p){roadPts.push(p);if(l.hw==="trunk")trunkPts.push(p);});
+      var mid=l.pts[Math.floor(l.pts.length/2)];
+      var slope=Math.round(clamp(noise(mid[0]*40,mid[1]*40)*12,0,12));
+      var md=1e9; majors.forEach(function(m){m.pts.forEach(function(p){var d=dMeters(mid,p);if(d<md)md=d;});});
+      var hwBase={trunk:40,primary:55,secondary:70,residential:82,service:75,path:90,footway:92}[l.hw]||70;
+      var grade=clamp(100-slope*6,0,100);
+      var safe=clamp(100-md/30,0,100);
+      var walk=clamp(Math.round(0.4*hwBase+0.35*grade+0.25*safe),0,100);
+      var sw,lit,cross;
+      if(l.hw==="trunk"){sw=false;lit=rnd()<0.35;cross=rnd()<0.6;}
+      else if(l.hw==="primary"){sw=rnd()<0.2;lit=rnd()<0.5;cross=rnd()<0.7;}
+      else{sw=rnd()<0.72;lit=rnd()<0.6;cross=rnd()<0.5;}
+      roadFeatures.push({type:"Feature",geometry:{type:"LineString",coordinates:l.pts},
+        properties:{hw:l.hw,slope:slope,walk:walk,sidewalk:sw,lit:lit,crossing:cross}});
+    });
+  }
+  buildRoads();
+
+  function nearest(lng,lat,pts){var m=1e9;for(var i=0;i<pts.length;i++){var d=dMeters([lng,lat],pts[i]);if(d<m)m=d;}return m;}
+  function parkProx(lng,lat){var best=0;PARKS.forEach(function(p){var d=dMeters([lng,lat],[p.lng,p.lat]);var r=Math.max(200,p.r*111000*Math.cos(LAT0*Math.PI/180));var v=Math.exp(-(d/r)*(d/r));if(v>best)best=v;});return best;}
+  function infraScore(lng,lat){ // 临街设施得分 0..1
+    var best=0;
+    roadFeatures.forEach(function(f){
+      var d=nearest(lng,lat,f.geometry.coordinates);
+      if(d>450)return;
+      var p=f.properties; var s=(p.sidewalk?0.5:0)+(p.lit?0.25:0)+(p.crossing?0.25:0);
+      if(s>best)best=s;
+    });
+    return best;
+  }
+
+  // ============ 生成 13x13 格子 ============
+  var cells=[]; // {i,j,lng,lat, access,conn, comfort,comfortUp, safety,safetyUp, attr}
+  for(var i=0;i<N;i++)for(var j=0;j<N;j++){
+    var lng=LNG0+(i-6)*CELL, lat=LAT0+(j-6)*CELL;
+    var poiProx=0, divCount=0;
+    POIS.forEach(function(p){var d=dMeters([lng,lat],[p.lng,p.lat]);var pr=Math.exp(-(d/700)*(d/700));if(pr>poiProx)poiProx=pr;
+      var within=d<1300; p.types.forEach(function(t){if(within && ALLTYPES.indexOf(t)>=0)divCount++;});});
+    var div=clamp(divCount/(ALLTYPES.length*POIS.length),0,1); // 多样性（粗略）
+    var access=clamp(Math.round(100*(0.5*poiProx+0.5*div)),0,100);
+    var attr=clamp(Math.round(100*(0.6*div+0.4*poiProx)),0,100);
+    var conn=clamp(Math.round(100*Math.exp(-nearest(lng,lat,roadPts)/400)),0,100);
+    var slopeDeg=Math.round(clamp(noise(i*0.5+3,j*0.5+7)*12,0,12));
+    var gp=parkProx(lng,lat);
+    var comfort=clamp(Math.round(55-(slopeDeg/12)*45),0,100);          // 当前：忽略绿地
+    var comfortUp=clamp(Math.round(comfort+30*gp),0,100);              // 升级：绿地进舒适
+    var trunkP=Math.exp(-nearest(lng,lat,trunkPts)/800);
+    var safety=clamp(Math.round(80-55*trunkP),0,100);                  // 当前：只看离主干道
+    var infra=infraScore(lng,lat);
+    var safetyUp=clamp(Math.round(safety+30*infra),0,100);            // 升级：步道/路灯/过街进安全
+    cells.push({i:i,j:j,lng:lng,lat:lat,access:access,conn:conn,comfort:comfort,comfortUp:comfortUp,
+      safety:safety,safetyUp:safetyUp,attr:attr,gp:gp,infra:infra});
+  }
+  function cellVal(c,key){
+    if(key==="comfort")return UPGRADE?c.comfortUp:c.comfort;
+    if(key==="safety")return UPGRADE?c.safetyUp:c.safety;
+    return c[key];
+  }
+  function scoreWith(c,up){ // 用当前权重；up=是否启用升级版
+    var s=curW.access*cellVal(c,"access")+curW.conn*cellVal(c,"conn")
+      +curW.comfort*(up?c.comfortUp:c.comfort)+curW.safety*(up?c.safetyUp:c.safety)+curW.attr*cellVal(c,"attr");
+    var sum=curW.access+curW.conn+curW.comfort+curW.safety+curW.attr;
+    return s/sum;
+  }
+  function scoreOf(c){ return scoreWith(c,UPGRADE); }
+  function friendlyOf(c){ // 去吸引力：四因子加权
+    var s=curW.access*cellVal(c,"access")+curW.conn*cellVal(c,"conn")+curW.comfort*cellVal(c,"comfort")+curW.safety*cellVal(c,"safety");
+    var sum=curW.access+curW.conn+curW.comfort+curW.safety;
+    return (s/sum)>=FRIEND_THRESH;
+  }
+
+  // ============ 地图 ============
+  var map=new maplibregl.Map({container:"map",style:"https://tiles.openfreemap.org/styles/liberty",
+    center:[LNG0,LAT0],zoom:12.4,attributionControl:true});
+  var FIELD="score";
+
+  function cellsFC(){
+    var feats=cells.map(function(c){
+      var val, color;
+      if(FIELD==="friendly"){var f=friendlyOf(c);val=f?100:0;color=f?"rgba(22,163,74,0.55)":"rgba(148,163,184,0.10)";}
+      else{val=cellVal(c,FIELD);color=ramp(val);}
+      var g=[];var w=CELL/2,h=CELL/2;
+      g.push([c.lng-w,c.lat+h]);g.push([c.lng+w,c.lat+h]);g.push([c.lng+w,c.lat-h]);g.push([c.lng-w,c.lat-h]);g.push([c.lng-w,c.lat+h]);
+      return {type:"Feature",geometry:{type:"Polygon",coordinates:[g]},
+        properties:{val:Math.round(val),color:color,i:c.i,j:c.j,
+          access:c.access,conn:c.conn,comfort:c.comfort,comfortUp:c.comfortUp,safety:c.safety,safetyUp:c.safetyUp,attr:c.attr,
+          gp:Math.round(c.gp*100),infra:Math.round(c.infra*100),friendly:friendlyOf(c)}};
+    });
+    return {type:"FeatureCollection",features:feats};
+  }
+  function parkFC(){
+    return {type:"FeatureCollection",features:PARKS.map(function(p){
+      var r=p.r, ring=[]; for(var a=0;a<=24;a++){var t=a/24*Math.PI*2;ring.push([p.lng+r*Math.cos(t),p.lat+r*Math.sin(t)/Math.cos(LAT0*Math.PI/180)]);}
+      return {type:"Feature",geometry:{type:"Polygon",coordinates:[ring]},properties:{}};
+    })};
+  }
+  function roadFC(){return {type:"FeatureCollection",features:roadFeatures};}
+
+  map.on("load",function(){
+    map.addSource("parks",{type:"geojson",data:parkFC()});
+    map.addLayer({id:"parks",type:"fill",source:"parks",paint:{"fill-color":"#166534","fill-opacity":0.5}});
+    map.addSource("cells",{type:"geojson",data:cellsFC()});
+    map.addLayer({id:"cells",type:"fill",source:"cells",paint:{"fill-color":["get","color"],"fill-opacity":0.72}});
+    map.addLayer({id:"cells-line",type:"line",source:"cells",paint:{"line-color":"#0b1220","line-width":0.3,"line-opacity":0.25}});
+    map.addSource("roads",{type:"geojson",data:roadFC()});
+    map.addLayer({id:"roads-casing",type:"line",source:"roads",paint:{"line-color":"#0b1220","line-width":["interpolate",["linear"],["zoom"],11,1.5,15,4],"line-opacity":0.4}});
+    map.addLayer({id:"roads-line",type:"line",source:"roads",paint:{
+      "line-color":["interpolate",["linear"],["coalesce",["get","walk"],50],5,"#ef4444",50,"#facc15",95,"#22c55e"],
+      "line-width":["match",["get","hw"],"trunk",3.5,"primary",3,"secondary",2.2,"residential",1.4,"service",1,1.4]}});
+    // 升级版高亮：有步道+路灯的路
+    map.addLayer({id:"roads-good",type:"line",source:"roads",filter:["all",["==",["get","sidewalk"],true],["==",["get","lit"],true]],
+      paint:{"line-color":"#22d3ee","line-width":2.4,"line-opacity":0.9},layout:{visibility:"none"}});
+    map.on("click","cells",function(e){ if(e.features&&e.features.length) showCell(e.features[0].properties); });
+    map.on("mouseenter","cells",function(){map.getCanvas().style.cursor="pointer";});
+    map.on("mouseleave","cells",function(){map.getCanvas().style.cursor="";});
+    refreshMean();
+  });
+
+  function rebuild(){ if(map.getSource("cells")) map.getSource("cells").setData(cellsFC()); }
+
+  // ============ 单格下钻叙事（Step 3） ============
+  function showCell(p){
+    var c=cells[p.i*N+p.j];
+    var panel=document.getElementById("cellpanel");
+    document.getElementById("celltitle").textContent="格 ("+p.i+","+p.j+") · "+(p.friendly?"友好格":"非友好格");
+    // 因子条
+    var factors=["access","conn","comfort","safety","attr"];
+    var rows=factors.map(function(k){
+      var v=cellVal(c,k); var up = (k==="comfort"&&UPGRADE)?c.comfortUp : (k==="safety"&&UPGRADE)?c.safetyUp : null;
+      var base = k==="comfort"?c.comfort : k==="safety"?c.safety : c[k];
+      var upHtml = up!==null ? ' <span class="tag tag-up">'+base+'→'+up+'</span>' : '';
+      return '<div class="frow"><span class="fl">'+W_NAME[k]+'</span>'
+        +'<span class="ftrack"><span class="fbar" style="width:'+v+'%;background:'+W_COLOR[k]+'"></span></span>'
+        +'<span class="fv">'+v+upHtml+'</span></div>';
+    }).join("");
+    // 主因/短板（按 权重×值）
+    var contrib=factors.map(function(k){return {k:k,v:cellVal(c,k),w:curW[k],c:curW[k]*cellVal(c,k)};});
+    var maxC=contrib[0],minC=contrib[0];
+    contrib.forEach(function(x){if(x.c>maxC.c)maxC=x;if(x.c<minC.c)minC=x;});
+    var score=Math.round(scoreOf(c));
+    var narr='该格【'+W_NAME[maxC.k]+'】('+maxC.v+') 是拉高综合分的主因；【'+W_NAME[minC.k]+'】('+minC.v+') 偏弱，是主要短板。';
+    if(p.friendly) narr+=' 四项（去吸引力）达标，属步行友好格。'; else narr+=' 四项（去吸引力）未达阈值，暂不计入友好区——避免 POI 少的县城被系统性低估。';
+    if(UPGRADE){
+      var cd=(c.comfortUp-c.comfort), sd=(c.safetyUp-c.safety);
+      if(cd>0||sd>0) narr+=' 升级标准下，因临近绿地(+'+cd+') / 临街设施(+'+sd+')，舒适与安全提升。';
+    }
+    var extra = '<div class="narr">'+narr+'</div>'
+      +'<div style="font-size:11px;color:#94a3b8">绿地邻近 '+p.gp+'% ｜ 临街设施 '+p.infra+'%</div>';
+    document.getElementById("cellbody").innerHTML='<div style="font-size:11px;color:#94a3b8">综合步行分 <b style="color:#86efac;font-size:15px">'+score+'</b> /100（当前权重）</div>'+rows+extra;
+    panel.style.display="block";
+  }
+  document.getElementById("cellclose").onclick=function(){document.getElementById("cellpanel").style.display="none";};
+
+  // ============ 控件 ============
+  document.querySelectorAll('input[name=field]').forEach(function(r){r.onclick=function(){FIELD=this.value;rebuild();};});
+  document.getElementById("upg").onchange=function(){UPGRADE=this.checked;rebuild();refreshMean();
+    document.getElementById("upgrade-note").style.display=UPGRADE?"block":"none";
+    if(map.getLayer("roads-good")) map.setLayoutProperty("roads-good","visibility",UPGRADE?"visible":"none");
+  };
+  // 权重滑块
+  var wbox=document.getElementById("weights");
+  ["access","conn","comfort","safety","attr"].forEach(function(k){
+    var row=document.createElement("div");row.className="wrow";
+    row.innerHTML='<label>'+W_NAME[k]+'</label><input type="range" min="0" max="100" value="'+Math.round(DEF_W[k]*100)+'" data-k="'+k+'"><span class="wv" id="wv-'+k+'">'+Math.round(DEF_W[k]*100)+'%</span>';
+    wbox.appendChild(row);
+    row.querySelector("input").oninput=function(){
+      curW[k]=parseInt(this.value,10)/100;
+      document.getElementById("wv-"+k).textContent=this.value+"%";
+      normalizeW(); rebuild(); refreshMean();
+    };
+  });
+  function normalizeW(){var s=0;for(var k in curW)s+=curW[k];if(s<=0)return;for(var k in curW)curW[k]=curW[k]/s;}
+  document.getElementById("wreset").onclick=function(){
+    curW=Object.assign({},DEF_W);
+    document.querySelectorAll('#weights input[type=range]').forEach(function(inp){var k=inp.dataset.k;inp.value=Math.round(DEF_W[k]*100);document.getElementById("wv-"+k).textContent=Math.round(DEF_W[k]*100)+"%";});
+    rebuild();refreshMean();
+  };
+  function refreshMean(){
+    var base=0,up=0;
+    cells.forEach(function(c){base+=scoreWith(c,false);up+=scoreOf(c);});
+    base/=cells.length;up/=cells.length;
+    var html='全县综合均分 <b>'+up.toFixed(1)+'</b> /100（当前权重）';
+    if(UPGRADE) html+='<br>当前算法下均分 '+base.toFixed(1)+' → 升级后 <b>'+up.toFixed(1)+'</b>（+'+(up-base).toFixed(1)+'）';
+    document.getElementById("meanbox").innerHTML=html;
+  }
+  // ============ 方法学（Step 5） ============
+  var methodHtml='<h2>步行友好度 · 方法学（演示版）</h2>'
+    +'<p>本页为<b>架空县城</b>的纯演示：底图是真实地图背景，所有分数均为模拟生成，仅用于展示「标准如何变得透明、可调、可升级」。</p>'
+    +'<h4>1. 五因子与权重</h4>'
+    +'<p>每格独立计算 5 个因子（0–100），按权重加权得到综合分。默认权重对齐 Walk Score 思路（可达+吸引共 0.50，路网环境共 0.50）：</p>'
+    +'<table><tr><th>因子</th><th>含义</th><th>权重</th><th>数据来源</th></tr>'
+    +'<tr><td>可达性 access</td><td>到 POI 的便利度 + 类型多样性</td><td>30%</td><td>OSM POI</td></tr>'
+    +'<tr><td>连通度 conn</td><td>路网邻近度（路口/路段密度）</td><td>18%</td><td>OSM 路网建图</td></tr>'
+    +'<tr><td>舒适度 comfort</td><td>坡度（当前）；升级版加入绿地邻近</td><td>17%</td><td>高程 / OSM 绿地</td></tr>'
+    +'<tr><td>安全度 safety</td><td>离主干道（当前）；升级版加入步道/路灯/过街</td><td>15%</td><td>OSM 路网 / 设施标签</td></tr>'
+    +'<tr><td>吸引力 attr</td><td>POI 类型丰富度</td><td>20%</td><td>OSM POI</td></tr></table>'
+    +'<h4>2. 综合分公式</h4><p><code>score = Σ wᵢ · fᵢ</code>（权重归一化到和为 1）。左侧滑块可实时改权重重算——这就是「标准可调」。</p>'
+    +'<h4>3. 友好区判定（公平性设计）</h4><p>判定连片友好区时<b>刻意去掉 attr</b>，对剩余四因子加权归一，阈值 ≥ '+FRIEND_THRESH+' 的格记为友好格。这样 POI 少的县城不会被系统性低估。分数本身是<b>每县相对 min-max</b>，跨县不可直接比。</p>'
+    +'<h4>4. 升级标准（本演示的「改进方式」之一）</h4><p>勾选「升级标准」后：</p>'
+    +'<ul><li><b>舒适度</b>：在坡度之外纳入「临近绿地」——公园 300m 内的格舒适度 +30。</li>'
+    +'<li><b>安全度</b>：在「离主干道」之外纳入 OSM 的 <code>sidewalk / lit / crossing</code> 标签——临街有步道+路灯+过街设施的格安全度 +30。</li></ul>'
+    +'<p>路网本身也按 <code>walk</code> 分（等级 0.4 + 坡度 0.35 + 离主干道安全 0.25）上色：红=不好走，绿=好走。升级版会额外高亮「有步道且亮灯」的路（青色）。</p>'
+    +'<h4>5. 局限与下一步</h4><ul>'
+    +'<li>分数为相对值，绝对步行体验还需实地校验；</li>'
+    +'<li>当前真实站点尚未把绿地/设施标签用进因子（已在路线图中）；</li>'
+    +'<li>可接入真实 OSM 标签、众包评分、夜间灯光等做二次校准。</li></ul>';
+  document.getElementById("methodbody").innerHTML=methodHtml;
+  document.getElementById("openmethod").onclick=function(){document.getElementById("method").style.display="flex";};
+  document.getElementById("methodclose").onclick=function(){document.getElementById("method").style.display="none";};
+  document.getElementById("method").onclick=function(e){if(e.target===this)this.style.display="none";};
+})();
+</script>
+</body>
+</html>
