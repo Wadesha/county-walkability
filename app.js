@@ -146,6 +146,37 @@
         if (n) enterDetail(n);
       }
     });
+    // 县城内交互：图层切换
+    document.querySelectorAll("#layerbar .lb").forEach(function (b) {
+      b.onclick = function () { setLayer(b.getAttribute("data-k")); };
+    });
+    // 权重面板开关
+    var wt = document.getElementById("wtoggle");
+    if (wt) wt.onclick = function () {
+      var wp = document.getElementById("wpanel");
+      var show = wp.style.display === "none";
+      wp.style.display = show ? "block" : "none";
+      wt.textContent = show ? "权重 ▴" : "权重 ▾";
+    };
+    // 生成 5 个权重滑块（插入到 #wnote 之前）
+    var wp = document.getElementById("wpanel");
+    if (wp) {
+      FACTOR_META.forEach(function (m) {
+        var row = document.createElement("div"); row.className = "wrow";
+        row.innerHTML = '<span class="wl">' + m.name + '</span>'
+          + '<input id="w_' + m.key + '" class="wslider" type="range" min="0" max="100" value="' + Math.round(m.w * 100) + '">'
+          + '<span class="wv" id="wv_' + m.key + '">' + Math.round(m.w * 100) + '%</span>';
+        wp.insertBefore(row, document.getElementById("wnote"));
+        var el = row.querySelector("input");
+        el.addEventListener("input", function () {
+          document.getElementById("wv_" + m.key).textContent = el.value + "%";
+          onWeightInput();
+        });
+      });
+    }
+    var mb = document.getElementById("mbtn"); if (mb) mb.onclick = openMethod;
+    var mc = document.getElementById("mclose"); if (mc) mc.onclick = closeMethod;
+    var mm = document.getElementById("methodmodal"); if (mm) mm.addEventListener("click", function (e) { if (e.target === mm) closeMethod(); });
   }
 
   // ===================== 入口分发 =====================
@@ -158,6 +189,7 @@
     var z = DETAIL[adcode];
     if (!z) { document.body.classList.remove("detail"); mode = "overview"; return; }
     curDetailAdcode = String(adcode); // 记录当前县城，供"下一个县城"使用
+    var cn = document.getElementById("cellnote"); if (cn) cn.style.display = "none";
     if (mapLibreOk) maplibreEnterDetail(z); else drawDetailSvg(adcode);
     renderFactorPanel(String(adcode)); // Step 2 因子分解面板（与渲染解耦，两路通用）
   }
@@ -179,6 +211,8 @@
   function backToOverview() {
     mode = "overview";
     document.body.classList.remove("detail");
+    var cn = document.getElementById("cellnote"); if (cn) cn.style.display = "none";
+    closeMethod();
     if (mapLibreOk) maplibreExitDetail(); else { setProj(116.5, 34, 17); renderOverviewSvg(); }
   }
 
@@ -334,26 +368,26 @@
     if (map && map.getSource("county-points")) map.getSource("county-points").setData(countyPointFC());
   }
   function maplibreEnterDetail(z) {
-    if (!map.getSource("detail-fill")) {
-      map.addSource("detail-fill", { type: "geojson", data: cellsFC(z) });
-      map.addLayer({ id: "detail-fill", type: "fill", source: "detail-fill", paint: { "fill-color": "#16a34a", "fill-opacity": 0.45 } });
-      map.addLayer({ id: "detail-line", type: "line", source: "detail-fill", paint: { "line-color": "#16a34a", "line-width": 1 } });
+    if (!map.getSource("detail-center")) {
       map.addSource("detail-center", { type: "geojson", data: centerFC(z) });
       map.addLayer({ id: "detail-center", type: "circle", source: "detail-center",
         paint: { "circle-radius": 6, "circle-color": "#f97316", "circle-stroke-color": "#fff", "circle-stroke-width": 1.5 } });
     } else {
-      map.getSource("detail-fill").setData(cellsFC(z));
       map.getSource("detail-center").setData(centerFC(z));
     }
     map.flyTo({ center: z.center, zoom: 13 });
     showCard(z);
-    renderRoadsML(String(z.id)); // 懒加载该县路网，下钻时才取
+    renderRoadsML(String(z.id)); // 懒加载该县路网
+    renderCellsML(String(z.id)); // 格级热力 + 单格下钻 + 权重
   }
   function maplibreExitDetail() {
     clearRoadsML();
-    if (map.getSource("detail-fill")) {
-      ["detail-line", "detail-fill", "detail-center"].forEach(function (id) { try { map.removeLayer(id); } catch (e) {} });
-      ["detail-fill", "detail-center"].forEach(function (id) { try { map.removeSource(id); } catch (e) {} });
+    if (map.getSource("cells-fill")) {
+      try { map.off("click", "cells-fill", onCellClick); } catch (e) {}
+      try { map.off("mousemove", "cells-fill", onCellMove); } catch (e) {}
+      try { map.off("mouseleave", "cells-fill", onCellLeave); } catch (e) {}
+      ["cells-fill", "detail-center"].forEach(function (id) { try { map.removeLayer(id); } catch (e) {} });
+      ["cells-fill", "detail-center"].forEach(function (id) { try { map.removeSource(id); } catch (e) {} });
     }
     map.flyTo({ center: [116.5, 34], zoom: 6.4 });
   }
@@ -447,7 +481,7 @@
     cdot.setAttribute("fill", "rgba(249,115,22,0.95)"); cdot.setAttribute("stroke", "#fff"); cdot.setAttribute("stroke-width", 1.5);
     svgG.appendChild(cdot);
     showCard(z);
-    renderRoadsSvg(adcode); // 兜底 SVG 路径也画路网（best-effort）
+    renderCellsSvg(adcode); // 真实因子热力 + 路网 + 单格点击（含即时绿色占位已由上面画出）
   }
 
   function fallbackSvg() {
@@ -456,6 +490,152 @@
     map = null;
     ensureSvg(); setProj(116.5, 34, 17); renderOverviewSvg();
     document.getElementById("hint").textContent = "（离线示意图：真实底图不可用）· 绿点=已有数据，点绿点下钻 · 灰点=收集中";
+  }
+
+  // ===================== 县城内交互：图层 / 单格下钻 / 权重 / 方法学 =====================
+  var curLayer = "friendly";
+  var curW = {}; FACTOR_META.forEach(function (m) { curW[m.key] = m.w; });
+  var cellsData = {};     // adcode -> { features, means, thr }
+  var cellAdcode = null;  // 防竞态
+
+  function normF(v, mn, mx) { if (mn === mx) return 50; return Math.round((v - mn) / (mx - mn) * 100); }
+  function compOf(n) {
+    var s = 0, ws = 0;
+    FACTOR_META.forEach(function (m) { s += curW[m.key] * n[m.key]; ws += curW[m.key]; });
+    return Math.round(s / ws);
+  }
+  function buildCellFeatures(d) {
+    var feats = d.cells.features;
+    var mn = {}, mx = {};
+    FACTOR_META.forEach(function (m) { mn[m.key] = Infinity; mx[m.key] = -Infinity; });
+    feats.forEach(function (f) {
+      var p = f.properties || {};
+      FACTOR_META.forEach(function (m) { var v = p[m.key]; if (typeof v === "number") { if (v < mn[m.key]) mn[m.key] = v; if (v > mx[m.key]) mx[m.key] = v; } });
+    });
+    var thr = d.friendly_threshold || 65, means = {};
+    FACTOR_META.forEach(function (m) { means[m.key] = 0; });
+    var out = feats.map(function (f) {
+      var p = f.properties || {};
+      var n = {};
+      FACTOR_META.forEach(function (m) { n[m.key] = normF(p[m.key], mn[m.key], mx[m.key]); means[m.key] += n[m.key]; });
+      var fscore = (n.access + n.conn + n.comfort + n.safety) / 4;
+      var nf = Object.assign({}, n, { friendly: fscore >= thr, raw: p });
+      nf.comp = compOf(nf);
+      return { type: "Feature", properties: nf, geometry: f.geometry };
+    });
+    FACTOR_META.forEach(function (m) { means[m.key] = Math.round(means[m.key] / out.length); });
+    return { features: out, means: means, thr: thr };
+  }
+  function cellsPaint() {
+    if (curLayer === "friendly") {
+      return { "fill-color": ["case", ["get", "friendly"], "rgba(34,197,94,0.55)", "rgba(100,116,139,0.05)"], "fill-opacity": 1 };
+    }
+    var key = curLayer === "score" ? "comp" : curLayer;
+    return { "fill-color": ["interpolate", ["linear"], ["get", key], 0, "#ef4444", 50, "#facc15", 100, "#22c55e"], "fill-opacity": 0.8 };
+  }
+  function applyCellsPaint() {
+    if (!map || !map.getLayer("cells-fill")) return;
+    var p = cellsPaint();
+    map.setPaintProperty("cells-fill", "fill-color", p["fill-color"]);
+    map.setPaintProperty("cells-fill", "fill-opacity", p["fill-opacity"]);
+  }
+  function renderCellsML(adcode) {
+    cellAdcode = String(adcode);
+    loadCounty(adcode).then(function (d) {
+      if (cellAdcode !== String(adcode) || !mapLibreOk) return;
+      if (!d || !d.cells || !d.cells.features || !d.cells.features.length) return;
+      var built = buildCellFeatures(d);
+      cellsData[adcode] = built;
+      if (!map.getSource("cells-fill")) {
+        map.addSource("cells-fill", { type: "geojson", data: { type: "FeatureCollection", features: built.features } });
+        map.addLayer({ id: "cells-fill", type: "fill", source: "cells-fill", paint: cellsPaint() }, map.getLayer("detail-center") ? "detail-center" : undefined);
+        map.on("click", "cells-fill", onCellClick);
+        map.on("mousemove", "cells-fill", onCellMove);
+        map.on("mouseleave", "cells-fill", onCellLeave);
+      } else {
+        map.getSource("cells-fill").setData({ type: "FeatureCollection", features: built.features });
+        applyCellsPaint();
+      }
+    }).catch(function (e) { console.warn("cells 加载失败", adcode, e); });
+  }
+  function onCellMove(e) {
+    if (!e.features || !e.features.length) return;
+    var p = e.features[0].properties, t = document.getElementById("tip");
+    var label = curLayer === "friendly" ? (p.friendly ? "友好格" : "非友好格")
+      : (curLayer === "score" ? "综合分 " + p.comp : factorName(curLayer) + " " + p[curLayer]);
+    t.textContent = label; t.style.left = e.point.x + "px"; t.style.top = e.point.y + "px"; t.style.display = "block";
+  }
+  function onCellLeave() { var t = document.getElementById("tip"); if (t) t.style.display = "none"; }
+  function factorName(k) { var m = FACTOR_META.filter(function (x) { return x.key === k; })[0]; return m ? m.name : k; }
+  function onCellClick(e) {
+    if (!e.features || !e.features.length) return;
+    showCellNote(e.features[0].properties, cellsData[curDetailAdcode]);
+  }
+  function showCellNote(p, ad) {
+    if (!ad) ad = cellsData[curDetailAdcode];
+    if (!ad) return;
+    var means = ad.means, thr = ad.thr;
+    var order = FACTOR_META.slice().sort(function (a, b) { return p[b.key] - p[a.key]; });
+    var best = order[0], worst = order[order.length - 1];
+    var bestM = Math.round(p[best.key]), worstM = Math.round(p[worst.key]);
+    var txt = '<div class="cn-t">单格解读</div>'
+      + '<div class="cn-row">友好格：<b style="color:' + (p.friendly ? "#4ade80" : "#94a3b8") + '">' + (p.friendly ? "是 ✓" : "否") + '</b> ｜ 综合分 <b>' + p.comp + '</b></div>'
+      + '<div class="cn-row">最强：<b style="color:' + best.color + '">' + best.name + ' ' + bestM + '</b> <span class="cn-m">全县均 ' + means[best.key] + '</span></div>'
+      + '<div class="cn-row">最弱：<b style="color:' + worst.color + '">' + worst.name + ' ' + worstM + '</b> <span class="cn-m">全县均 ' + means[worst.key] + '</span></div>'
+      + '<div class="cn-note">' + (p.friendly
+        ? ("该格「可达/连通/舒适/安全」4 项环境因子（不含吸引）达友好阈值 " + thr + "，属连片友好区的一部分。")
+        : ("该格环境因子未达友好阈值；短板是 " + worst.name + "（" + worstM + " vs 全县均 " + means[worst.key] + "），步行体验弱于友好格。")) + '</div>';
+    var box = document.getElementById("cellnote"); if (box) { box.innerHTML = txt; box.style.display = "block"; }
+  }
+  function setLayer(key) {
+    curLayer = key;
+    if (mapLibreOk) applyCellsPaint();
+    else if (mode === "detail" && curDetailAdcode) renderCellsSvg(curDetailAdcode);
+    document.querySelectorAll("#layerbar .lb").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-k") === key); });
+  }
+  function onWeightInput() {
+    FACTOR_META.forEach(function (m) { var el = document.getElementById("w_" + m.key); if (el) curW[m.key] = parseFloat(el.value) / 100; });
+    var ad = cellsData[curDetailAdcode];
+    if (ad) {
+      ad.features.forEach(function (f) { f.properties.comp = compOf(f.properties); });
+      if (mapLibreOk && map.getSource("cells-fill")) map.getSource("cells-fill").setData({ type: "FeatureCollection", features: ad.features });
+      else if (mode === "detail") renderCellsSvg(curDetailAdcode);
+      applyCellsPaint();
+    }
+    var wn = document.getElementById("wnote"); if (wn) wn.textContent = "权重已实时应用到「综合分」图层（友好区阈值不随权重变化）。";
+  }
+  function openMethod() { var m = document.getElementById("methodmodal"); if (m) m.style.display = "flex"; }
+  function closeMethod() { var m = document.getElementById("methodmodal"); if (m) m.style.display = "none"; }
+
+  function renderCellsSvg(adcode) {
+    loadCounty(adcode).then(function (d) {
+      if (mode !== "detail" || curDetailAdcode !== String(adcode)) return;
+      if (!d || !d.cells || !d.cells.features || !d.cells.features.length) return;
+      var built = buildCellFeatures(d); cellsData[adcode] = built;
+      clearSvg();
+      var z = DETAIL[adcode];
+      built.features.forEach(function (f) {
+        var g = f.geometry, ring = g.coordinates && g.coordinates[0]; if (!ring || !ring.length) return;
+        var pts = ring.map(function (c) { var q = toXY(c[0], c[1]); return q[0].toFixed(1) + "," + q[1].toFixed(1); }).join(" ");
+        var pg = document.createElementNS(NS, "polygon");
+        pg.setAttribute("points", pts);
+        var fill;
+        if (curLayer === "friendly") fill = f.properties.friendly ? "rgba(34,197,94,0.55)" : "rgba(100,116,139,0.05)";
+        else { var key = curLayer === "score" ? "comp" : curLayer; fill = walkColor(f.properties[key]); }
+        pg.setAttribute("fill", fill); pg.setAttribute("stroke", "rgba(15,23,42,0.35)"); pg.setAttribute("stroke-width", 0.3);
+        pg.style.cursor = "pointer";
+        pg.addEventListener("click", function () { showCellNote(f.properties, built); });
+        svgG.appendChild(pg);
+      });
+      if (z) {
+        var cp = toXY(z.center[0], z.center[1]);
+        var cdot = document.createElementNS(NS, "circle");
+        cdot.setAttribute("cx", cp[0]); cdot.setAttribute("cy", cp[1]); cdot.setAttribute("r", 6);
+        cdot.setAttribute("fill", "rgba(249,115,22,0.95)"); cdot.setAttribute("stroke", "#fff"); cdot.setAttribute("stroke-width", 1.5);
+        svgG.appendChild(cdot);
+      }
+      renderRoadsSvg(adcode);
+    }).catch(function () {});
   }
 
   // ===================== 启动 =====================
