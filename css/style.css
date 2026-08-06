@@ -37,5 +37,9 @@ body.detail #chip, body.detail #dir, body.detail #hint { display:none !important
 #detailcard .kv .b .k{color:#94a3b8;font-size:10px}
 #detailcard .kv .b .v{font-size:15px;font-weight:600}
 #detailcard .warn{margin-top:6px;background:rgba(66,32,6,.7);border:1px solid #854d0e;color:#fcd34d;padding:5px 7px;border-radius:6px;font-size:10px;line-height:1.4}
+/* 下一个县城：卡片底部，低调小字，hover 才亮（不起眼位置） */
+#detailcard .nextrow{margin-top:7px;padding-top:5px;border-top:1px solid rgba(55,65,81,.5)}
+#detailcard .nextc{display:inline-block;color:#475569;font-size:10px;cursor:pointer;letter-spacing:.5px;user-select:none}
+#detailcard .nextc:hover{color:#86efac}
 
 #tip{position:absolute;z-index:20;pointer-events:none;background:rgba(0,0,0,.78);color:#fff;font-size:11px;padding:2px 6px;border-radius:5px;display:none;transform:translate(-50%,-150%)}
