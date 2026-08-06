@@ -14,6 +14,65 @@
   var COUNTY_CACHE = {};   // adcode -> Promise<json>（县城明细，含路网 GeoJSON）
   var roadsAdcode = null; // 当前下钻县城，防止竞态
   var curDetailAdcode = null; // 当前下钻县城 adcode（用于"下一个县城"导航）
+  var factorAdcode = null;   // 因子面板当前县城，防竞态
+
+  // 五因子标准（透明展示用）：权重与线上 build_county.py 完全一致
+  var FACTOR_META = [
+    { key: "access",  name: "可达性", w: 0.30, color: "#38bdf8" },
+    { key: "conn",    name: "连通度", w: 0.18, color: "#a78bfa" },
+    { key: "comfort", name: "舒适度", w: 0.17, color: "#34d399" },
+    { key: "safety",  name: "安全度", w: 0.15, color: "#f472b6" },
+    { key: "attr",    name: "吸引力", w: 0.20, color: "#fbbf24" }
+  ];
+
+  // 街道步行质量分 walk(0-100) → 红(差)→黄(中)→绿(好)
+  function hexMix(a, b, t) {
+    var pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16);
+    var ar = (pa >> 16) & 255, ag = (pa >> 8) & 255, ab = pa & 255;
+    var br = (pb >> 16) & 255, bg = (pb >> 8) & 255, bb = pb & 255;
+    var r = Math.round(ar + (br - ar) * t), g = Math.round(ag + (bg - ag) * t), bl = Math.round(ab + (bb - ab) * t);
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
+  }
+  function walkColor(w) {
+    if (w == null || isNaN(w)) return "#94a3b8";
+    w = Math.max(0, Math.min(100, w));
+    return w < 50 ? hexMix("#ef4444", "#facc15", w / 50) : hexMix("#facc15", "#22c55e", (w - 50) / 50);
+  }
+  // 从县城明细 cells 求某因子均值
+  function avgFactor(d, key) {
+    var fs = (d && d.cells && d.cells.features) || [];
+    if (!fs.length) return null;
+    var s = 0, n = 0;
+    fs.forEach(function (f) { var v = f.properties && f.properties[key]; if (typeof v === "number") { s += v; n++; } });
+    return n ? s / n : null;
+  }
+  // Step 2：县城卡片里的五因子分解面板（与渲染解耦，两路通用）
+  function renderFactorPanel(adcode) {
+    factorAdcode = adcode;
+    loadCounty(adcode).then(function (d) {
+      if (factorAdcode !== adcode) return; // 已离开该县城，丢弃
+      var box = document.getElementById("factorbox");
+      if (!box) return;
+      if (!d || !d.cells || !d.cells.features || !d.cells.features.length) {
+        box.innerHTML = '<div class="fnote">该县无格级因子数据</div>'; return;
+      }
+      var rows = FACTOR_META.map(function (m) { return { m: m, v: avgFactor(d, m.key) }; });
+      var best = rows[0], worst = rows[0];
+      rows.forEach(function (r) { if (r.v > best.v) best = r; if (r.v < worst.v) worst = r; });
+      var html = '<div class="ftitle">五因子分解 <span class="fw">（权重已标）</span></div>';
+      rows.forEach(function (r) {
+        var v = Math.round(r.v);
+        html += '<div class="frow"><span class="fl">' + r.m.name + '</span>'
+          + '<span class="ftrack"><span class="fbar" style="width:' + v + '%;background:' + r.m.color + '"></span></span>'
+          + '<span class="fv">' + v + '<span class="fw2">' + Math.round(r.m.w * 100) + '%</span></span></div>';
+      });
+      html += '<div class="fsum">优势 <b style="color:' + best.m.color + '">' + best.m.name + '</b> ｜ 短板 <b style="color:' + worst.m.color + '">' + worst.m.name + '</b></div>';
+      box.innerHTML = html;
+    }).catch(function () {
+      var box = document.getElementById("factorbox");
+      if (box) box.innerHTML = '<div class="fnote">因子加载失败</div>';
+    });
+  }
 
   function byAdcode(ad) {
     for (var i = 0; i < COUNTIES.length; i++) if (String(COUNTIES[i].adcode) === String(ad)) return COUNTIES[i];
@@ -42,6 +101,7 @@
         '<div class="b"><div class="k">同省排名</div><div class="v">' + (z.province_rank ? ("#" + z.province_rank) : "—") + '</div></div>' +
         '<div class="b"><div class="k">全省名</div><div class="v">' + (z.global_rank ? ("#" + z.global_rank) : "—") + '</div></div>' +
       '</div>' + warn +
+      '<div id="factorbox" class="factorbox"></div>' +
       '<div class="nextrow"><span id="nextc" class="nextc">下一个县城 ›</span></div>';
   }
 
@@ -99,6 +159,7 @@
     if (!z) { document.body.classList.remove("detail"); mode = "overview"; return; }
     curDetailAdcode = String(adcode); // 记录当前县城，供"下一个县城"使用
     if (mapLibreOk) maplibreEnterDetail(z); else drawDetailSvg(adcode);
+    renderFactorPanel(String(adcode)); // Step 2 因子分解面板（与渲染解耦，两路通用）
   }
   // 在「当前省份筛选」顺序中，找下一个有数据的县城（循环到开头）
   function nextCountyAdcode() {
@@ -186,10 +247,8 @@
           paint: { "line-color": "#0b1220", "line-width": ["interpolate", ["linear"], ["zoom"], 11, 2, 15, 5], "line-opacity": 0.4 } });
         addRoadLayer({ id: "roads-line", type: "line", source: "roads",
           paint: {
-            "line-color": ["match", ["get", "hw"],
-              "trunk", "#f59e0b", "primary", "#f97316", "secondary", "#38bdf8",
-              "tertiary", "#7dd3fc", "residential", "#cbd5e1", "service", "#64748b",
-              "unclassified", "#cbd5e1", "path", "#a3a3a3", "footway", "#a3a3a3", "#94a3b8"],
+            "line-color": ["interpolate", ["linear"], ["coalesce", ["get", "walk"], 50],
+              5, "#ef4444", 50, "#facc15", 95, "#22c55e"],
             "line-width": ["interpolate", ["linear"], ["zoom"], 11,
               ["match", ["get", "hw"], "trunk", 1.5, "primary", 1.2, "secondary", 0.9, "tertiary", 0.7, "residential", 0.6, "service", 0.4, "unclassified", 0.6, "path", 0.3, "footway", 0.3, 0.6],
               15, ["match", ["get", "hw"], "trunk", 4, "primary", 3.2, "secondary", 2.4, "tertiary", 1.8, "residential", 1.4, "service", 1, "unclassified", 1.4, "path", 0.8, "footway", 0.8, 1.4]]
@@ -218,7 +277,7 @@
           var pl = document.createElementNS(NS, "polyline");
           pl.setAttribute("points", pts);
           pl.setAttribute("fill", "none");
-          pl.setAttribute("stroke", hwColor(f.properties && f.properties.hw));
+          pl.setAttribute("stroke", walkColor(f.properties && f.properties.walk));
           pl.setAttribute("stroke-width", Math.max(0.5, hwWidth(f.properties && f.properties.hw) * 0.4));
           pl.setAttribute("stroke-opacity", "0.9");
           svgG.appendChild(pl);
@@ -406,11 +465,22 @@
   PROVINCES = DATA.provinces || [];
   DETAIL_LIST.forEach(function (z) { DETAIL[z.id] = z; });
 
+  // 路网步行质量图例（红=差→黄=中→绿=好），仅在县城详情显示
+  function updateRoadLegend() {
+    var el = document.getElementById("roadlegend");
+    if (!el) return;
+    el.innerHTML = '<span class="rl-t">路网好走度</span>'
+      + '<span class="rl-bar"></span>'
+      + '<span class="rl-l"><b style="color:#ef4444">差</b> 0</span>'
+      + '<span class="rl-l"><b style="color:#facc15">中</b> 50</span>'
+      + '<span class="rl-l"><b style="color:#22c55e">好</b> 100</span>';
+  }
   function boot() {
     if (COUNTIES.length === 0) {
       document.getElementById("hint").textContent = "数据为空：请重新生成 data_bundle.js";
       return;
     }
+    updateRoadLegend();
     // 1) 立刻画 SVG 兜底（绝不空白），MapLibre 加载完会盖上去
     ensureSvg(); setProj(116.5, 34, 17); renderOverviewSvg();
     buildChips(); buildDir(); bindUi();
